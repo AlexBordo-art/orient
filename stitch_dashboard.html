@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The East - High-End Organic Tech</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&amp;family=Outfit:wght@100..900&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0b1f2d",
+                        "accent": "#E66C37",
+                        "background-light": "#F2F0E9",
+                        "background-dark": "#1A1A1A",
+                    },
+                    fontFamily: {
+                        "display": ["Outfit", "sans-serif"],
+                        "serif": ["Cormorant Garamond", "serif"],
+                        "mono": ["Space Mono", "monospace"],
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .gradient-moss {
+            background: linear-gradient(180deg, rgba(11,31,45,0.8) 0%, rgba(26,26,26,1) 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+<!-- Navbar -->
+<div class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+<nav class="flex items-center justify-between px-8 py-4 bg-primary/80 backdrop-blur-md rounded-full w-full max-w-5xl shadow-xl border border-white/10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-background-light text-2xl">eco</span>
+<span class="text-background-light font-bold text-lg tracking-widest uppercase">The East</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-background-light/80 hover:text-background-light text-sm font-medium tracking-wide transition-colors" href="#philosophy">Philosophy</a>
+<a class="text-background-light/80 hover:text-background-light text-sm font-medium tracking-wide transition-colors" href="#dashboard">Dashboard</a>
+<a class="text-background-light/80 hover:text-background-light text-sm font-medium tracking-wide transition-colors" href="#regimen">Regimen</a>
+</div>
+<button class="bg-background-light text-primary hover:bg-white px-6 py-2 rounded-full text-sm font-bold tracking-wide transition-colors">
+                Begin Journey
+            </button>
+</nav>
+</div>
+<!-- Hero Section -->
+<section class="relative h-screen w-full flex flex-col justify-end p-8 md:p-20 gradient-moss" data-alt="Dark misty forest landscape" style="background-image: linear-gradient(180deg, rgba(11,31,45,0.7) 0%, rgba(26,26,26,1) 100%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuDznNH3sjf1MdN_cGYG7A_lcu5cmXIZjp-pO_KyWNF3SCNi3kk7n5IRx09lLm2UM-5EsoaaTDZFjOPPVIcWWRc2P4xDIs2IzivRjl80DTLzo6O4mCND8tSHXkbOGuNnwwqiLyMusaSbX0SjReY51MyTfe_LKcQ-33yyISmEBPAxs5erHlxKWFS1u8WfBTySfP6yYV0JdB3-fIugCY75ZwqoyuRUVm-yAcjSYUEJtWjreXzuqXpBUzFRlHZEwUTFnNNOgwJfwNq8Nws'); background-size: cover; background-position: center;">
+<div class="max-w-5xl w-full mx-auto relative z-10">
+<h1 class="text-background-light font-bold text-2xl md:text-4xl tracking-tight mb-2 uppercase">Your journey to</h1>
+<h2 class="text-background-light font-serif italic text-7xl md:text-9xl font-light leading-none -ml-2">The East</h2>
+<p class="text-background-light/80 font-mono text-sm md:text-base mt-8 max-w-md">
+                Experience high-end organic tech for clinical and diagnostic navigation.
+            </p>
+<div class="mt-12 flex gap-4">
+<button class="flex items-center justify-center rounded-full h-12 px-8 bg-accent text-white text-base font-bold tracking-wider uppercase hover:bg-accent/90 transition-colors">
+                    Initialize
+                </button>
+</div>
+</div>
+</section>
+<!-- Visual Dashboard Section -->
+<section class="py-24 px-4 md:px-8 max-w-7xl mx-auto" id="dashboard">
+<div class="flex justify-between items-end mb-16">
+<div>
+<h3 class="text-primary dark:text-background-light text-sm font-bold tracking-widest uppercase mb-2">Diagnostic Interface</h3>
+<h2 class="text-4xl md:text-5xl font-serif text-slate-900 dark:text-slate-100">Telemetry Console</h2>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Card 1: Diagnostic Shuffler -->
+<div class="bg-white dark:bg-primary/20 rounded-xl p-8 shadow-sm border border-primary/10 relative overflow-hidden flex flex-col justify-between h-[400px]">
+<div>
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-bold text-xl text-primary dark:text-background-light">Protocol Alpha</h4>
+<span class="material-symbols-outlined text-primary dark:text-background-light">tune</span>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm mb-8 font-mono">Initializing bio-metric sequence...</p>
+</div>
+<div class="flex flex-col gap-3 font-mono">
+<div class="flex h-10 items-center justify-between rounded-full bg-background-light dark:bg-primary/40 px-6 border border-primary/5">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Visa Status</span>
+<span class="text-accent text-xs">Verified</span>
+</div>
+<div class="flex h-10 items-center justify-between rounded-full bg-background-light dark:bg-primary/40 px-6 border border-primary/5">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Route Optimization</span>
+<span class="text-primary dark:text-background-light text-xs">Active</span>
+</div>
+<div class="flex h-10 items-center justify-between rounded-full bg-background-light dark:bg-primary/40 px-6 border border-primary/5 opacity-50">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Neural Link</span>
+<span class="text-slate-500 text-xs">Pending</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Neural Stream -->
+<div class="bg-primary rounded-xl p-8 shadow-lg relative overflow-hidden flex flex-col h-[400px] lg:col-span-2">
+<div class="absolute top-0 right-0 p-8 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-accent"></span>
+<span class="text-accent text-xs font-mono uppercase tracking-widest">Live Feed</span>
+</div>
+<h4 class="font-bold text-xl text-background-light mb-2">Neural Stream</h4>
+<p class="text-background-light/60 text-sm font-mono mb-8">Telemetry data console</p>
+<div class="flex-1 bg-background-dark/50 rounded-lg p-6 font-mono text-xs md:text-sm text-green-400/80 overflow-hidden flex flex-col justify-end border border-white/5">
+<p>&gt; initializing handshake protocol...</p>
+<p>&gt; connection established.</p>
+<p>&gt; routing biometrics to sector 7G.</p>
+<p>&gt; analyzing organic signatures...</p>
+<p class="text-background-light mt-4">&gt; system ready<span class="text-accent ml-1">_</span></p>
+</div>
+</div>
+</div>
+<!-- Card 3: Adaptive Regimen -->
+<div class="mt-8 bg-white dark:bg-primary/20 rounded-xl p-8 shadow-sm border border-primary/10" id="regimen">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+<div>
+<h4 class="font-bold text-xl text-primary dark:text-background-light">Adaptive Regimen</h4>
+<p class="text-slate-600 dark:text-slate-400 text-sm font-mono mt-1">Schedule your clinical synthesis.</p>
+</div>
+<button class="bg-primary dark:bg-background-light text-white dark:text-primary px-6 py-2 rounded-full text-sm font-bold tracking-wide">
+                    Book Session
+                </button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="p-6 rounded-lg border border-primary/10 bg-background-light/50 dark:bg-primary/10 text-center cursor-pointer hover:border-primary/30 transition-colors">
+<p class="text-sm font-bold text-slate-500 mb-2 uppercase">Mon</p>
+<p class="text-2xl font-serif text-primary dark:text-background-light">12</p>
+</div>
+<div class="p-6 rounded-lg border border-accent bg-accent/5 text-center cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-accent"></div>
+<p class="text-sm font-bold text-accent mb-2 uppercase">Tue</p>
+<p class="text-2xl font-serif text-primary dark:text-background-light">13</p>
+</div>
+<div class="p-6 rounded-lg border border-primary/10 bg-background-light/50 dark:bg-primary/10 text-center cursor-pointer hover:border-primary/30 transition-colors opacity-50">
+<p class="text-sm font-bold text-slate-500 mb-2 uppercase">Wed</p>
+<p class="text-2xl font-serif text-primary dark:text-background-light">14</p>
+</div>
+<div class="p-6 rounded-lg border border-primary/10 bg-background-light/50 dark:bg-primary/10 text-center cursor-pointer hover:border-primary/30 transition-colors">
+<p class="text-sm font-bold text-slate-500 mb-2 uppercase">Thu</p>
+<p class="text-2xl font-serif text-primary dark:text-background-light">15</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Philosophy Section -->
+<section class="bg-background-dark text-background-light py-32 px-4 md:px-8 relative overflow-hidden" id="philosophy">
+<div class="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&amp;fit=crop&amp;w=1000&amp;q=80')] bg-cover bg-center mix-blend-overlay" data-alt="Abstract organic texture"></div>
+<div class="max-w-4xl mx-auto relative z-10 text-center">
+<span class="material-symbols-outlined text-accent text-4xl mb-6">spa</span>
+<h2 class="text-5xl md:text-7xl font-serif italic font-light mb-8">The Synthesis of Nature &amp; Technology</h2>
+<p class="text-lg md:text-xl font-mono text-background-light/70 leading-relaxed max-w-2xl mx-auto">
+                We believe in an organic approach to diagnostic navigation. By merging ancient wisdom with bleeding-edge clinical tech, we chart a course for holistic optimization.
+            </p>
+</div>
+</section>
+</body></html>
