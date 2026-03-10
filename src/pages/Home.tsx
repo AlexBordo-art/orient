@@ -1,16 +1,14 @@
 import React from 'react';
 import Hero from '../components/Hero';
-import ServicesGrid from '../components/ServicesGrid';
-import VisaForm from '../components/VisaForm';
-import PopularDestinations from '../components/PopularDestinations';
+import PortalCarousel from '../components/PortalCarousel';
+// Note: We are transforming the site into a multi-page portal.
+// Components like VisaForm, ServicesGrid, etc., will be moved to their respective sub-pages.
 
 const Home: React.FC = () => {
     return (
-        <main className="bg-transparent">
+        <main className="bg-obsidian min-h-screen">
             <Hero />
-            <ServicesGrid />
-            <VisaForm />
-            <PopularDestinations />
+            <PortalCarousel />
         </main>
     );
 };

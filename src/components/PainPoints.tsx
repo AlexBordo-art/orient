@@ -8,73 +8,98 @@ gsap.registerPlugin(ScrollTrigger);
 
 const PAIN_POINTS = [
     {
-        icon: <FileQuestion className="w-8 h-8 text-primary" />,
-        title: "Не знаете, какие документы нужны?",
-        desc: "Гуглите списки, звоните в визовые центры, но требования постоянно меняются. Страшно принести не ту справку и потерять сбор.",
-        solution: "Даём точный, актуальный на сегодня список конкретно под вашу цель поездки."
+        icon: <FileQuestion className="w-8 h-8 text-champagne-light" strokeWidth={1.5} />,
+        title: "Бюрократический лабиринт",
+        desc: "Гуглите списки, звоните в визовые центры, но требования постоянно меняются. Страшно принести не ту справку и потерять время.",
+        solution: "Формируем предельно точный, актуальный протокол документов под вашу цель поездки."
     },
     {
-        icon: <XOctagon className="w-8 h-8 text-cta" />,
-        title: "Боитесь получить отказ?",
+        icon: <XOctagon className="w-8 h-8 text-rose-400" strokeWidth={1.5} />,
+        title: "Риск отказа",
         desc: "Отказ портит визовую историю навсегда. Особенно сейчас, когда консульства присматриваются к каждому штампу.",
-        solution: "Готовим документы так, чтобы комар носа не подточил. У нас 98% одобрений."
+        solution: "Наш процент успешных кейсов — 98%. Мы берем на себя ответственность за результат."
     },
     {
-        icon: <Clock3 className="w-8 h-8 text-sky-600" />,
-        title: "Нет времени на очереди?",
-        desc: "Запись в консульство, поездки в другой город, часы ожидания в визовом центре — всё это отнимает кучу нервов.",
+        icon: <Clock3 className="w-8 h-8 text-sapphire-light" strokeWidth={1.5} />,
+        title: "Потеря времени",
+        desc: "Запись в консульство, поездки, часы ожидания в визовом центре — всё это отнимает самый ценный ресурс.",
         solution: "Вам нужен только паспорт. Остальную логистику мы полностью берём на себя."
     }
 ];
 
 const PainPoints: React.FC = () => {
     const sectionRef = useRef<HTMLDivElement>(null);
+    const headerRef = useRef<HTMLDivElement>(null);
     const cardsRef = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
         const cards = cardsRef.current?.children;
         if (!cards) return;
 
-        gsap.fromTo(cards,
-            { y: 50, opacity: 0 },
+        gsap.fromTo(headerRef.current,
+            { opacity: 0, y: 30 },
             {
-                y: 0,
                 opacity: 1,
-                duration: 0.8,
-                stagger: 0.2,
+                y: 0,
+                duration: 1,
                 ease: 'power3.out',
                 scrollTrigger: {
                     trigger: sectionRef.current,
-                    start: 'top 70%',
+                    start: 'top 70%'
+                }
+            }
+        );
+
+        gsap.fromTo(cards,
+            { y: 50, opacity: 0, scale: 0.95 },
+            {
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                duration: 1,
+                stagger: 0.15,
+                ease: 'expo.out',
+                scrollTrigger: {
+                    trigger: cardsRef.current,
+                    start: 'top 80%',
                 }
             }
         );
     }, { scope: sectionRef });
 
     return (
-        <section className="section bg-white" id="painpoints" ref={sectionRef}>
+        <section className="section-padding relative z-10" id="painpoints" ref={sectionRef}>
             <div className="container-main">
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <h2 className="text-title mb-6">Знакомая ситуация?</h2>
-                    <p className="text-lg text-sky-800/70 font-light">
-                        Оформление визы часто превращается в лотерею. Мы знаем все подводные камни и берём риски на себя, чтобы вы могли просто собирать чемоданы.
+                <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16 lg:mb-24 flex flex-col items-center">
+                    <h3 className="text-champagne text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-4 font-mono">
+                        Проблематика
+                    </h3>
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium tracking-tight text-slate-100 leading-tight mb-6">
+                        Оформление визы часто превращается в лотерею.
+                    </h2>
+                    <p className="text-slate-300 font-sans font-light text-lg md:text-xl leading-relaxed">
+                        Мы берем на себя все риски и бюрократию, чтобы вы могли сфокусироваться на главном.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8" ref={cardsRef}>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8" ref={cardsRef}>
                     {PAIN_POINTS.map((item, idx) => (
-                        <div key={idx} className="card group hover:-translate-y-2 transition-transform duration-300">
-                            <div className="w-16 h-16 rounded-2xl bg-sky-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <div key={idx} className="glass-card group p-8 lg:p-10 hover:-translate-y-2 transition-all duration-500 hover:border-champagne/30 relative overflow-hidden flex flex-col">
+
+                            {/* Subtle background glow on hover */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-sapphire/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                            <div className="w-16 h-16 rounded-2xl bg-obsidian border border-white/5 shadow-inner flex items-center justify-center mb-8 relative z-10 transition-transform duration-500 group-hover:scale-110">
                                 {item.icon}
                             </div>
 
-                            <h3 className="text-xl font-bold font-body text-sky-900 mb-4">{item.title}</h3>
-                            <p className="text-sky-700/80 mb-6 font-light">{item.desc}</p>
+                            <h3 className="text-2xl font-heading font-medium text-slate-100 mb-4 tracking-tight relative z-10">{item.title}</h3>
+                            <p className="text-slate-400 font-sans font-light leading-relaxed mb-8 relative z-10 flex-1">{item.desc}</p>
 
-                            <div className="pt-6 border-t border-sky-100 mt-auto">
-                                <p className="font-medium text-sky-900 flex gap-2 items-start">
-                                    <span className="text-primary mt-1">✓</span>
-                                    <span>{item.solution}</span>
+                            <div className="pt-6 border-t border-white/10 mt-auto relative z-10">
+                                <p className="font-sans font-medium text-slate-200 flex gap-3 items-start">
+                                    <span className="text-champagne mt-0.5 w-4 h-4 rounded-full bg-champagne/10 flex items-center justify-center flex-shrink-0 text-[10px]">✓</span>
+                                    <span className="leading-snug">{item.solution}</span>
                                 </p>
                             </div>
                         </div>

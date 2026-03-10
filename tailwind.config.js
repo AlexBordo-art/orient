@@ -7,39 +7,37 @@ export default {
   theme: {
     extend: {
       colors: {
-        // High-End Organic Tech System
-        primary: {
-          light: '#1B364D',
-          DEFAULT: '#0B1F2D', // Deep Oceanic Blue (Moss replacement)
-          dark: '#05111A',
+        // 2026 Premium Travel System
+        obsidian: {
+          light: '#1E293B',
+          DEFAULT: '#0F172A',
+          dark: '#020617',
         },
-        accent: {
-          light: '#F28555',
-          DEFAULT: '#E66C37', // Vibrant Mandarin / Clay
-          dark: '#C85220',
+        sapphire: {
+          light: '#3B82F6',
+          DEFAULT: '#1E3A8A',
+          dark: '#172554',
         },
-        cream: {
-          50: '#FFFFFF',
-          100: '#FDFCF9',
-          DEFAULT: '#F2F0E9', // Cream Background
-          900: '#D9D5C5',
+        champagne: {
+          light: '#FEF08A',
+          DEFAULT: '#D4AF37',
+          dark: '#A16207',
         },
-        charcoal: {
-          light: '#2d2d2d',
-          DEFAULT: '#1A1A1A',
-          dark: '#0a0a0a',
+        frosted: {
+          light: 'rgba(255, 255, 255, 0.15)',
+          DEFAULT: 'rgba(255, 255, 255, 0.08)',
+          dark: 'rgba(255, 255, 255, 0.03)',
         },
       },
       fontFamily: {
-        heading: ['"Plus Jakarta Sans"', '"Outfit"', 'sans-serif'],
-        drama: ['"Cormorant Garamond"', 'serif'],
-        data: ['"Space Mono"', 'monospace'],
-        body: ['"Outfit"', 'sans-serif'],
+        heading: ['"Cormorant Garamond"', 'serif'], // Elegant emotional headers
+        sans: ['"Plus Jakarta Sans"', 'sans-serif'], // Body and UI data
+        mono: ['"Space Mono"', 'monospace'], // Formatted numbers/data if needed
       },
       fontSize: {
-        'display': ['clamp(3rem, 10vw, 12rem)', { lineHeight: '0.9', letterSpacing: '-0.05em' }],
-        'hero': ['clamp(2rem, 6vw, 7rem)', { lineHeight: '0.95', letterSpacing: '-0.04em' }],
-        'title': ['clamp(1.5rem, 4vw, 4rem)', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
+        'display': ['clamp(3rem, 10vw, 12rem)', { lineHeight: '0.9', letterSpacing: '-0.02em' }],
+        'hero': ['clamp(2rem, 6vw, 7rem)', { lineHeight: '0.95', letterSpacing: '-0.02em' }],
+        'title': ['clamp(1.5rem, 4vw, 4rem)', { lineHeight: '1.05', letterSpacing: '-0.01em' }],
       },
       borderRadius: {
         '2xl': '1.5rem',
@@ -48,8 +46,22 @@ export default {
         'pill': '9999px',
       },
       backgroundImage: {
-        'dark-gradient': 'linear-gradient(to bottom, transparent 0%, rgba(11, 31, 45, 0.9) 100%)',
+        'glass-gradient': 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%)',
+        'dark-glass': 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0.4) 100%)',
       },
+      boxShadow: {
+        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
+        'glass-light': '0 4px 24px 0 rgba(255, 255, 255, 0.05)',
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        }
+      }
     },
   },
   plugins: [],

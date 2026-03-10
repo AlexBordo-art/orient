@@ -12,106 +12,105 @@ const VisaForm: React.FC = () => {
     };
 
     return (
-        <section className="py-24 px-6 lg:px-8 max-w-7xl mx-auto w-full relative z-10" id="visa-form">
-            <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-8 md:p-12 lg:p-16 shadow-2xl relative overflow-hidden flex flex-col lg:flex-row gap-16 items-center">
+        <section className="section-padding relative z-10" id="visa-form">
+            <div className="container-main">
+                <div className="glass-panel p-8 md:p-12 lg:p-16 relative flex flex-col lg:flex-row gap-16 items-center">
 
-                {/* Background glow effects */}
-                <div className="absolute top-[-20%] right-[-10%] w-[50vh] h-[50vh] rounded-full bg-accent/20 blur-[100px] pointer-events-none" />
-                <div className="absolute bottom-[-20%] left-[-10%] w-[50vh] h-[50vh] rounded-full bg-primary/30 blur-[100px] pointer-events-none" />
+                    {/* Background glow effects inside the panel */}
+                    <div className="absolute top-[-20%] right-[-10%] w-[50vh] h-[50vh] rounded-full bg-sapphire/20 blur-[100px] pointer-events-none" />
+                    <div className="absolute bottom-[-20%] left-[-10%] w-[50vh] h-[50vh] rounded-full bg-champagne/10 blur-[100px] pointer-events-none" />
 
-                {/* Left Side: Context */}
-                <div className="flex-1 relative z-10 w-full lg:max-w-md">
-                    <div className="inline-flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-pill mb-8">
-                        <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
-                        </span>
-                        <span className="text-cream text-xs font-data tracking-widest uppercase">
-                            Оставить заявку
-                        </span>
-                    </div>
-
-                    <h2 className="text-4xl md:text-5xl font-drama italic text-cream leading-tight mb-6">
-                        Оформить визу легко.
-                    </h2>
-
-                    <p className="text-cream/60 font-body text-lg leading-relaxed mb-8">
-                        Оставьте заявку, и наши специалисты свяжутся с вами для бесплатной консультации и оценки шансов на получение визы.
-                    </p>
-
-                    <div className="space-y-4">
-                        <div className="flex items-center gap-4 text-cream/80 text-sm font-body">
-                            <CheckCircle2 className="text-accent w-5 h-5 shrink-0" />
-                            Без предоплаты за консультацию
-                        </div>
-                        <div className="flex items-center gap-4 text-cream/80 text-sm font-body">
-                            <CheckCircle2 className="text-accent w-5 h-5 shrink-0" />
-                            Высокий процент одобрения
-                        </div>
-                        <div className="flex items-center gap-4 text-cream/80 text-sm font-body">
-                            <CheckCircle2 className="text-accent w-5 h-5 shrink-0" />
-                            Поддержка АТЭС и бизнес-виз
-                        </div>
-                    </div>
-                </div>
-
-                {/* Right Side: Contact Form */}
-                <div className="flex-1 w-full bg-charcoal/40 backdrop-blur-md border border-white/10 rounded-[2rem] p-8 shadow-inner relative z-10">
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                        <div className="group">
-                            <label className="block text-xs font-data uppercase tracking-wider text-cream/50 mb-2">Имя</label>
-                            <input
-                                required
-                                type="text"
-                                placeholder="Ваше полное имя"
-                                className="w-full bg-black/20 border border-white/10 rounded-xl px-5 py-4 text-cream font-body focus:outline-none focus:border-accent/50 transition-all placeholder:text-cream/20"
-                            />
+                    {/* Left Side: Context */}
+                    <div className="flex-1 relative z-10 w-full lg:max-w-md">
+                        <div className="inline-flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-8">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-champagne opacity-75" />
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-champagne-light" />
+                            </span>
+                            <span className="text-slate-200 text-xs font-mono tracking-widest uppercase font-semibold">
+                                Private Application
+                            </span>
                         </div>
 
-                        <div className="group">
-                            <label className="block text-xs font-data uppercase tracking-wider text-cream/50 mb-2">Телефон</label>
-                            <input
-                                required
-                                type="tel"
-                                placeholder="+7 (___) ___-__-__"
-                                className="w-full bg-black/20 border border-white/10 rounded-xl px-5 py-4 text-cream font-body focus:outline-none focus:border-accent/50 transition-all placeholder:text-cream/20"
-                            />
-                        </div>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium tracking-tight text-slate-100 leading-tight mb-6">
+                            Оформить визу легко.
+                        </h2>
 
-                        <div className="group">
-                            <label className="block text-xs font-data uppercase tracking-wider text-cream/50 mb-2">Направление / Тип визы</label>
-                            <div className="relative">
-                                <select className="w-full bg-black/20 border border-white/10 rounded-xl px-5 py-4 text-cream font-body appearance-none focus:outline-none focus:border-accent/50 transition-all cursor-pointer">
-                                    <option value="china">Китай (Бизнес / Туризм)</option>
-                                    <option value="japan">Япония</option>
-                                    <option value="korea">Южная Корея</option>
-                                    <option value="apec">Карта АТЭС (APEC)</option>
-                                    <option value="other">Другое / Консультация</option>
-                                </select>
-                                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-cream/40">▼</div>
+                        <p className="text-slate-300 font-sans font-light text-lg leading-relaxed mb-10">
+                            Оставьте заявку, и ваш персональный менеджер свяжется с вами для оценки шансов на получение многократной визы.
+                        </p>
+
+                        <div className="space-y-5">
+                            <div className="flex items-center gap-4 text-slate-200 font-sans">
+                                <CheckCircle2 className="text-champagne w-5 h-5 shrink-0" />
+                                Без предоплаты за консультацию
+                            </div>
+                            <div className="flex items-center gap-4 text-slate-200 font-sans">
+                                <CheckCircle2 className="text-champagne w-5 h-5 shrink-0" />
+                                Высокий процент одобрения
+                            </div>
+                            <div className="flex items-center gap-4 text-slate-200 font-sans">
+                                <CheckCircle2 className="text-champagne w-5 h-5 shrink-0" />
+                                Поддержка АТЭС и бизнес-инвитаций
                             </div>
                         </div>
+                    </div>
 
-                        <Magnetic strength={5}>
-                            <button
-                                type="submit"
-                                disabled={submitted}
-                                className={`mt-4 w-full px-8 py-5 rounded-xl font-bold font-heading text-lg transition-all duration-300 flex items-center justify-center gap-3 group ${submitted
-                                        ? 'bg-green-500/20 text-green-400 border border-green-500/50'
-                                        : 'bg-cream text-primary hover:bg-white hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]'
-                                    }`}
-                            >
-                                {submitted ? 'Заявка отправлена!' : 'Оставить заявку'}
-                                {!submitted && <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
-                            </button>
-                        </Magnetic>
+                    {/* Right Side: Contact Form */}
+                    <div className="flex-1 w-full bg-obsidian-dark/40 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-8 md:p-10 shadow-inner relative z-10">
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                            <div className="group">
+                                <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 mb-2 font-semibold">Имя</label>
+                                <input
+                                    required
+                                    type="text"
+                                    placeholder="Ваше полное имя"
+                                    className="w-full bg-transparent border-b border-white/20 px-2 py-3 text-slate-100 font-sans focus:outline-none focus:border-champagne transition-colors placeholder:text-slate-500"
+                                />
+                            </div>
 
-                        <p className="text-center text-[10px] text-cream/30 font-body mt-2">
-                            Нажимая кнопку, вы соглашаетесь с условиями обработки персональных данных.
-                        </p>
-                    </form>
+                            <div className="group">
+                                <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 mb-2 font-semibold">Телефон</label>
+                                <input
+                                    required
+                                    type="tel"
+                                    placeholder="+7 (___) ___-__-__"
+                                    className="w-full bg-transparent border-b border-white/20 px-2 py-3 text-slate-100 font-sans focus:outline-none focus:border-champagne transition-colors placeholder:text-slate-500"
+                                />
+                            </div>
+
+                            <div className="group">
+                                <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 mb-2 font-semibold">Тип визы</label>
+                                <div className="relative">
+                                    <select className="w-full bg-transparent border-b border-white/20 px-2 py-3 text-slate-100 font-sans appearance-none focus:outline-none focus:border-champagne transition-colors cursor-pointer">
+                                        <option value="china" className="bg-obsidian-dark text-slate-100">Китай (Бизнес / Туризм)</option>
+                                        <option value="japan" className="bg-obsidian-dark text-slate-100">Япония</option>
+                                        <option value="korea" className="bg-obsidian-dark text-slate-100">Южная Корея</option>
+                                        <option value="apec" className="bg-obsidian-dark text-slate-100">Карта АТЭС (APEC)</option>
+                                        <option value="other" className="bg-obsidian-dark text-slate-100">Консьерж-услуги / Другое</option>
+                                    </select>
+                                    <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">▼</div>
+                                </div>
+                            </div>
+
+                            <Magnetic strength={0.4}>
+                                <button
+                                    type="submit"
+                                    disabled={submitted}
+                                    className={`mt-6 w-full ${submitted ? 'btn-ghost-premium text-green-400 border-green-500/50 hover:bg-green-500/10 hover:translate-y-0' : 'btn-premium'}`}
+                                >
+                                    {submitted ? 'Заявка отправлена!' : 'Запросить Инвайт'}
+                                    {!submitted && <Send className="w-5 h-5 ml-2" />}
+                                </button>
+                            </Magnetic>
+
+                            <p className="text-center text-[11px] text-slate-500 font-sans mt-3">
+                                Взаимодействие полностью конфиденциально.
+                            </p>
+                        </form>
+                    </div>
+
                 </div>
-
             </div>
         </section>
     );

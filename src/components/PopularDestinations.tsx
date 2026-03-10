@@ -74,51 +74,53 @@ const PopularDestinations: React.FC = () => {
     }, { scope: sectionRef });
 
     return (
-        <section ref={sectionRef} className="py-32 px-6 lg:px-8 max-w-7xl mx-auto w-full relative z-10">
-            <div ref={headerRef} className="text-center mb-16 flex flex-col items-center">
-                <h3 className="text-accent text-sm font-bold tracking-[0.2em] uppercase mb-4 font-data">
-                    Популярные направления
-                </h3>
-                <p className="text-charcoal/80 font-body text-lg max-w-2xl text-center">
-                    Синтез лучших точек для бизнес-интервенций и отдыха.
-                </p>
-            </div>
+        <section ref={sectionRef} className="section-padding relative z-10">
+            <div className="container-main">
+                <div ref={headerRef} className="text-center mb-16 flex flex-col items-center">
+                    <h3 className="text-champagne text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-4 font-mono">
+                        Популярные направления
+                    </h3>
+                    <p className="text-slate-300 font-sans font-light text-lg md:text-xl max-w-2xl text-center">
+                        Синтез лучших точек для бизнес-интервенций и премиального отдыха.
+                    </p>
+                </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {DESTINATIONS.map((dest, i) => (
-                    <div
-                        key={dest.id}
-                        ref={el => { cardsRef.current[i] = el; }}
-                        className="group relative h-[400px] md:h-[500px] rounded-[2rem] overflow-hidden cursor-pointer"
-                    >
-                        {/* Image */}
-                        <img
-                            src={dest.image}
-                            alt={dest.title}
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {DESTINATIONS.map((dest, i) => (
+                        <div
+                            key={dest.id}
+                            ref={el => { cardsRef.current[i] = el; }}
+                            className="group relative h-[450px] md:h-[550px] rounded-[2rem] overflow-hidden cursor-pointer"
+                        >
+                            {/* Image */}
+                            <img
+                                src={dest.image}
+                                alt={dest.title}
+                                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+                            />
 
-                        {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+                            {/* Gradient Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-obsidian-dark/90 via-obsidian-dark/30 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
 
-                        {/* Content */}
-                        <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                            <h4 className="text-2xl font-heading font-bold text-cream mb-1">{dest.title}</h4>
-                            <p className="text-cream/60 font-body text-sm mb-4">{dest.desc}</p>
+                            {/* Content */}
+                            <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                                <h4 className="text-3xl font-heading font-semibold text-slate-100 mb-1">{dest.title}</h4>
+                                <p className="text-slate-300 font-sans font-light text-sm mb-6">{dest.desc}</p>
 
-                            {/* Action Button that slides up */}
-                            <div className="overflow-hidden">
-                                <span className="inline-flex items-center gap-2 text-accent text-sm font-bold tracking-wider uppercase translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                                    Подробнее
-                                    <ArrowRight className="w-4 h-4" />
-                                </span>
+                                {/* Action Button that slides up */}
+                                <div className="overflow-hidden">
+                                    <span className="inline-flex items-center gap-2 text-champagne text-xs font-bold font-mono tracking-widest uppercase translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                                        Исследовать
+                                        <ArrowRight className="w-4 h-4" />
+                                    </span>
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Border interaction */}
-                        <div className="absolute inset-0 border-2 border-transparent group-hover:border-accent/30 rounded-[2rem] transition-colors duration-300 pointer-events-none" />
-                    </div>
-                ))}
+                            {/* Border interaction */}
+                            <div className="absolute inset-0 border border-white/10 group-hover:border-champagne/40 rounded-[2rem] transition-colors duration-500 pointer-events-none" />
+                        </div>
+                    ))}
+                </div>
             </div>
         </section>
     );

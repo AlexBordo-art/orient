@@ -1,21 +1,32 @@
 import { Routes, Route } from 'react-router-dom';
 import RootLayout from './layouts/RootLayout';
 import Home from './pages/Home';
-import Auth from './pages/Auth';
-import Dashboard from './pages/Dashboard';
-import EcosystemBuilder from './pages/EcosystemBuilder';
-import ArticleGrid from './pages/ArticleGrid';
+import VisaHub from './pages/VisaHub';
+import VisaPage from './pages/VisaPage';
+import ToursHub from './pages/ToursHub';
+import EducationHub from './pages/EducationHub';
+import ServicesHub from './pages/ServicesHub';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
-        <Route path="auth" element={<Auth />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="builder" element={<EcosystemBuilder />} />
-        <Route path="intelligence" element={<ArticleGrid />} />
-        {/* We will add Dashboard, Services, Blog routes here later */}
+
+        {/* Силос 1: Визы */}
+        <Route path="visas" element={<VisaHub />} />
+        <Route path="visas/:country" element={<VisaPage />} />
+
+        {/* Силос 2: Путешествия */}
+        <Route path="tours" element={<ToursHub />} />
+
+        {/* Силос 3: Образование */}
+        <Route path="education" element={<EducationHub />} />
+
+        {/* Силос 4: Сервисы */}
+        <Route path="services" element={<ServicesHub />} />
+
+        {/* TODO Phase 4+: Blog, Reviews, About, Contact, Privacy */}
       </Route>
     </Routes>
   );

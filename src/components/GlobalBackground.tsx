@@ -1,60 +1,64 @@
 import React, { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const IMAGES = [
-    "https://images.unsplash.com/photo-1470115636492-6d2b56f9146d?auto=format&fit=crop&q=80&w=2400", // Moody Dark Forest (Nura ref)
-    "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&q=80&w=2400", // Misty Asian Mountains
-    "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=2400", // Organic Texture
-    "https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&q=80&w=2400"  // Minimalist Kyoto Temple
+    "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?auto=format&fit=crop&q=80&w=2400", // Nature / Epic Landscape
+    "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&q=80&w=2400", // European Architecture / Paris
+    "https://images.unsplash.com/photo-1540541338287-41700607e5ce?auto=format&fit=crop&q=80&w=2400", // Luxury Resort
+    "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=2400"  // Modern Metropolis
 ];
 
 const GlobalBackground: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
 
     useGSAP(() => {
         const ctx = gsap.context(() => {
-            // Setup timeline driven by scroll
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: document.body,
-                    start: 'top top',
-                    end: 'bottom bottom',
-                    scrub: 1.5, // 1.5 second smoothing
-                }
-            });
+            const images = gsap.utils.toArray('.bg-image') as HTMLElement[];
+            if (images.length === 0) return;
 
-            // Initialize all images to opacity 0 except the first one
-            gsap.set(imagesRef.current, { opacity: 0, scale: 1.05 });
-            gsap.set(imagesRef.current[0], { opacity: 1 });
+            gsap.set(images, { opacity: 0, scale: 1 });
+            gsap.set(images[0], { opacity: 1 });
 
-            // Animate scale continuously throughout the whole page scroll
-            tl.to(imagesRef.current, {
-                scale: 1.2, // Subtle Ken Burns as you scroll down
-                ease: 'none',
-                stagger: 0
-            }, 0);
+            const startAnimation = (index: number) => {
+                const currentImg = images[index];
+                const nextIndex = (index + 1) % images.length;
+                const nextImg = images[nextIndex];
 
-            // Calculate evenly spaced transition points
-            const numImages = IMAGES.length;
-            const segment = 1 / numImages;
+                // Ensure correct stacking order
+                gsap.set(currentImg, { zIndex: 1 });
+                gsap.set(nextImg, { zIndex: 2 });
 
-            IMAGES.forEach((_, i) => {
-                if (i === 0) return; // Skip first image as it's already visible
+                // Ken Burns: slow zoom on current image
+                gsap.to(currentImg, {
+                    scale: 1.10,
+                    duration: 8,
+                    ease: 'none',
+                });
 
-                const startFadeIn = (i * segment) - (segment * 0.2); // Start fading in slightly before segment starts
-
-                // Fade in the next image
-                tl.to(imagesRef.current[i], {
+                // Crossfade: fade in next image after a delay
+                gsap.to(nextImg, {
                     opacity: 1,
-                    ease: "power2.inOut",
-                    duration: segment * 0.4
-                }, startFadeIn);
-            });
+                    duration: 2.5,
+                    ease: 'power2.inOut',
+                    delay: 5.5,
+                    onStart: () => {
+                        // Start zooming next image as soon as it begins to appear
+                        gsap.set(nextImg, { scale: 1 });
+                        gsap.to(nextImg, {
+                            scale: 1.10,
+                            duration: 8,
+                            ease: 'none',
+                        });
+                    },
+                    onComplete: () => {
+                        gsap.set(currentImg, { opacity: 0 }); // Hide old image completely
+                        startAnimation(nextIndex); // Queue next cycle
+                    }
+                });
+            };
+
+            startAnimation(0);
 
         }, containerRef);
 
@@ -67,18 +71,20 @@ const GlobalBackground: React.FC = () => {
             {IMAGES.map((src, index) => (
                 <img
                     key={index}
-                    ref={(el) => { imagesRef.current[index] = el; }}
                     src={src}
-                    alt={`Travel Background ${index + 1}`}
-                    className="absolute inset-0 w-full h-full object-cover object-center"
+                    alt={`Cinematic Background ${index + 1}`}
+                    className="bg-image absolute inset-0 w-full h-full object-cover object-center"
                     style={{ willChange: 'transform, opacity' }}
                 />
             ))}
 
-            {/* Overlays for contrast: Moss-to-Black heavy gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-charcoal/40 via-primary/80 to-charcoal" />
-            <div className="absolute inset-0 bg-primary/60 mix-blend-multiply" />
-            <div className="absolute inset-0 bg-charcoal/40" />
+            {/* Overlays for contrast: Obsidian-to-Sapphire luxury gradient */}
+            <div className="absolute inset-0 bg-gradient-to-b from-obsidian-dark/40 via-obsidian/70 to-obsidian-dark z-10" />
+            <div className="absolute inset-0 bg-sapphire-dark/30 mix-blend-multiply z-10" />
+            <div className="absolute inset-0 bg-obsidian-dark/60 z-10" />
+
+            {/* Subtle noise layer to blend images and gradients */}
+            <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none noise-bg z-10" />
         </div>
     );
 };

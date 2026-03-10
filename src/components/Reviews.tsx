@@ -13,14 +13,14 @@ const REVIEWS = [
         rating: 4.8,
         count: '150+',
         link: 'https://2gis.ru/khabarovsk/firm/4926340373575901/tab/reviews',
-        desc: 'Проверенные отзывы от реальных клиентов Дальнего Востока',
+        desc: 'Проверенные отзывы от реальных клиентов. Высокая оценка качества услуг и клиентского сервиса.',
     },
     {
         platform: 'Яндекс Карты',
         rating: 4.9,
         count: '120+',
         link: 'https://yandex.ru/maps/org/oriyent_ekspress/1032200453/reviews/?ll=135.084206%2C48.484451&z=15',
-        desc: 'Ежедневные оценки работы нашего визового бутика',
+        desc: 'Ежедневные оценки работы нашего визового бутика. Мы ценим каждый отзыв.',
     }
 ];
 
@@ -32,67 +32,77 @@ const Reviews: React.FC = () => {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: sectionRef.current,
-                start: "top 70%",
+                start: "top 75%",
             }
         });
 
         tl.from(".review-header", {
             y: 40,
             opacity: 0,
-            duration: 0.8,
+            duration: 1,
             ease: "power3.out"
         })
             .from(".review-card", {
-                y: 50,
+                y: 60,
                 opacity: 0,
-                duration: 0.8,
-                stagger: 0.15,
+                rotationX: -15, // 3D effect
+                transformPerspective: 1000,
+                duration: 1,
+                stagger: 0.2,
                 ease: "power3.out"
-            }, "-=0.4");
+            }, "-=0.6");
     }, { scope: sectionRef });
 
     return (
-        <section id="reviews" className="section bg-sky-50 relative overflow-hidden" ref={sectionRef}>
+        <section id="reviews" className="section-padding relative overflow-hidden z-10" ref={sectionRef}>
             <div className="container-main relative z-10">
-                <div className="text-center mb-16 review-header">
-                    <h2 className="text-cta text-sm font-body font-bold tracking-widest uppercase mb-4">Социальное доказательство</h2>
-                    <h3 className="text-title text-sky-900 mb-6 font-heading">Оформляем визы с 2010 года</h3>
-                    <p className="text-sky-800/70 max-w-2xl mx-auto font-body text-lg font-light">
-                        Мы не публикуем избранные отзывы на сайте. Мы гордимся своей открытой репутацией на независимых площадках, где каждый может оценить нашу работу.
+                <div className="text-center mb-16 lg:mb-24 flex flex-col items-center review-header">
+                    <h3 className="text-champagne text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-4 font-mono">
+                        Социальное доказательство
+                    </h3>
+                    <h2 className="text-slate-100 text-4xl md:text-5xl lg:text-6xl font-heading font-medium tracking-tight text-center mb-6">
+                        Репутация без компромиссов
+                    </h2>
+                    <p className="text-slate-300 font-sans font-light text-lg md:text-xl max-w-2xl text-center">
+                        Мы гордимся своей открытой репутацией на независимых площадках, где каждый может оценить уровень нашей экспертизы.
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto" ref={containerRef}>
+                <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto" ref={containerRef}>
                     {REVIEWS.map((review, i) => (
-                        <div key={i} className="review-card card bg-white flex flex-col justify-between">
+                        <div key={i} className="review-card glass-panel p-8 md:p-10 flex flex-col justify-between group">
+
+                            {/* Inner glow on hover */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-champagne/0 to-sapphire/0 group-hover:from-champagne/5 group-hover:to-sapphire/5 rounded-3xl transition-all duration-700 pointer-events-none" />
+
                             <div>
-                                <div className="flex justify-between items-start mb-8">
+                                <div className="flex justify-between items-start mb-10">
                                     <div className="flex items-center space-x-3">
-                                        <h4 className="text-2xl font-body font-bold text-sky-900">{review.platform}</h4>
+                                        <h4 className="text-3xl font-heading font-medium text-slate-100">{review.platform}</h4>
                                     </div>
                                     <div className="text-right flex flex-col items-end">
-                                        <div className="flex items-center space-x-1 text-cta mb-1">
-                                            <span className="text-xl font-bold text-sky-900 mr-2">{review.rating}</span>
+                                        <div className="flex items-center space-x-2 text-champagne mb-1">
+                                            <span className="text-2xl font-bold font-mono tracking-tighter">{review.rating}</span>
                                             <Star className="w-5 h-5 fill-current" />
                                         </div>
-                                        <div className="text-xs font-body text-sky-600 uppercase tracking-widest">{review.count} отзывов</div>
+                                        <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">{review.count} отзывов</div>
                                     </div>
                                 </div>
 
-                                <p className="text-sky-800/80 font-body mb-8 font-light text-lg">
-                                    {review.desc}
+                                <p className="text-slate-300 font-sans font-light text-lg leading-relaxed mb-10">
+                                    "{review.desc}"
                                 </p>
                             </div>
 
-                            <Magnetic strength={15}>
+                            <Magnetic strength={0.3}>
                                 <a
                                     href={review.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="btn-ghost w-full justify-center group"
+                                    className="btn-ghost-premium w-full justify-center group/btn"
                                 >
-                                    <span>Читать все отзывы</span>
-                                    <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
+                                    <span className="font-mono text-xs font-bold tracking-widest uppercase">Ознакомиться</span>
+                                    <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
                                 </a>
                             </Magnetic>
                         </div>
@@ -100,9 +110,9 @@ const Reviews: React.FC = () => {
                 </div>
             </div>
 
-            {/* Background elements */}
-            <div className="absolute top-1/2 left-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] -translate-y-1/2"></div>
-            <div className="absolute top-1/2 right-0 w-64 h-64 bg-cta/5 rounded-full blur-[80px] -translate-y-1/2"></div>
+            {/* Ambient gradients */}
+            <div className="absolute top-1/2 left-0 w-[50vh] h-[50vh] bg-sapphire/10 rounded-full blur-[120px] -translate-y-1/2 pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-[50vh] h-[50vh] bg-champagne/5 rounded-full blur-[120px] pointer-events-none" />
         </section>
     );
 };

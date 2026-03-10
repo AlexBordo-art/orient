@@ -9,23 +9,28 @@ gsap.registerPlugin(ScrollTrigger);
 const SERVICES = [
     {
         icon: FileText,
-        title: 'Визовый центр и АТЭС',
-        desc: 'Оформление деловых и туристических виз. Карты международных деловых поездок АТЭС.'
+        title: 'Оформление Визовых Протоколов & АТЭС',
+        desc: 'Мы берем на себя всю бюрократию. От детального планирования сложного профиля до выдачи готового паспорта с многократной визой. Включает специализированные карты международных деловых поездок.',
+        colSpan: 'md:col-span-2 md:row-span-2',
+        image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1200'
     },
     {
         icon: Plane,
-        title: 'Авиа и Ж/Д билеты',
-        desc: 'Подбор сложных маршрутов и бронирование билетов по лучшим тарифам.'
+        title: 'Приватная Логистика',
+        desc: 'Организация сложных маршрутов, бизнес-авиация и бронирование премиальных тарифов.',
+        colSpan: 'md:col-span-1',
     },
     {
         icon: ShieldCheck,
-        title: 'Страхование',
-        desc: 'Надежные страховые полисы для туристов на любые случаи и срок пребывания.'
+        title: 'Ультимативная Страховка',
+        desc: 'Глобальное медицинское покрытие.',
+        colSpan: 'md:col-span-1',
     },
     {
         icon: GraduationCap,
-        title: 'Обучение за рубежом',
-        desc: 'Языковые школы и программы обучения для студентов, детей и взрослых.'
+        title: 'Академическая Интеграция',
+        desc: 'Подбор закрытых школ и университетов за границей для вашей семьи.',
+        colSpan: 'md:col-span-2',
     }
 ];
 
@@ -45,22 +50,23 @@ const ServicesGrid: React.FC = () => {
                     ease: "power3.out",
                     scrollTrigger: {
                         trigger: sectionRef.current,
-                        start: "top 80%"
+                        start: "top 85%"
                     }
                 }
             );
 
             gsap.fromTo(cardsRef.current,
-                { opacity: 0, y: 50 },
+                { opacity: 0, y: 40, scale: 0.98 },
                 {
                     opacity: 1,
                     y: 0,
+                    scale: 1,
                     duration: 0.8,
-                    stagger: 0.15,
-                    ease: "power3.out",
+                    stagger: 0.1,
+                    ease: "power2.out",
                     scrollTrigger: {
                         trigger: sectionRef.current,
-                        start: "top 60%"
+                        start: "top 70%"
                     }
                 }
             );
@@ -70,48 +76,61 @@ const ServicesGrid: React.FC = () => {
     }, { scope: sectionRef });
 
     return (
-        <section ref={sectionRef} className="py-24 px-6 lg:px-8 max-w-7xl mx-auto w-full relative z-10">
-            <div ref={headerRef} className="text-center mb-16 flex flex-col items-center">
-                <h3 className="text-accent text-sm font-bold tracking-[0.2em] uppercase mb-4 font-data">
-                    Экосистема услуг
-                </h3>
-                <h2 className="text-cream text-4xl md:text-5xl font-drama italic max-w-2xl text-center">
-                    Комплексная поддержка в Азии
-                </h2>
-            </div>
+        <section ref={sectionRef} className="section-padding relative z-10">
+            <div className="container-main">
+                <div ref={headerRef} className="text-center mb-16 lg:mb-24 flex flex-col items-center">
+                    <h3 className="text-champagne text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-4 font-mono">
+                        Инфраструктура Услуг
+                    </h3>
+                    <h2 className="text-slate-100 text-4xl md:text-5xl lg:text-6xl font-heading font-medium tracking-tight max-w-3xl text-center">
+                        Экосистема для людей, которые ценят свое время
+                    </h2>
+                </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {SERVICES.map((service, i) => {
-                    const Icon = service.icon;
-                    return (
-                        <div
-                            key={i}
-                            ref={el => { cardsRef.current[i] = el; }}
-                            className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-xl group hover:bg-white/10 hover:border-accent/30 transition-all duration-500 cursor-pointer flex flex-col sm:flex-row gap-8 items-start relative overflow-hidden"
-                        >
-                            {/* Accent Glow */}
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-3xl group-hover:bg-accent/20 transition-colors duration-500" />
+                {/* Bento Grid layout */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[250px] md:auto-rows-[300px]">
+                    {SERVICES.map((service, i) => {
+                        const Icon = service.icon;
+                        const isLarge = service.colSpan.includes('row-span-2');
 
-                            <div className="bg-primary/50 p-4 rounded-2xl border border-white/5 shrink-0">
-                                <Icon className="w-8 h-8 text-accent" />
-                            </div>
+                        return (
+                            <div
+                                key={i}
+                                ref={el => { cardsRef.current[i] = el; }}
+                                className={`glass-card group p-8 lg:p-10 flex flex-col justify-between relative ${service.colSpan}`}
+                            >
+                                {/* Background Image for large card */}
+                                {service.image && (
+                                    <div className="absolute inset-0 w-full h-full opacity-[0.15] group-hover:opacity-[0.25] transition-opacity duration-700 pointer-events-none z-0">
+                                        <div className="absolute inset-0 bg-gradient-to-t from-obsidian-dark via-obsidian/50 to-transparent z-10" />
+                                        <img src={service.image} alt="" className="w-full h-full object-cover object-center" />
+                                    </div>
+                                )}
 
-                            <div className="flex-1 relative z-10">
-                                <h4 className="text-2xl font-heading font-medium text-cream mb-3 tracking-tight">
-                                    {service.title}
-                                </h4>
-                                <p className="text-cream/60 font-body text-sm leading-relaxed mb-6">
-                                    {service.desc}
-                                </p>
+                                {/* Corner Accent Glow */}
+                                <div className="absolute -top-12 -right-12 w-48 h-48 bg-sapphire/20 rounded-full blur-[50px] group-hover:bg-champagne/10 transition-colors duration-700 z-0" />
 
-                                <div className="flex items-center gap-2 text-accent text-sm font-bold font-data uppercase tracking-widest translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                                    Узнать больше
-                                    <ArrowRight className="w-4 h-4" />
+                                <div className="relative z-10 flex justify-between items-start">
+                                    <div className="bg-obsidian w-14 h-14 rounded-2xl flex items-center justify-center border border-white/5 shadow-inner">
+                                        <Icon className="w-7 h-7 text-champagne-light" strokeWidth={1.5} />
+                                    </div>
+                                    <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                                        <ArrowRight className="w-5 h-5 text-champagne" />
+                                    </div>
+                                </div>
+
+                                <div className="relative z-10 mt-auto pt-8">
+                                    <h4 className={`font-heading font-medium text-slate-100 tracking-tight leading-tight mb-3 ${isLarge ? 'text-4xl pr-12' : 'text-2xl'}`}>
+                                        {service.title}
+                                    </h4>
+                                    <p className={`text-slate-300 font-sans font-light leading-relaxed max-w-xl ${isLarge ? 'text-lg' : 'text-base line-clamp-2'}`}>
+                                        {service.desc}
+                                    </p>
                                 </div>
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </div>
             </div>
         </section>
     );
