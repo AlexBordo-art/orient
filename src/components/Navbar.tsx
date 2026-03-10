@@ -109,11 +109,10 @@ export function Navbar() {
                 <div className="flex items-center gap-4">
                     <button
                         onClick={openLeadModal}
-                        className={`hidden md:flex items-center justify-center px-6 py-2.5 rounded-pill text-sm font-semibold transition-all duration-300 overflow-hidden relative group ${scrolled ? 'bg-primary text-cream hover:scale-105' : 'bg-white text-primary hover:scale-105'
-                            }`}
+                        className="hidden md:flex items-center justify-center px-6 py-2.5 rounded-pill text-sm font-semibold transition-all duration-300 overflow-hidden relative group bg-gradient-to-r from-champagne-light to-champagne text-obsidian-dark hover:scale-105 shadow-lg shadow-champagne/20"
                     >
                         <span className="relative z-10">Консультация</span>
-                        <div className={`absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out bg-accent`} />
+                        <div className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out bg-champagne-dark" />
                     </button>
 
                     {/* Burger */}

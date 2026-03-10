@@ -28,6 +28,12 @@ export default {
           DEFAULT: 'rgba(255, 255, 255, 0.08)',
           dark: 'rgba(255, 255, 255, 0.03)',
         },
+        // Semantic aliases — used across Navbar, LeadModal, PricingFooter, Process, Destinations
+        primary: '#0F172A',      // obsidian — dark brand anchor
+        charcoal: '#1E293B',     // obsidian.light — text on light bg
+        cream: '#F8FAFC',        // slate-50 — light bg & text on dark
+        accent: '#D4AF37',       // champagne — CTA highlights
+        cta: '#D4AF37',          // champagne — CTA text color
       },
       fontFamily: {
         heading: ['\"Playfair Display\"', 'serif'], // Luxury Cyrillic headings — high contrast elegant serifs

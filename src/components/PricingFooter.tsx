@@ -10,7 +10,7 @@ const PricingFooter: React.FC = () => {
             <div className="container-main mb-32">
                 <div className="text-center mb-16">
                     <h2 className="text-accent text-sm font-data font-bold tracking-[0.2em] uppercase mb-4">Инвестиции в спокойствие</h2>
-                    <h3 className="text-cream text-5xl md:text-6xl font-drama italic">Прозрачные тарифы</h3>
+                    <h3 className="text-cream text-5xl md:text-6xl font-heading italic">Прозрачные тарифы</h3>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">

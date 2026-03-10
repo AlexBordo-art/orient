@@ -53,8 +53,8 @@ const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
                     <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full filter blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
 
                     <div className="relative z-10">
-                        <span className="font-data text-xs tracking-widest uppercase opacity-70 mb-4 block">Secure Protocol</span>
-                        <h3 className="font-drama italic text-3xl mb-6">Оформление визы.</h3>
+                        <span className="font-mono text-xs tracking-widest uppercase opacity-70 mb-4 block">Визовая поддержка</span>
+                        <h3 className="font-heading italic text-3xl mb-6">Оформление визы.</h3>
                         <p className="font-sans text-sm opacity-80 leading-relaxed mb-8">
                             Оставьте данные. Наш визовый эксперт проведет аудит вашего кейса и предложит оптимальную стратегию одобрения.
                         </p>
@@ -116,11 +116,11 @@ const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
                             disabled={submitted}
                             className={`mt-4 w-full py-4 rounded-xl font-sans font-bold flex items-center justify-center gap-2 transition-all duration-300
                                 ${submitted
-                                    ? 'bg-primary text-cream'
-                                    : 'bg-primary text-cream hover:bg-accent hover:-translate-y-1 shadow-lg'
+                                    ? 'bg-emerald-600 text-white'
+                                    : 'bg-obsidian-dark text-white hover:bg-champagne hover:text-obsidian-dark hover:-translate-y-1 shadow-lg'
                                 }`}
                         >
-                            {submitted ? 'Заявка принята' : 'Начать оформление'}
+                            {submitted ? '✓ Заявка принята' : 'Начать оформление'}
                             {!submitted && <Send size={18} />}
                         </button>
 
