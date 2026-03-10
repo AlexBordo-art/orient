@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
-import { Clock, CheckCircle, FileText, Shield } from 'lucide-react';
+import { Clock, CheckCircle, FileText, Shield, ChevronDown, MessageCircle, Star } from 'lucide-react';
 
-// Visa data — will be expanded later with full content from Phase 4
+// Visa data
 const VISA_DATA: Record<string, { name: string; icon: string; types: { name: string; desc: string }[] }> = {
     china: {
         name: 'Китай', icon: '🇨🇳',
@@ -33,9 +33,7 @@ const VISA_DATA: Record<string, { name: string; icon: string; types: { name: str
     },
     schengen: {
         name: 'Шенгенская зона', icon: '🇪🇺',
-        types: [
-            { name: 'Туристическая виза (C)', desc: 'Единая шенгенская виза для 27 стран Европы.' },
-        ],
+        types: [{ name: 'Туристическая виза (C)', desc: 'Единая шенгенская виза для 27 стран Европы.' }],
     },
     singapore: { name: 'Сингапур', icon: '🇸🇬', types: [{ name: 'eVisa', desc: 'Электронная туристическая виза.' }] },
     india: { name: 'Индия', icon: '🇮🇳', types: [{ name: 'ETA', desc: 'Электронное разрешение на въезд.' }] },
@@ -55,6 +53,50 @@ const VISA_DATA: Record<string, { name: string; icon: string; types: { name: str
             { name: 'Гостевая (C)', desc: 'По приглашению.' },
         ],
     },
+};
+
+// FAQ — Objection Handling (5 Universal Objections)
+const FAQ_ITEMS = [
+    {
+        q: 'Сколько стоит оформление визы?',
+        a: 'Стоимость зависит от страны и типа визы. Консультация бесплатна — мы просчитаем точную стоимость в течение 15 минут. Визы «под ключ» начинаются от 3 000 ₽.'
+    },
+    {
+        q: 'Что будет, если мне откажут в визе?',
+        a: 'За 12 лет работы наш процент одобрений — 99.8%. Но если отказ всё же произойдёт, мы вернём стоимость наших услуг. Консульский сбор не возвращается по правилам консульства.'
+    },
+    {
+        q: 'Насколько сложно всё оформить?',
+        a: 'С нашей стороны — ничего сложного. Вы предоставляете паспорт и базовые данные, мы делаем всё остальное: анкеты, переводы, запись, подачу. Среднее время оформления: 5-7 рабочих дней.'
+    },
+    {
+        q: 'Могу ли я отслеживать статус моей визы?',
+        a: 'Да. Мы уведомляем вас на каждом этапе: приём документов → подача → рассмотрение → готово. Персональный менеджер доступен по телефону и мессенджерам.'
+    },
+    {
+        q: 'Почему стоит обратиться к вам, а не оформить самостоятельно?',
+        a: 'Самостоятельное оформление — это часы в очередях, риск ошибок в анкетах и неполного пакета документов. Одна ошибка = отказ. Мы снимаем все эти риски и экономим ваше время. Средний клиент экономит 8+ часов.'
+    },
+];
+
+const FaqItem: React.FC<{ item: typeof FAQ_ITEMS[0] }> = ({ item }) => {
+    const [open, setOpen] = useState(false);
+    return (
+        <div className="border border-white/5 rounded-xl overflow-hidden">
+            <button
+                onClick={() => setOpen(v => !v)}
+                className="w-full p-5 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors"
+            >
+                <span className="text-white font-medium text-sm pr-4">{item.q}</span>
+                <ChevronDown size={18} className={`text-champagne shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} />
+            </button>
+            {open && (
+                <div className="px-5 pb-5">
+                    <p className="text-slate-400 text-sm leading-relaxed">{item.a}</p>
+                </div>
+            )}
+        </div>
+    );
 };
 
 const VisaPage: React.FC = () => {
@@ -87,8 +129,29 @@ const VisaPage: React.FC = () => {
                     </p>
                 </div>
 
+                {/* Trust Cascade — Step 3: Credibility Trust (Social Proof) */}
+                <div className="flex flex-wrap gap-6 mb-12 p-5 rounded-xl border border-white/5 bg-white/[0.02]">
+                    <div className="flex items-center gap-2">
+                        <Shield size={16} className="text-champagne" />
+                        <span className="text-slate-300 text-sm">99.8% одобрений</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Clock size={16} className="text-champagne" />
+                        <span className="text-slate-300 text-sm">5-7 дней оформление</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Star size={16} className="text-champagne" />
+                        <span className="text-slate-300 text-sm">12+ лет экспертизы</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <MessageCircle size={16} className="text-champagne" />
+                        <span className="text-slate-300 text-sm">Персональный менеджер</span>
+                    </div>
+                </div>
+
                 {/* Visa Types */}
                 <div className="space-y-4 mb-16">
+                    <h2 className="text-xl font-heading font-bold text-white mb-4">Типы виз</h2>
                     {visa.types.map((type, i) => (
                         <div
                             key={i}
@@ -107,17 +170,18 @@ const VisaPage: React.FC = () => {
                     ))}
                 </div>
 
-                {/* Process Steps */}
+                {/* Process Steps — Reduces "complexity" objection */}
                 <div className="mb-16">
                     <h2 className="text-2xl font-heading font-bold text-white mb-8">Как мы работаем</h2>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                         {[
-                            { icon: <FileText size={20} />, title: 'Консультация', desc: 'Бесплатно определим тип визы и перечень документов' },
-                            { icon: <CheckCircle size={20} />, title: 'Подготовка', desc: 'Собираем и проверяем пакет документов' },
-                            { icon: <Clock size={20} />, title: 'Подача', desc: 'Подаём заявку и отслеживаем статус' },
-                            { icon: <Shield size={20} />, title: 'Получение', desc: 'Выдаём паспорт с визой лично или курьером' },
+                            { icon: <FileText size={20} />, step: '01', title: 'Консультация', desc: 'Бесплатно определим тип визы и перечень документов' },
+                            { icon: <CheckCircle size={20} />, step: '02', title: 'Подготовка', desc: 'Собираем и проверяем пакет документов' },
+                            { icon: <Clock size={20} />, step: '03', title: 'Подача', desc: 'Подаём заявку и отслеживаем статус' },
+                            { icon: <Shield size={20} />, step: '04', title: 'Получение', desc: 'Выдаём паспорт с визой лично или курьером' },
                         ].map((step, i) => (
-                            <div key={i} className="p-5 rounded-xl border border-white/5 bg-white/[0.02]">
+                            <div key={i} className="p-5 rounded-xl border border-white/5 bg-white/[0.02] relative">
+                                <span className="absolute top-3 right-3 text-champagne/20 font-mono text-2xl font-bold">{step.step}</span>
                                 <div className="text-champagne mb-3">{step.icon}</div>
                                 <h4 className="text-white font-semibold text-sm mb-1">{step.title}</h4>
                                 <p className="text-slate-500 text-xs leading-relaxed">{step.desc}</p>
@@ -126,13 +190,43 @@ const VisaPage: React.FC = () => {
                     </div>
                 </div>
 
-                {/* CTA */}
+                {/* FAQ — Objection Handling Architecture (5 Universal Objections) */}
+                <div className="mb-16">
+                    <h2 className="text-2xl font-heading font-bold text-white mb-8">Частые вопросы</h2>
+                    <div className="space-y-2">
+                        {FAQ_ITEMS.map((item, i) => (
+                            <FaqItem key={i} item={item} />
+                        ))}
+                    </div>
+                </div>
+
+                {/* Final CTA with Risk Reversal + Social Proof */}
                 <div className="text-center p-10 rounded-2xl border border-champagne/10 bg-champagne/[0.03]">
                     <h2 className="text-2xl font-heading font-bold text-white mb-3">Готовы оформить визу?</h2>
                     <p className="text-slate-400 mb-6">Бесплатная консультация — ответим за 15 минут в рабочее время</p>
-                    <button className="px-8 py-3.5 rounded-xl bg-champagne text-obsidian font-semibold text-sm hover:scale-105 transition-transform">
-                        Получить консультацию
+
+                    {/* Primary CTA */}
+                    <button className="px-8 py-3.5 rounded-xl bg-champagne text-obsidian font-semibold text-sm hover:scale-105 transition-transform mb-4">
+                        Получить бесплатную консультацию
                     </button>
+
+                    {/* Risk Reversal (Trust Cascade Step 4) */}
+                    <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500 mt-4">
+                        <span className="flex items-center gap-1">
+                            <Shield size={12} className="text-champagne/60" />
+                            Возврат при отказе
+                        </span>
+                        <span>·</span>
+                        <span className="flex items-center gap-1">
+                            <Clock size={12} className="text-champagne/60" />
+                            Ответ за 15 минут
+                        </span>
+                        <span>·</span>
+                        <span className="flex items-center gap-1">
+                            <Star size={12} className="text-champagne/60" />
+                            15,000+ виз оформлено
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

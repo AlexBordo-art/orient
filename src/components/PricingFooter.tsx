@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Check, ArrowRight } from 'lucide-react';
 import Magnetic from './Magnetic';
 
@@ -32,9 +33,10 @@ const PricingFooter: React.FC = () => {
                         </div>
                         <Magnetic strength={10}>
                             <button className="w-full inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium cursor-pointer text-cream border-[1.5px] border-white/20 hover:border-accent hover:bg-accent/10 transition-all duration-300 justify-center">
-                                Оставить заявку
+                                Получить консультацию
                             </button>
                         </Magnetic>
+                        <p className="text-center text-cream/30 text-xs mt-3">Ответим за 15 минут в рабочее время</p>
                     </div>
 
                     {/* Premium Tier (Middle) - Highlighted */}
@@ -63,6 +65,7 @@ const PricingFooter: React.FC = () => {
                                 Оформить визу <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
                             </button>
                         </Magnetic>
+                        <p className="text-center text-cream/40 text-xs mt-3 relative z-10">Гарантия: вернём деньги при отказе консульства</p>
                     </div>
 
                     {/* VIP Tier */}
@@ -91,7 +94,7 @@ const PricingFooter: React.FC = () => {
                 </div>
             </div>
 
-            {/* Actual Footer */}
+            {/* Portal Footer with navigation zones */}
             <div className="bg-charcoal/80 backdrop-blur-3xl border-t border-white/5 py-16 text-white rounded-t-[3rem] lg:rounded-t-[4rem]">
                 <div className="container-main grid grid-cols-1 md:grid-cols-4 gap-12">
                     <div className="md:col-span-1">
@@ -99,47 +102,54 @@ const PricingFooter: React.FC = () => {
                             <div className="w-8 h-8 rounded-full flex items-center justify-center text-primary text-sm font-data font-bold bg-accent">OE</div>
                             <span className="font-heading text-2xl font-bold tracking-tight text-cream">Orient Express.</span>
                         </div>
-                        <p className="text-sm font-body font-light text-cream/50 leading-relaxed mb-6 gap-2">
+                        <p className="text-sm font-body font-light text-cream/50 leading-relaxed mb-6">
                             Специализированное бюро путешествий и визовой поддержки. Работаем с 2010 года.
                         </p>
-                    </div>
-
-                    <div>
-                        <h5 className="font-body font-semibold text-accent mb-4 tracking-wider uppercase text-sm">Направления</h5>
-                        <ul className="space-y-3 text-sm font-body font-light text-cream/70">
-                            <li><a href="#" className="hover:text-accent transition-colors">Виза в Китай</a></li>
-                            <li><a href="#" className="hover:text-accent transition-colors">Таиланд Elite</a></li>
-                            <li><a href="#" className="hover:text-accent transition-colors">Виза в Южную Корею</a></li>
-                            <li><a href="#" className="hover:text-accent transition-colors">Япония / Сингапур</a></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h5 className="font-body font-semibold text-accent mb-4 tracking-wider uppercase text-sm">Лаборатория</h5>
-                        <ul className="space-y-3 text-sm font-body font-light text-cream/70">
-                            <li><a href="#" className="hover:text-accent transition-colors">О нас</a></li>
-                            <li><a href="#" className="hover:text-accent transition-colors">Телеметрия</a></li>
-                            <li><a href="#" className="hover:text-accent transition-colors">Политика конфиденциальности</a></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h5 className="font-body font-semibold text-accent mb-4 tracking-wider uppercase text-sm">Связь</h5>
-                        <div className="text-sm font-body font-light text-cream/70 space-y-3">
-                            <p className="hover:text-accent transition-colors cursor-pointer">+7 (937) 762-55-72</p>
-                            <p className="hover:text-accent transition-colors cursor-pointer">visa@orient-dv.ru</p>
-                            <p className="mt-4 pt-4 border-t border-white/10">
-                                Владивосток<br />
-                                Операции по всей РФ
-                            </p>
+                        <div className="flex gap-4 text-cream/40 text-xs font-data">
+                            <span>Хабаровск</span>
+                            <span>·</span>
+                            <span>Москва</span>
                         </div>
+                    </div>
+
+                    {/* Column 1: Визы */}
+                    <div>
+                        <h5 className="font-body font-semibold text-accent mb-4 tracking-wider uppercase text-sm">Визы</h5>
+                        <ul className="space-y-3 text-sm font-body font-light text-cream/70">
+                            <li><Link to="/visas/china" className="hover:text-accent transition-colors">🇨🇳 Виза в Китай</Link></li>
+                            <li><Link to="/visas/korea" className="hover:text-accent transition-colors">🇰🇷 Виза в Корею</Link></li>
+                            <li><Link to="/visas/schengen" className="hover:text-accent transition-colors">🇪🇺 Шенгенская виза</Link></li>
+                            <li><Link to="/visas" className="hover:text-accent transition-colors font-medium text-champagne/80">Все визы →</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Column 2: Путешествия */}
+                    <div>
+                        <h5 className="font-body font-semibold text-accent mb-4 tracking-wider uppercase text-sm">Путешествия</h5>
+                        <ul className="space-y-3 text-sm font-body font-light text-cream/70">
+                            <li><Link to="/tours/china" className="hover:text-accent transition-colors">🇨🇳 Туры в Китай</Link></li>
+                            <li><Link to="/tours/russia" className="hover:text-accent transition-colors">🇷🇺 По России</Link></li>
+                            <li><Link to="/tours/hot-deals" className="hover:text-accent transition-colors">🔥 Горящие туры</Link></li>
+                            <li><Link to="/tours" className="hover:text-accent transition-colors font-medium text-champagne/80">Все туры →</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Column 3: Компания */}
+                    <div>
+                        <h5 className="font-body font-semibold text-accent mb-4 tracking-wider uppercase text-sm">Компания</h5>
+                        <ul className="space-y-3 text-sm font-body font-light text-cream/70">
+                            <li><Link to="/education" className="hover:text-accent transition-colors">Образование</Link></li>
+                            <li><Link to="/services" className="hover:text-accent transition-colors">Сервисы</Link></li>
+                            <li><span className="hover:text-accent transition-colors cursor-pointer">+7 (937) 762-55-72</span></li>
+                            <li><span className="hover:text-accent transition-colors cursor-pointer">visa@orient-dv.ru</span></li>
+                        </ul>
                     </div>
                 </div>
 
                 <div className="container-main mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs font-data font-light text-cream/30 uppercase tracking-widest">
                     <p>© {new Date().getFullYear()} ОРИЕНТ ЭКСПРЕСС. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</p>
                     <div className="flex space-x-6 mt-4 md:mt-0">
-                        <span>Синтезировано нейросетью</span>
+                        <Link to="/privacy" className="hover:text-cream/60 transition-colors">Политика конфиденциальности</Link>
                     </div>
                 </div>
             </div>

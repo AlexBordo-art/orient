@@ -96,12 +96,19 @@ const Hero: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="reveal-text w-full sm:w-auto">
+                        <div className="reveal-text flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
                             <button className="btn-premium w-full sm:w-auto">
                                 Оставить Заявку
                             </button>
+                            <button className="w-full sm:w-auto px-6 py-3 rounded-full border border-champagne/30 text-champagne text-sm font-medium hover:bg-champagne/10 transition-all">
+                                Узнать стоимость →
+                            </button>
                         </div>
                     </div>
+                    {/* Micro social proof — reduces decision anxiety */}
+                    <p className="text-slate-500 text-xs mt-4 reveal-text">
+                        Бесплатная консультация · Ответ за 15 минут · Гарантия возврата при отказе
+                    </p>
 
                 </div>
             </div>
