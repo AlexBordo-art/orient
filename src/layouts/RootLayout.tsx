@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import PricingFooter from '../components/PricingFooter';
+import SiteFooter from '../components/SiteFooter';
 import GlobalBackground from '../components/GlobalBackground';
 import LeadModal from '../components/LeadModal';
 
@@ -20,7 +20,7 @@ const RootLayout: React.FC = () => {
                 <main className="flex-grow flex flex-col relative z-10">
                     <Outlet />
                 </main>
-                <PricingFooter />
+                <SiteFooter />
                 <LeadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
             </div>
         </ModalContext.Provider>

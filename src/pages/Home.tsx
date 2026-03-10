@@ -1,14 +1,15 @@
 import React from 'react';
 import Hero from '../components/Hero';
 import PortalCarousel from '../components/PortalCarousel';
+import PricingSection from '../components/PricingSection';
 import SEO from '../components/SEO';
 
 const Home: React.FC = () => {
     return (
-        <main className="bg-obsidian min-h-screen">
+        <main className="bg-transparent min-h-screen">
             <SEO
                 title="Визы, Путешествия, Образование"
-                description="Бюро путешествий Ориент Экспресс — оформление виз в Китай, Корею, Таиланд, Шенген. Авторские туры и образование за рубежом. 12+ лет опыта, 99.8% одобрений. Хабаровск и Москва."
+                description="Бюро путешествий Ориент Экспресс — оформление виз в Китай, Корею, Таиланд, Шенген. Авторские туры и образование за рубежом. С 2007 года, 5.0★ на 2GIS. Хабаровск и Москва."
                 canonical="/"
                 keywords="оформление виз Хабаровск, визы в Китай, туры в Китай, образование за рубежом, Ориент Экспресс"
                 schema={{
@@ -26,6 +27,7 @@ const Home: React.FC = () => {
             />
             <Hero />
             <PortalCarousel />
+            <PricingSection />
         </main>
     );
 };

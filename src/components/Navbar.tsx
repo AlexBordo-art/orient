@@ -86,18 +86,20 @@ export function Navbar() {
                                     {hasChildren && <ChevronDown size={14} className={`transition-transform ${openDropdown === link.label ? 'rotate-180' : ''}`} />}
                                 </Link>
 
-                                {/* Dropdown */}
+                                {/* Dropdown — pt-3 creates hover bridge, no gap to lose mouse */}
                                 {hasChildren && openDropdown === link.label && (
-                                    <div className="absolute top-full left-0 mt-3 py-2 min-w-[200px] bg-white/90 backdrop-blur-xl rounded-xl border border-primary/10 shadow-xl">
-                                        {link.children!.map(child => (
-                                            <Link
-                                                key={child.href}
-                                                to={child.href}
-                                                className="block px-4 py-2.5 text-sm text-charcoal/80 hover:text-primary hover:bg-primary/5 transition-colors"
-                                            >
-                                                {child.label}
-                                            </Link>
-                                        ))}
+                                    <div className="absolute top-full left-0 pt-3 z-50">
+                                        <div className="py-2 min-w-[220px] bg-obsidian/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl">
+                                            {link.children!.map(child => (
+                                                <Link
+                                                    key={child.href}
+                                                    to={child.href}
+                                                    className="block px-5 py-3 text-sm text-slate-200 hover:text-champagne hover:bg-white/5 transition-colors"
+                                                >
+                                                    {child.label}
+                                                </Link>
+                                            ))}
+                                        </div>
                                     </div>
                                 )}
                             </div>

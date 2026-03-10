@@ -78,10 +78,9 @@ const GlobalBackground: React.FC = () => {
                 />
             ))}
 
-            {/* Overlays for contrast: Obsidian-to-Sapphire luxury gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-obsidian-dark/40 via-obsidian/70 to-obsidian-dark z-10" />
-            <div className="absolute inset-0 bg-sapphire-dark/30 mix-blend-multiply z-10" />
-            <div className="absolute inset-0 bg-obsidian-dark/60 z-10" />
+            {/* Overlays — reduced to let images breathe on sub-pages */}
+            <div className="absolute inset-0 bg-gradient-to-b from-obsidian-dark/30 via-obsidian/50 to-obsidian-dark/80 z-10" />
+            <div className="absolute inset-0 bg-sapphire-dark/15 mix-blend-multiply z-10" />
 
             {/* Subtle noise layer to blend images and gradients */}
             <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none noise-bg z-10" />
