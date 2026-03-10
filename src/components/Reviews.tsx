@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, Star } from 'lucide-react';
 import Magnetic from './Magnetic';
+import KineticTitle from './KineticTitle';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,21 +37,15 @@ const Reviews: React.FC = () => {
             }
         });
 
-        tl.from(".review-header", {
-            y: 40,
+        tl.from(".review-card", {
+            y: 60,
             opacity: 0,
+            rotationX: -15, // 3D effect
+            transformPerspective: 1000,
             duration: 1,
+            stagger: 0.2,
             ease: "power3.out"
-        })
-            .from(".review-card", {
-                y: 60,
-                opacity: 0,
-                rotationX: -15, // 3D effect
-                transformPerspective: 1000,
-                duration: 1,
-                stagger: 0.2,
-                ease: "power3.out"
-            }, "-=0.6");
+        }, "-=0.6");
     }, { scope: sectionRef });
 
     return (
@@ -60,9 +55,11 @@ const Reviews: React.FC = () => {
                     <h3 className="text-champagne text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-4 font-mono">
                         Социальное доказательство
                     </h3>
-                    <h2 className="text-slate-100 text-4xl md:text-5xl lg:text-6xl font-heading font-medium tracking-tight text-center mb-6">
-                        Репутация без компромиссов
-                    </h2>
+                    <KineticTitle
+                        text="Репутация без компромиссов"
+                        tag="h2"
+                        className="text-slate-100 text-4xl md:text-5xl lg:text-6xl font-heading font-medium tracking-tight text-center mb-6"
+                    />
                     <p className="text-slate-300 font-sans font-light text-lg md:text-xl max-w-2xl text-center">
                         Мы гордимся своей открытой репутацией на независимых площадках, где каждый может оценить уровень нашей экспертизы.
                     </p>

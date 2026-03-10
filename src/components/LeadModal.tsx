@@ -46,34 +46,34 @@ const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
             />
 
             {/* Modal Container */}
-            <div className="modal-content relative w-full max-w-2xl bg-cream rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row">
+            <div className="modal-content relative w-full max-w-4xl bg-cream rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[500px]">
 
                 {/* Left Side: Trust & Info */}
-                <div className="bg-primary text-cream p-10 md:w-5/12 flex flex-col justify-between relative overflow-hidden">
+                <div className="bg-primary text-cream p-10 lg:p-14 md:w-2/5 flex flex-col justify-between relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full filter blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
 
                     <div className="relative z-10">
                         <span className="font-mono text-xs tracking-widest uppercase opacity-70 mb-4 block">Визовая поддержка</span>
-                        <h3 className="font-heading italic text-3xl mb-6">Оформление визы.</h3>
+                        <h3 className="font-heading italic text-3xl lg:text-4xl mb-6">Оформление визы.</h3>
                         <p className="font-sans text-sm opacity-80 leading-relaxed mb-8">
                             Оставьте данные. Наш визовый эксперт проведет аудит вашего кейса и предложит оптимальную стратегию одобрения.
                         </p>
                     </div>
 
-                    <div className="relative z-10 space-y-4">
+                    <div className="relative z-10 space-y-5">
                         <div className="flex items-center gap-3">
-                            <ShieldCheck size={20} className="text-accent" />
-                            <span className="font-sans text-xs uppercase tracking-wide">Конфиденциально</span>
+                            <ShieldCheck size={24} className="text-accent" />
+                            <span className="font-sans text-sm uppercase tracking-wide">Конфиденциально</span>
                         </div>
                         <div className="flex items-center gap-3">
-                            <Clock size={20} className="text-accent" />
-                            <span className="font-sans text-xs uppercase tracking-wide">Анализ за 15 мин</span>
+                            <Clock size={24} className="text-accent" />
+                            <span className="font-sans text-sm uppercase tracking-wide">Анализ за 15 мин</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Right Side: Form */}
-                <div className="p-10 md:w-7/12 bg-white relative">
+                <div className="p-10 lg:p-14 md:w-3/5 bg-white relative flex flex-col justify-center">
                     <button
                         onClick={onClose}
                         className="absolute top-6 right-6 p-2 text-charcoal/40 hover:text-charcoal transition-colors rounded-full hover:bg-charcoal/5"

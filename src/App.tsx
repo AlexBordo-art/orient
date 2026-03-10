@@ -6,6 +6,7 @@ import VisaPage from './pages/VisaPage';
 import ToursHub from './pages/ToursHub';
 import EducationHub from './pages/EducationHub';
 import ServicesHub from './pages/ServicesHub';
+import ComingSoon from './pages/ComingSoon';
 
 function App() {
   return (
@@ -19,14 +20,25 @@ function App() {
 
         {/* Силос 2: Путешествия */}
         <Route path="tours" element={<ToursHub />} />
+        <Route path="tours/:destination" element={<ComingSoon />} /> {/* Fallback */}
 
         {/* Силос 3: Образование */}
         <Route path="education" element={<EducationHub />} />
+        <Route path="education/:program" element={<ComingSoon />} /> {/* Fallback */}
 
         {/* Силос 4: Сервисы */}
         <Route path="services" element={<ServicesHub />} />
+        <Route path="services/:service" element={<ComingSoon />} /> {/* Fallback */}
 
-        {/* TODO Phase 4+: Blog, Reviews, About, Contact, Privacy */}
+        {/* Утилиты и контент (Заглушки) */}
+        <Route path="blog" element={<ComingSoon />} />
+        <Route path="reviews" element={<ComingSoon />} />
+        <Route path="about" element={<ComingSoon />} />
+        <Route path="contact" element={<ComingSoon />} />
+        <Route path="privacy" element={<ComingSoon />} />
+
+        {/* 404 Fallback */}
+        <Route path="*" element={<ComingSoon />} />
       </Route>
     </Routes>
   );

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const SiteFooter: React.FC = () => {
     return (
-        <footer className="bg-obsidian/90 backdrop-blur-3xl border-t border-white/5 py-16 text-white rounded-t-[3rem] lg:rounded-t-[4rem] relative z-10">
+        <footer className="bg-obsidian/90 backdrop-blur-3xl border-t border-white/5 py-16 text-white relative z-10">
             <div className="container-main grid grid-cols-1 md:grid-cols-4 gap-12">
                 <div className="md:col-span-1">
                     <div className="flex items-center space-x-2 mb-6 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>

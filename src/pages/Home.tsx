@@ -1,10 +1,11 @@
-import React from 'react';
-import Hero from '../components/Hero';
-import PortalCarousel from '../components/PortalCarousel';
+import React, { useContext } from 'react';
+import CodropsStickyGrid from '../components/CodropsStickyGrid';
 import PricingSection from '../components/PricingSection';
 import SEO from '../components/SEO';
+import { ModalContext } from '../layouts/RootLayout';
 
 const Home: React.FC = () => {
+    const { openLeadModal } = useContext(ModalContext);
     return (
         <main className="bg-transparent min-h-screen">
             <SEO
@@ -25,8 +26,7 @@ const Home: React.FC = () => {
                     ]
                 }}
             />
-            <Hero />
-            <PortalCarousel />
+            <CodropsStickyGrid onOpenModal={openLeadModal} />
             <PricingSection />
         </main>
     );

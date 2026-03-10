@@ -3,6 +3,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FileText, Plane, ShieldCheck, GraduationCap, ArrowRight } from 'lucide-react';
+import KineticTitle from './KineticTitle';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,7 +43,7 @@ const ServicesGrid: React.FC = () => {
     useGSAP(() => {
         const ctx = gsap.context(() => {
             gsap.fromTo(headerRef.current,
-                { opacity: 0, y: 30 },
+                { opacity: 0, y: 20 },
                 {
                     opacity: 1,
                     y: 0,
@@ -56,14 +57,17 @@ const ServicesGrid: React.FC = () => {
             );
 
             gsap.fromTo(cardsRef.current,
-                { opacity: 0, y: 40, scale: 0.98 },
+                { opacity: 0, y: 100, z: -150, rotateX: -20, rotateY: 15, scale: 0.9 },
                 {
                     opacity: 1,
                     y: 0,
+                    z: 0,
+                    rotateX: 0,
+                    rotateY: 0,
                     scale: 1,
-                    duration: 0.8,
-                    stagger: 0.1,
-                    ease: "power2.out",
+                    duration: 1.2,
+                    stagger: 0.15,
+                    ease: "back.out(1.2, 0.8)",
                     scrollTrigger: {
                         trigger: sectionRef.current,
                         start: "top 70%"
@@ -79,16 +83,18 @@ const ServicesGrid: React.FC = () => {
         <section ref={sectionRef} className="section-padding relative z-10">
             <div className="container-main">
                 <div ref={headerRef} className="text-center mb-16 lg:mb-24 flex flex-col items-center">
-                    <h3 className="text-champagne text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-4 font-mono">
+                    <h3 ref={headerRef} className="text-champagne text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-4 font-mono">
                         Инфраструктура Услуг
                     </h3>
-                    <h2 className="text-slate-100 text-4xl md:text-5xl lg:text-6xl font-heading font-medium tracking-tight max-w-3xl text-center">
-                        Экосистема для людей, которые ценят свое время
-                    </h2>
+                    <KineticTitle
+                        text="Экосистема для людей, которые ценят свое время"
+                        tag="h2"
+                        className="text-slate-100 text-4xl md:text-5xl lg:text-6xl font-heading font-medium tracking-tight max-w-3xl text-center"
+                    />
                 </div>
 
-                {/* Bento Grid layout */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[250px] md:auto-rows-[300px]">
+                {/* Bento Grid layout with perspective for 3D entrance */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[250px] md:auto-rows-[300px]" style={{ perspective: '1200px' }}>
                     {SERVICES.map((service, i) => {
                         const Icon = service.icon;
                         const isLarge = service.colSpan.includes('row-span-2');
