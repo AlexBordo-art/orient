@@ -30,9 +30,9 @@ export default {
         },
       },
       fontFamily: {
-        heading: ['"Cormorant Garamond"', 'serif'], // Elegant emotional headers
-        sans: ['"Plus Jakarta Sans"', 'sans-serif'], // Body and UI data
-        mono: ['"Space Mono"', 'monospace'], // Formatted numbers/data if needed
+        heading: ['\"Playfair Display\"', 'serif'], // Luxury Cyrillic headings — high contrast elegant serifs
+        sans: ['\"Inter\"', 'sans-serif'], // Clean readable body — perfect Cyrillic rendering
+        mono: ['\"Space Mono\"', 'monospace'], // Formatted numbers/data
       },
       fontSize: {
         'display': ['clamp(3rem, 10vw, 12rem)', { lineHeight: '0.9', letterSpacing: '-0.02em' }],
