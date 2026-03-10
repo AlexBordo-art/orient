@@ -103,7 +103,7 @@ const PricingFooter: React.FC = () => {
                             <span className="font-heading text-2xl font-bold tracking-tight text-cream">Orient Express.</span>
                         </div>
                         <p className="text-sm font-body font-light text-cream/50 leading-relaxed mb-6">
-                            Специализированное бюро путешествий и визовой поддержки. Работаем с 2010 года.
+                            Специализированное бюро путешествий и визовой поддержки. Работаем с 2007 года.
                         </p>
                         <div className="flex gap-4 text-cream/40 text-xs font-data">
                             <span>Хабаровск</span>

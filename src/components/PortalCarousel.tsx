@@ -1,147 +1,176 @@
-import React, { useRef } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Globe2, Compass, BookOpen, PlaneTakeoff, ShieldCheck, ArrowRight } from 'lucide-react';
-import Magnetic from './Magnetic';
-
-gsap.registerPlugin(ScrollTrigger);
+import React, { useRef, useState } from 'react';
+import { Globe2, Compass, BookOpen, PlaneTakeoff, ShieldCheck, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const PORTAL_SECTIONS = [
     {
         id: '01',
         title: 'Визовый Центр',
-        desc: 'Эталонный процессинг туристических, деловых и учебных виз. Индивидуальные стратегии для сложных кейсов и безупречная логистика документов.',
-        icon: <Globe2 className="w-10 h-10 text-champagne" strokeWidth={1} />,
-        linkText: 'Открыть Визовый Центр',
-        href: '/visas'
+        desc: 'Оформление туристических, деловых и учебных виз. Индивидуальные стратегии для сложных кейсов.',
+        icon: <Globe2 className="w-8 h-8 text-champagne" strokeWidth={1.5} />,
+        linkText: 'Подробнее',
+        href: '/visas',
+        accent: 'from-champagne/20 to-champagne/5',
     },
     {
         id: '02',
         title: 'Туры в Китай',
-        desc: 'Погружение в Поднебесную нового уровня. От высокотехнологичного Шэньчжэня до древних терракотовых армий с премиальным сопровождением.',
-        icon: <Compass className="w-10 h-10 text-champagne-light" strokeWidth={1} />,
-        linkText: 'Смотреть Направления',
-        href: '/china'
+        desc: 'От высокотехнологичного Шэньчжэня до древних терракотовых армий с премиальным сопровождением.',
+        icon: <Compass className="w-8 h-8 text-champagne-light" strokeWidth={1.5} />,
+        linkText: 'Направления',
+        href: '/tours',
+        accent: 'from-amber-500/20 to-amber-500/5',
     },
     {
         id: '03',
-        title: 'Образование за Рубежом',
-        desc: 'Инвестиции в будущее. Мы подберем лучшие языковые школы, колледжи и университеты по всему миру, взяв на себя весь процесс зачисления.',
-        icon: <BookOpen className="w-10 h-10 text-sapphire-light" strokeWidth={1} />,
-        linkText: 'Изучить Программы',
-        href: '/education'
+        title: 'Образование',
+        desc: 'Языковые школы, колледжи и университеты по всему миру. Полное сопровождение зачисления.',
+        icon: <BookOpen className="w-8 h-8 text-blue-400" strokeWidth={1.5} />,
+        linkText: 'Программы',
+        href: '/education',
+        accent: 'from-blue-500/20 to-blue-500/5',
     },
     {
         id: '04',
-        title: 'Авиабилеты & ИЖД',
-        desc: 'Доступ к закрытым тарифам и сложным стыковкам. Организация перелетов любой сложности с круглосуточной консьерж-поддержкой.',
-        icon: <PlaneTakeoff className="w-10 h-10 text-white" strokeWidth={1} />,
-        linkText: 'Заказать Билеты',
-        href: '/tickets'
+        title: 'Авиабилеты',
+        desc: 'Доступ к закрытым тарифам и сложным стыковкам. Круглосуточная консьерж-поддержка.',
+        icon: <PlaneTakeoff className="w-8 h-8 text-emerald-400" strokeWidth={1.5} />,
+        linkText: 'Заказать',
+        href: '/services',
+        accent: 'from-emerald-500/20 to-emerald-500/5',
     },
     {
         id: '05',
-        title: 'Страхование Путешествий',
-        desc: 'Ваша абсолютная безопасность в любой точке мира. Расширенные полисы для активного отдыха, медицины и страхования от невыезда.',
-        icon: <ShieldCheck className="w-10 h-10 text-slate-300" strokeWidth={1} />,
-        linkText: 'Выбрать Полис',
-        href: '/insurance'
+        title: 'Страхование',
+        desc: 'Расширенные полисы для активного отдыха, медицины и страхования от невыезда.',
+        icon: <ShieldCheck className="w-8 h-8 text-violet-400" strokeWidth={1.5} />,
+        linkText: 'Выбрать',
+        href: '/services',
+        accent: 'from-violet-500/20 to-violet-500/5',
     }
 ];
 
 const PortalCarousel: React.FC = () => {
-    const sectionRef = useRef<HTMLDivElement>(null);
-    const containerRef = useRef<HTMLDivElement>(null);
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(true);
 
-    useGSAP(() => {
-        const cards = gsap.utils.toArray('.portal-card') as HTMLElement[];
+    const updateScrollState = () => {
+        const el = scrollRef.current;
+        if (!el) return;
+        setCanScrollLeft(el.scrollLeft > 10);
+        setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+    };
 
-        // Sticky Stacking & Blurring Animation
-        cards.forEach((card, index) => {
-            if (index === cards.length - 1) return; // Last card doesn't scale down
-
-            gsap.to(card, {
-                scale: 0.85,
-                opacity: 0.3,
-                filter: 'blur(16px)',
-                scrollTrigger: {
-                    trigger: card,
-                    start: 'top 15%', // When card hits top of viewport
-                    endTrigger: cards[index + 1],
-                    end: 'top 40%', // Until next card takes over
-                    scrub: 1,
-                    invalidateOnRefresh: true,
-                }
-            });
-        });
-
-    }, { scope: sectionRef });
+    const scroll = (direction: 'left' | 'right') => {
+        const el = scrollRef.current;
+        if (!el) return;
+        const cardWidth = el.querySelector('.portal-card')?.clientWidth || 380;
+        const gap = 24;
+        const scrollAmount = direction === 'left' ? -(cardWidth + gap) : (cardWidth + gap);
+        el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        setTimeout(updateScrollState, 400);
+    };
 
     return (
-        <section id="portal" className="py-24 md:py-32 relative bg-obsidian-dark z-20 border-t border-white/5" ref={sectionRef}>
+        <section id="portal" className="py-20 md:py-28 relative bg-obsidian-dark z-20 border-t border-white/5">
 
             {/* Ambient Background Glows */}
-            <div className="absolute top-0 right-0 w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-sapphire-dark/20 rounded-full blur-[150px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] bg-champagne-dark/10 rounded-full blur-[150px] pointer-events-none" />
+            <div className="absolute top-0 right-0 w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] bg-sapphire-dark/15 rounded-full blur-[150px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] max-w-[400px] max-h-[400px] bg-champagne-dark/8 rounded-full blur-[120px] pointer-events-none" />
 
-            <div className="container-main relative z-10">
-                <div className="text-center mb-24 lg:mb-32">
-                    <h2 className="text-champagne text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-4 font-mono">
-                        Инфраструктура Опыта
-                    </h2>
-                    <h3 className="text-4xl md:text-6xl lg:text-7xl font-heading font-medium text-slate-100 tracking-tight">
-                        Выберите направление
-                    </h3>
+            <div className="relative z-10">
+
+                {/* Section Header */}
+                <div className="container-main flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12">
+                    <div>
+                        <h2 className="text-champagne text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-3 font-mono">
+                            Наши направления
+                        </h2>
+                        <h3 className="text-3xl md:text-5xl lg:text-6xl font-heading font-medium text-slate-100 tracking-tight">
+                            Выберите услугу
+                        </h3>
+                    </div>
+                    {/* Navigation Arrows — desktop */}
+                    <div className="hidden sm:flex gap-3">
+                        <button
+                            onClick={() => scroll('left')}
+                            disabled={!canScrollLeft}
+                            className={`w-12 h-12 rounded-full border border-white/20 flex items-center justify-center transition-all duration-300 ${canScrollLeft
+                                ? 'hover:bg-champagne/10 hover:border-champagne/40 text-slate-300 hover:text-champagne cursor-pointer'
+                                : 'text-white/10 cursor-not-allowed'
+                                }`}
+                        >
+                            <ChevronLeft className="w-5 h-5" />
+                        </button>
+                        <button
+                            onClick={() => scroll('right')}
+                            disabled={!canScrollRight}
+                            className={`w-12 h-12 rounded-full border border-white/20 flex items-center justify-center transition-all duration-300 ${canScrollRight
+                                ? 'hover:bg-champagne/10 hover:border-champagne/40 text-slate-300 hover:text-champagne cursor-pointer'
+                                : 'text-white/10 cursor-not-allowed'
+                                }`}
+                        >
+                            <ChevronRight className="w-5 h-5" />
+                        </button>
+                    </div>
                 </div>
 
-                <div className="space-y-12 md:space-y-24 max-w-5xl mx-auto" ref={containerRef}>
-                    {PORTAL_SECTIONS.map((section, index) => (
-                        <div
-                            key={index}
-                            className="portal-card sticky top-20 md:top-32 glass-panel p-10 md:p-20 shadow-2xl origin-top flex flex-col justify-between group h-[60vh] md:h-[65vh] min-h-[450px]"
+                {/* Horizontal Scroll Track */}
+                <div
+                    ref={scrollRef}
+                    onScroll={updateScrollState}
+                    className="flex gap-6 overflow-x-auto scrollbar-hide pl-[max(1rem,calc((100vw-80rem)/2+1rem))] pr-8 pb-4 snap-x snap-mandatory scroll-smooth"
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
+                    {PORTAL_SECTIONS.map((section) => (
+                        <Link
+                            key={section.id}
+                            to={section.href}
+                            className="portal-card group relative flex-shrink-0 w-[85vw] sm:w-[380px] lg:w-[420px] rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 sm:p-10 flex flex-col justify-between cursor-pointer snap-start transition-all duration-500 hover:border-champagne/20 hover:bg-white/[0.06] min-h-[340px] sm:min-h-[380px]"
                         >
-                            {/* Inner Hover Glow */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-champagne/0 to-sapphire/0 group-hover:from-champagne/5 group-hover:to-sapphire/5 rounded-3xl transition-all duration-700 pointer-events-none" />
+                            {/* Hover glow */}
+                            <div className={`absolute inset-0 bg-gradient-to-br ${section.accent} rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
 
-                            <div className="flex justify-between items-start relative z-10">
-                                <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-obsidian-light/50 border border-white/10 shadow-inner flex items-center justify-center backdrop-blur-md">
+                            {/* Top: Icon + Number */}
+                            <div className="flex justify-between items-start relative z-10 mb-auto">
+                                <div className="w-14 h-14 rounded-2xl bg-obsidian-light/50 border border-white/10 shadow-inner flex items-center justify-center backdrop-blur-md">
                                     {section.icon}
                                 </div>
-                                <span className="font-mono text-5xl md:text-8xl font-bold text-white/5 group-hover:text-white/10 transition-colors duration-500">
+                                <span className="font-mono text-5xl font-bold text-white/[0.04] group-hover:text-white/[0.08] transition-colors duration-500">
                                     {section.id}
                                 </span>
                             </div>
 
-                            <div className="relative z-10 mt-auto">
-                                <h4 className="text-4xl md:text-6xl font-heading font-medium text-slate-100 mb-6 tracking-tight">
+                            {/* Bottom: Content */}
+                            <div className="relative z-10 mt-8">
+                                <h4 className="text-2xl sm:text-3xl font-heading font-medium text-slate-100 mb-3 tracking-tight">
                                     {section.title}
                                 </h4>
-                                <p className="text-slate-300 font-sans font-light text-lg md:text-2xl leading-relaxed max-w-2xl mb-12">
+                                <p className="text-slate-400 font-sans font-light text-sm sm:text-base leading-relaxed mb-6">
                                     {section.desc}
                                 </p>
 
-                                <Magnetic strength={0.3}>
-                                    <a
-                                        href={section.href}
-                                        className="inline-flex items-center justify-center md:justify-start gap-4 text-slate-100 group/btn"
-                                    >
-                                        <div className="w-14 h-14 rounded-full border border-champagne/30 bg-champagne/10 flex items-center justify-center backdrop-blur-md group-hover/btn:bg-champagne group-hover/btn:border-champagne group-hover/btn:text-obsidian transition-all duration-500">
-                                            <ArrowRight className="w-6 h-6 -rotate-45 group-hover/btn:rotate-0 transition-transform duration-500" />
-                                        </div>
-                                        <span className="font-mono text-sm uppercase tracking-[0.2em] font-bold group-hover/btn:text-champagne transition-colors duration-500">
-                                            {section.linkText}
-                                        </span>
-                                    </a>
-                                </Magnetic>
+                                <div className="inline-flex items-center gap-3 text-slate-300 group-hover:text-champagne transition-colors duration-300">
+                                    <div className="w-10 h-10 rounded-full border border-white/20 group-hover:border-champagne/40 group-hover:bg-champagne/10 flex items-center justify-center transition-all duration-500">
+                                        <ArrowRight className="w-4 h-4 -rotate-45 group-hover:rotate-0 transition-transform duration-500" />
+                                    </div>
+                                    <span className="font-mono text-xs uppercase tracking-[0.15em] font-bold">
+                                        {section.linkText}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
+                    ))}
+                </div>
+
+                {/* Mobile scroll indicator */}
+                <div className="sm:hidden flex justify-center mt-6 gap-1.5">
+                    {PORTAL_SECTIONS.map((_, i) => (
+                        <div key={i} className="w-1.5 h-1.5 rounded-full bg-white/20" />
                     ))}
                 </div>
             </div>
-
-            {/* Height spacer to allow the sticky effect to fully play out for the last card before next section (if there is one) */}
-            <div className="h-[20vh]"></div>
         </section>
     );
 };

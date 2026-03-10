@@ -17,7 +17,7 @@ const Home: React.FC = () => {
                     "name": "Ориент Экспресс",
                     "url": "https://orient-dv.ru",
                     "description": "Бюро путешествий и визовой поддержки",
-                    "foundingDate": "2010",
+                    "foundingDate": "2007",
                     "address": [
                         { "@type": "PostalAddress", "addressLocality": "Хабаровск", "addressCountry": "RU" },
                         { "@type": "PostalAddress", "addressLocality": "Москва", "addressCountry": "RU" }
