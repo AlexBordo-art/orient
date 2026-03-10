@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
+import SEO from '../components/SEO';
 import { GraduationCap, ArrowRight } from 'lucide-react';
 
 const PROGRAMS = [
@@ -10,6 +11,12 @@ const PROGRAMS = [
 
 const EducationHub: React.FC = () => (
     <div className="min-h-screen bg-obsidian">
+        <SEO
+            title="Образование за рубежом"
+            description="Обучение в университетах Китая, Кореи и Европы. Языковые курсы за рубежом. Помощь с поступлением, документами и визами от Ориент Экспресс."
+            canonical="/education"
+            keywords="образование за рубежом, учеба в Китае, языковые курсы, обучение в Корее"
+        />
         <Breadcrumbs />
         <div className="max-w-7xl mx-auto px-6 pb-20">
             <div className="mb-16">

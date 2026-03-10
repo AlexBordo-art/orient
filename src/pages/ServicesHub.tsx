@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
+import SEO from '../components/SEO';
 import { Briefcase, ArrowRight, Plane, Shield, Users, Receipt } from 'lucide-react';
 
 const SERVICES = [
@@ -12,6 +13,12 @@ const SERVICES = [
 
 const ServicesHub: React.FC = () => (
     <div className="min-h-screen bg-obsidian">
+        <SEO
+            title="Авиабилеты, Страхование, Гиды"
+            description="Полный комплекс туристических сервисов: авиабилеты, страхование путешествий, гиды и переводчики, Tax Free. Всё от Ориент Экспресс."
+            canonical="/services"
+            keywords="авиабилеты, страхование путешествий, гиды в Китае, tax free"
+        />
         <Breadcrumbs />
         <div className="max-w-7xl mx-auto px-6 pb-20">
             <div className="mb-16">

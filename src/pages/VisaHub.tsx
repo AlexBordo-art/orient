@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
+import SEO from '../components/SEO';
 import { Stamp, ArrowRight } from 'lucide-react';
 
 const VISA_COUNTRIES = [
@@ -17,6 +18,12 @@ const VISA_COUNTRIES = [
 const VisaHub: React.FC = () => {
     return (
         <div className="min-h-screen bg-obsidian">
+            <SEO
+                title="Оформление виз — Визовый центр"
+                description="Визовый центр Ориент Экспресс: визы в Китай, Корею, Таиланд, Шенген, Сингапур, Индию, Болгарию, Кипр. 99.8% одобрений. Оформление под ключ от 3000₽."
+                canonical="/visas"
+                keywords="оформление виз, виза в Китай, виза в Корею, шенгенская виза, визовый центр Хабаровск"
+            />
             <Breadcrumbs />
             <div className="max-w-7xl mx-auto px-6 pb-20">
                 {/* Hub Header */}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
+import SEO from '../components/SEO';
 import { ArrowRight, Compass } from 'lucide-react';
 
 const TOUR_DESTINATIONS = [
@@ -11,6 +12,12 @@ const TOUR_DESTINATIONS = [
 
 const ToursHub: React.FC = () => (
     <div className="min-h-screen bg-obsidian">
+        <SEO
+            title="Авторские туры — Путешествия"
+            description="Индивидуальные туры в Китай, по России и горящие предложения от Ориент Экспресс. Авторские маршруты, проверенные экспертами лично. Экономия до 40%."
+            canonical="/tours"
+            keywords="туры в Китай, горящие туры, путешествия Дальний Восток, туры из Хабаровска"
+        />
         <Breadcrumbs />
         <div className="max-w-7xl mx-auto px-6 pb-20">
             <div className="mb-16">

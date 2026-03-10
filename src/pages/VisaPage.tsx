@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
+import SEO from '../components/SEO';
 import { Clock, CheckCircle, FileText, Shield, ChevronDown, MessageCircle, Star } from 'lucide-react';
 
 // Visa data
@@ -116,6 +117,20 @@ const VisaPage: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-obsidian">
+            <SEO
+                title={`Виза в ${visa.name} — оформление под ключ`}
+                description={`Оформление визы в ${visa.name}: ${visa.types.map(t => t.name).join(', ')}. 99.8% одобрений, оформление за 5-7 дней. Бесплатная консультация.`}
+                canonical={`/visas/${country}`}
+                keywords={`виза в ${visa.name}, оформление визы ${visa.name}, ${visa.name} виза стоимость`}
+                schema={{
+                    "@context": "https://schema.org",
+                    "@type": "Service",
+                    "name": `Оформление визы в ${visa.name}`,
+                    "provider": { "@type": "Organization", "name": "Ориент Экспресс" },
+                    "areaServed": visa.name,
+                    "serviceType": "Visa Processing"
+                }}
+            />
             <Breadcrumbs />
             <div className="max-w-5xl mx-auto px-6 pb-20">
                 {/* Page Header */}
