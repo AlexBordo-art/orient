@@ -21,7 +21,7 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
     // Global wheel, touch, and keyboard handler to control the spatial transition
     useEffect(() => {
         let lastActionTime = 0;
-        const DEBOUNCE_MS = 1200; // time required to complete the smooth 1000ms CSS transition
+        const DEBOUNCE_MS = 900; // slightly longer than the 800ms transition
 
         // Function to handle moving forward (down/next)
         const goNext = () => {
@@ -97,16 +97,17 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
         };
     }, []);
 
-    // Helper functions for layer states
-    const getLayerStateClasses = (index: number) => {
-        if (layer === index) {
-            return "opacity-100 z-20 scale-100 blur-none pointer-events-auto";
-        } else if (layer < index) {
-            // It is hidden down below
-            return "opacity-0 z-0 scale-75 blur-xl pointer-events-none";
+    // Helper: inline styles for smooth spatial transitions
+    const getLayerStyle = (index: number): React.CSSProperties => {
+        const diff = index - layer;
+        if (diff === 0) {
+            return { opacity: 1, transform: 'translateY(0) scale(1)', filter: 'blur(0px)', pointerEvents: 'auto', zIndex: 20 };
+        } else if (diff > 0) {
+            // Below: slide up from bottom
+            return { opacity: 0, transform: `translateY(${diff * 60}px) scale(0.96)`, filter: 'blur(12px)', pointerEvents: 'none', zIndex: 0 };
         } else {
-            // It moved up and past the user
-            return "opacity-0 z-0 scale-150 blur-2xl pointer-events-none";
+            // Above: slide up and fade
+            return { opacity: 0, transform: `translateY(${diff * 80}px) scale(1.03)`, filter: 'blur(8px)', pointerEvents: 'none', zIndex: 0 };
         }
     };
 
@@ -114,7 +115,7 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
         <div className="bg-transparent text-t-text font-sans selection:bg-t-strong selection:text-t-bg relative w-full h-[100dvh] md:h-screen overflow-hidden perspective-[2000px]">
 
             {/* LAYER 0: The Portal Entry (Genesis) */}
-            <div className={`absolute inset-0 flex flex-col items-center justify-center px-6 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${getLayerStateClasses(0)}`}>
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-6" style={{ ...getLayerStyle(0), transition: 'all 800ms cubic-bezier(0.22, 1, 0.36, 1)' }}>
 
                 {/* Trust badge — "С 2007 года" */}
                 <div className="mb-6 flex items-center gap-2 bg-t-glass border border-t-strong/20 rounded-full px-5 py-2 backdrop-blur-sm">
@@ -171,19 +172,19 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
             </div>
 
             {/* LAYER 1: Experience Finder */}
-            <div className={`absolute inset-0 flex flex-col items-center justify-center px-4 md:px-8 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${getLayerStateClasses(1)}`}>
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-4 md:px-8" style={{ ...getLayerStyle(1), transition: 'all 800ms cubic-bezier(0.22, 1, 0.36, 1)' }}>
                 <ExperienceFinder images={IMAGES} onOpenModal={onOpenModal} />
             </div>
 
             {/* LAYER 2: Pricing (Core Offer) */}
-            <div className={`absolute inset-0 flex items-center justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${getLayerStateClasses(2)}`}>
+            <div className="absolute inset-0 flex items-center justify-center" style={{ ...getLayerStyle(2), transition: 'all 800ms cubic-bezier(0.22, 1, 0.36, 1)' }}>
                 <div className="w-full h-full md:h-auto overflow-y-auto hide-scrollbar pt-24 md:pt-0 pb-20 md:pb-0 relative z-10">
                     <PricingSection />
                 </div>
             </div>
 
             {/* LAYER 3: Contact (Finale) */}
-            <div className={`absolute inset-0 flex items-center justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${getLayerStateClasses(3)}`}>
+            <div className="absolute inset-0 flex items-center justify-center" style={{ ...getLayerStyle(3), transition: 'all 800ms cubic-bezier(0.22, 1, 0.36, 1)' }}>
                 <div className="w-full h-full md:h-auto overflow-y-auto hide-scrollbar pt-24 md:pt-0 pb-20 md:pb-0 relative z-10">
                     <ContactSection />
                 </div>

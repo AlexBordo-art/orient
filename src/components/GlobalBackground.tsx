@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
 const IMAGES = [
-    "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?auto=format&fit=crop&q=80&w=2400",
-    "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&q=80&w=2400",
-    "https://images.unsplash.com/photo-1540541338287-41700607e5ce?auto=format&fit=crop&q=80&w=2400",
-    "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=2400"
+    "/backgrounds/bg-sakura.webp",
+    "/backgrounds/bg-bonsai.webp",
+    "/backgrounds/bg-pion.webp",
+    "/backgrounds/bg-vetka.webp",
 ];
 
 const GlobalBackground: React.FC = () => {
@@ -48,7 +48,6 @@ const GlobalBackground: React.FC = () => {
                             alt=""
                             className={`w-full h-full object-cover object-center photo-atmosphere ${isActive ? 'animate-ken-burns' : ''}`}
                             loading={index === 0 ? "eager" : "lazy"}
-                            crossOrigin="anonymous"
                         />
                     </div>
                 );
