@@ -22,10 +22,10 @@ const ComingSoon: React.FC = () => {
                         <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                     </svg>
                 </div>
-                <h1 className="font-heading italic text-4xl lg:text-5xl text-white mb-6">
+                <h1 className="font-heading italic text-4xl lg:text-5xl text-t-text mb-6">
                     Страница в разработке.
                 </h1>
-                <p className="font-sans text-slate-400 mb-10 leading-relaxed text-lg">
+                <p className="font-sans text-t-muted mb-10 leading-relaxed text-lg">
                     Мы готовим для вас новый персонализированный раздел. Скоро здесь появится подробная информация о наших услугах.
                 </p>
                 <button

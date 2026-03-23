@@ -117,7 +117,7 @@ const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
                             className={`mt-4 w-full py-4 rounded-xl font-sans font-bold flex items-center justify-center gap-2 transition-all duration-300
                                 ${submitted
                                     ? 'bg-emerald-600 text-white'
-                                    : 'bg-obsidian-dark text-white hover:bg-champagne hover:text-obsidian-dark hover:-translate-y-1 shadow-lg'
+                                    : 'bg-t-bg text-t-text hover:bg-t-strong hover:text-t-bg hover:-translate-y-1 shadow-lg'
                                 }`}
                         >
                             {submitted ? '✓ Заявка принята' : 'Начать оформление'}
