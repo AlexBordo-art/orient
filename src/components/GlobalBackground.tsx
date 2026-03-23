@@ -1,25 +1,36 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 
-const IMAGES = [
+const HOME_IMAGES = [
     "/backgrounds/bg-sakura.webp",
     "/backgrounds/bg-bonsai.webp",
     "/backgrounds/bg-pion.webp",
     "/backgrounds/bg-vetka.webp",
 ];
 
+const ROUTE_IMAGE: { prefix: string; src: string }[] = [
+    { prefix: '/visas', src: '/backgrounds/bg-bambuk.webp' },
+    { prefix: '/education', src: '/backgrounds/bg-book.webp' },
+];
+
 const GlobalBackground: React.FC = () => {
     const { isDay } = useTheme();
+    const location = useLocation();
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [loadedImages, setLoadedImages] = useState<string[]>([]);
 
+    const routeMatch = ROUTE_IMAGE.find(r => location.pathname.startsWith(r.prefix));
+    const IMAGES = routeMatch ? [routeMatch.src] : HOME_IMAGES;
+
     useEffect(() => {
+        setCurrentImageIndex(0);
         IMAGES.forEach(src => {
             const img = new Image();
             img.src = src;
-            img.onload = () => setLoadedImages(prev => [...prev, src]);
+            img.onload = () => setLoadedImages(prev => prev.includes(src) ? prev : [...prev, src]);
         });
-    }, []);
+    }, [location.pathname]);
 
     useEffect(() => {
         if (loadedImages.length < 2) return;
