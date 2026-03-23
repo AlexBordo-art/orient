@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
 import SEO from '../components/SEO';
+import SpecialistBlock from '../components/SpecialistBlock';
 import { ArrowRight, Compass } from 'lucide-react';
 
 const TOUR_DESTINATIONS = [
@@ -37,7 +38,7 @@ const ToursHub: React.FC = () => (
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-0">
                 {TOUR_DESTINATIONS.map(dest => (
                     <Link
                         key={dest.slug}
@@ -59,6 +60,7 @@ const ToursHub: React.FC = () => (
                     </Link>
                 ))}
             </div>
+            <SpecialistBlock type="china" />
         </div>
     </div>
 );

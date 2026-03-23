@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
 import SEO from '../components/SEO';
+import SpecialistBlock from '../components/SpecialistBlock';
 import { Stamp, ArrowRight } from 'lucide-react';
 
 const VISA_COUNTRIES = [
@@ -68,8 +69,10 @@ const VisaHub: React.FC = () => {
                     ))}
                 </div>
 
+                <SpecialistBlock type="visa" />
+
                 {/* Trust Block */}
-                <div className="mt-20 p-8 rounded-2xl border border-white/5 bg-white/[0.02]">
+                <div className="mt-8 p-8 rounded-2xl border border-white/5 bg-white/[0.02]">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                         <div>
                             <div className="text-3xl font-bold text-champagne mb-2">99.8%</div>
