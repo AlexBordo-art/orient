@@ -17,14 +17,17 @@ const ROUTE_IMAGE: { prefix: string; src: string }[] = [
 const GlobalBackground: React.FC = () => {
     const { isDay } = useTheme();
     const location = useLocation();
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [prevIndex, setPrevIndex] = useState<number | null>(null);
     const [loadedImages, setLoadedImages] = useState<string[]>([]);
 
     const routeMatch = ROUTE_IMAGE.find(r => location.pathname.startsWith(r.prefix));
     const IMAGES = routeMatch ? [routeMatch.src] : HOME_IMAGES;
 
+    // Preload images, reset on route change
     useEffect(() => {
-        setCurrentImageIndex(0);
+        setCurrentIndex(0);
+        setPrevIndex(null);
         IMAGES.forEach(src => {
             const img = new Image();
             img.src = src;
@@ -32,32 +35,52 @@ const GlobalBackground: React.FC = () => {
         });
     }, [location.pathname]);
 
+    // Auto-rotate only when multiple images available
     useEffect(() => {
-        if (loadedImages.length < 2) return;
+        if (IMAGES.length < 2) return;
         const interval = setInterval(() => {
-            setCurrentImageIndex(prev => (prev + 1) % IMAGES.length);
-        }, 8000);
+            setCurrentIndex(prev => {
+                setPrevIndex(prev);
+                return (prev + 1) % IMAGES.length;
+            });
+        }, 9000);
         return () => clearInterval(interval);
-    }, [loadedImages.length]);
+    }, [IMAGES.length]);
+
+    // Clear prevIndex after transition completes
+    useEffect(() => {
+        if (prevIndex === null) return;
+        const timer = setTimeout(() => setPrevIndex(null), 2500);
+        return () => clearTimeout(timer);
+    }, [prevIndex]);
 
     return (
         <div
             className="fixed inset-0 w-full h-full z-0 pointer-events-none overflow-hidden transition-colors duration-700"
             style={{ backgroundColor: 'var(--color-bg)' }}
         >
-            {/* Images — same photos, different filter per theme */}
+            {/* Images with true cross-fade: prev stays visible while next fades in on top */}
             {IMAGES.map((src, index) => {
-                const isActive = index === currentImageIndex;
+                const isCurrent = index === currentIndex;
+                const isPrev = index === prevIndex;
                 const isLoaded = loadedImages.includes(src);
+
+                if (!isCurrent && !isPrev) return null;
+
                 return (
                     <div
                         key={src}
-                        className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${isActive && isLoaded ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                        className="absolute inset-0"
+                        style={{
+                            zIndex: isCurrent ? 11 : 10,
+                            opacity: isCurrent && isLoaded ? 1 : isPrev ? 1 : 0,
+                            transition: isCurrent ? 'opacity 2500ms cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
+                        }}
                     >
                         <img
                             src={src}
                             alt=""
-                            className={`w-full h-full object-cover object-center photo-atmosphere ${isActive ? 'animate-ken-burns' : ''}`}
+                            className={`w-full h-full object-cover object-center photo-atmosphere ${isCurrent ? 'animate-ken-burns' : ''}`}
                             loading={index === 0 ? "eager" : "lazy"}
                         />
                     </div>
