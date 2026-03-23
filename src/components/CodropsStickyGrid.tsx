@@ -1,23 +1,14 @@
-import React, { useRef } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import PricingSection from './PricingSection';
+import ContactSection from './ContactSection';
+import Magnetic from './Magnetic';
+import ExperienceFinder from './ExperienceFinder';
 
 const IMAGES = [
-    "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=80&w=400", // Tokyo
-    "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&q=80&w=400", // Paris
-    "https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?auto=format&fit=crop&q=80&w=400", // Japan
-    "https://images.unsplash.com/photo-1510809228800-4b21a8cd36b6?auto=format&fit=crop&q=80&w=400", // Seoul
-    "https://images.unsplash.com/photo-1534008897995-27a23e859048?auto=format&fit=crop&q=80&w=400", // Nature
-    "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&q=80&w=400", // Dubai
-    "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&q=80&w=400", // Rome
-    "https://images.unsplash.com/photo-1584347525865-1d48c8b4081c?auto=format&fit=crop&q=80&w=400", // Beach
-    "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&q=80&w=400", // Swiss
-    "https://images.unsplash.com/photo-1533929736458-ca588d08c8be?auto=format&fit=crop&q=80&w=400", // London
-    "https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&q=80&w=400", // Boat
-    "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&q=80&w=400", // NYC
+    "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=90&w=1200", // Tokyo
+    "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&q=90&w=1200", // Dubai
+    "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&q=90&w=1200", // Rome
 ];
 
 interface CodropsStickyGridProps {
@@ -25,195 +16,201 @@ interface CodropsStickyGridProps {
 }
 
 const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) => {
-    const mainBlockRef = useRef<HTMLElement>(null);
-    const wrapperRef = useRef<HTMLDivElement>(null);
+    const [layer, setLayer] = useState(0);
 
-    // Content Refs
-    const contentRef = useRef<HTMLDivElement>(null);
-    const titleRef = useRef<HTMLHeadingElement>(null);
-    const subTitleRef = useRef<HTMLParagraphElement>(null);
-    const ctaRef = useRef<HTMLButtonElement>(null);
+    // Global wheel, touch, and keyboard handler to control the spatial transition
+    useEffect(() => {
+        let lastActionTime = 0;
+        const DEBOUNCE_MS = 1200; // time required to complete the smooth 1000ms CSS transition
 
-    // Grid Refs
-    const gridRef = useRef<HTMLUListElement>(null);
-    const gridItemsRef = useRef<(HTMLLIElement | null)[]>([]);
+        // Function to handle moving forward (down/next)
+        const goNext = () => {
+            const now = Date.now();
+            if (now - lastActionTime < DEBOUNCE_MS) return;
+            setLayer(l => Math.min(l + 1, 3));
+            lastActionTime = now;
+        };
 
-    useGSAP(() => {
-        const block = mainBlockRef.current;
-        const wrapper = wrapperRef.current;
-        const content = contentRef.current;
-        const title = titleRef.current;
-        const description = subTitleRef.current;
-        const button = ctaRef.current;
-        const grid = gridRef.current;
+        // Function to handle moving backward (up/prev)
+        const goPrev = () => {
+            const now = Date.now();
+            if (now - lastActionTime < DEBOUNCE_MS) return;
+            setLayer(l => Math.max(l - 1, 0));
+            lastActionTime = now;
+        };
 
-        if (!block || !wrapper || !content || !title || !grid || !description || !button) return;
+        // Wheel Event Handler
+        const handleWheel = (e: WheelEvent) => {
+            // e.deltaY > 0 -> scrolling down (moving forward in layers)
+            if (e.deltaY > 30) {
+                goNext();
+            } else if (e.deltaY < -30) {
+                goPrev();
+            }
+        };
 
-        // Group into 3 columns
-        const columns: HTMLElement[][] = [[], [], []];
-        gridItemsRef.current.forEach((el, index) => {
-            if (el) columns[index % 3].push(el);
-        });
+        // Keyboard Event Handler
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (['ArrowDown', 'PageDown', ' '].includes(e.key)) {
+                e.preventDefault(); // Prevent native scroll even if overflow is not caught
+                goNext();
+            } else if (['ArrowUp', 'PageUp'].includes(e.key)) {
+                e.preventDefault();
+                goPrev();
+            }
+        };
 
-        // INIT CONTENT
-        gsap.set([description, button], { opacity: 0, pointerEvents: "none" });
+        // Touch Event Handlers
+        let touchStartY = 0;
+        const handleTouchStart = (e: TouchEvent) => {
+            touchStartY = e.touches[0].clientY;
+        };
 
-        // Wait a tiny bit for render to settle before calculating offset so fonts have applied constraints
-        setTimeout(() => {
-            // Calculate how many pixels are needed to vertically center the title inside its container
-            const dy = (content.offsetHeight - title.offsetHeight) / 2;
-            const titleOffsetY = (dy / content.offsetHeight) * 100;
-            gsap.set(title, { yPercent: titleOffsetY });
+        const handleTouchMove = (e: TouchEvent) => {
+            const touchEndY = e.touches[0].clientY;
+            const deltaY = touchStartY - touchEndY;
 
-            // ADD PARALLAX ON SCROLL (Wrapper)
-            gsap.from(wrapper, {
-                yPercent: -100,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: block,
-                    start: "top bottom",
-                    end: "top top",
-                    scrub: true,
-                },
-            });
+            if (Math.abs(deltaY) > 50) {
+                if (deltaY > 0) { // swipe up = scroll down = next layer
+                    goNext();
+                } else {
+                    goPrev();
+                }
+            }
 
-            // ANIMATE TITLE ON SCROLL (Title Opacity)
-            gsap.from(title, {
-                opacity: 0,
-                duration: 0.7,
-                ease: "power1.out",
-                scrollTrigger: {
-                    trigger: block,
-                    start: "top 57%",
-                    toggleActions: "play none none reset",
-                },
-            });
+            // Prevent actual scrolling to maintain single-page spatial feel
+            if (e.cancelable) {
+                e.preventDefault();
+            }
+        };
 
-            // MAIN GRID ANIMATION TIMELINE
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: block,
-                    start: "top 25%",
-                    end: "bottom bottom",
-                    scrub: true,
-                },
-            });
+        window.addEventListener('wheel', handleWheel, { passive: false });
+        window.addEventListener('keydown', handleKeyDown, { passive: false });
+        window.addEventListener('touchstart', handleTouchStart, { passive: false });
+        window.addEventListener('touchmove', handleTouchMove, { passive: false });
 
-            // Grid Reveal (y: from outside viewport)
-            const wh = window.innerHeight;
-            const distY = wh - (wh - grid.offsetHeight) / 2;
+        return () => {
+            window.removeEventListener('wheel', handleWheel);
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('touchstart', handleTouchStart);
+            window.removeEventListener('touchmove', handleTouchMove);
+        };
+    }, []);
 
-            const revealTl = gsap.timeline();
-            columns.forEach((column, colIndex) => {
-                const fromTop = colIndex % 2 === 0;
-                revealTl.from(column, {
-                    y: distY * (fromTop ? -1 : 1),
-                    stagger: {
-                        each: 0.06,
-                        from: fromTop ? "end" : "start",
-                    },
-                    ease: "power1.inOut",
-                }, "grid-reveal");
-            });
-            tl.add(revealTl);
-
-            // Grid Zoom
-            const zoomTl = gsap.timeline({ defaults: { duration: 1, ease: "power3.inOut" } });
-            zoomTl.to(grid, { scale: 2.05 });
-            zoomTl.to(columns[0], { xPercent: -40 }, "<");
-            zoomTl.to(columns[2], { xPercent: 40 }, "<");
-            // Central split
-            zoomTl.to(columns[1], {
-                yPercent: (index) => (index < Math.floor(columns[1].length / 2) ? -1 : 1) * 40,
-                duration: 0.5,
-                ease: "power1.inOut"
-            }, "-=0.5");
-            tl.add(zoomTl, "-=0.6");
-
-            // Toggle Text
-            const toggleContent = (isVisible: boolean) => {
-                gsap.timeline({ defaults: { overwrite: true } })
-                    .to(title, {
-                        yPercent: isVisible ? 0 : titleOffsetY,
-                        duration: 0.7,
-                        ease: "power2.inOut",
-                    })
-                    .to([description, button], {
-                        opacity: isVisible ? 1 : 0,
-                        duration: 0.4,
-                        ease: `power1.${isVisible ? "inOut" : "out"}`,
-                        pointerEvents: isVisible ? "all" : "none",
-                    }, isVisible ? "-=90%" : "<");
-            };
-
-            tl.add(() => toggleContent(tl.scrollTrigger!.direction === 1), "-=0.32");
-        }, 100); // 100ms timeout to ensure DOM paints its layout dimensions completely
-
-    }, { scope: mainBlockRef });
+    // Helper functions for layer states
+    const getLayerStateClasses = (index: number) => {
+        if (layer === index) {
+            return "opacity-100 z-20 scale-100 blur-none pointer-events-auto";
+        } else if (layer < index) {
+            // It is hidden down below
+            return "opacity-0 z-0 scale-75 blur-xl pointer-events-none";
+        } else {
+            // It moved up and past the user
+            return "opacity-0 z-0 scale-150 blur-2xl pointer-events-none";
+        }
+    };
 
     return (
-        <div className="bg-[#f4f4f4] text-[#050505] font-sans selection:bg-obsidian-dark selection:text-white">
+        <div className="bg-obsidian-dark text-white font-sans selection:bg-champagne selection:text-obsidian-dark relative w-full h-[100dvh] md:h-screen overflow-hidden perspective-[2000px]">
 
-            {/* Intro Block (Scrolls up to reveal the sticky block under it) */}
-            <section className="relative z-10 block block--intro bg-[#f4f4f4]">
-                <figure className="relative flex justify-center items-center w-full h-screen px-6 m-0 opacity-90 mix-blend-multiply">
-                    <img
-                        className="absolute top-0 left-0 w-full h-full object-cover bg-gray-200"
-                        src="https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&q=80&w=1920"
-                        alt="Intro"
-                    />
-                    <figcaption className="relative w-[221px] text-[14px] font-mono uppercase text-center text-obsidian tracking-wider">
-                        Путешествие начинается здесь
-                    </figcaption>
-                </figure>
-            </section>
+            {/* Global Cinematic Background Atmosphere */}
+            <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] z-[60]"></div>
+                <div className="absolute top-1/4 -left-20 w-[400px] h-[400px] bg-champagne/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
+                <div className="absolute bottom-1/4 -right-20 w-[400px] h-[400px] bg-champagne/5 rounded-full blur-[120px] pointer-events-none z-0"></div>
+            </div>
 
-            {/* Main Sticky Block */}
-            <section ref={mainBlockRef} className="block block--main h-[425vh] bg-[#f4f4f4]">
-                <div ref={wrapperRef} className="sticky top-0 px-6 h-screen overflow-hidden will-change-transform bg-[#f4f4f4]">
+            {/* Background Image that fades entirely when moving to Layer 2+ */}
+            <div className={`absolute inset-0 z-0 bg-[url('https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&q=80&w=1920')] bg-cover bg-center brightness-50 transition-all duration-[1500ms] ${layer === 0 ? 'opacity-50 scale-105' : 'opacity-10 shadow-[inset_0_0_100px_black] blur-xl grayscale'}`}></div>
+            <div className="absolute inset-0 z-10 bg-gradient-to-t from-obsidian-dark via-transparent to-transparent opacity-80 pointer-events-none"></div>
+            <div className="absolute inset-0 z-10 bg-gradient-to-b from-obsidian-dark/40 via-transparent to-transparent pointer-events-none"></div>
 
-                    {/* Centered Content */}
-                    <div ref={contentRef} className="content relative flex flex-col justify-center items-center w-full h-screen text-center z-10 pointer-events-none">
-                        <h2
-                            ref={titleRef}
-                            className="font-heading max-w-full md:w-[924px] text-6xl md:text-[104px] leading-[1.15] tracking-[-0.02em] font-normal pointer-events-none text-obsidian"
-                        >
-                            Ориент Экспресс
-                        </h2>
+            {/* LAYER 0: The Portal Entry (Genesis) */}
+            <div className={`absolute inset-0 flex flex-col items-center justify-center px-6 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${getLayerStateClasses(0)}`}>
 
-                        <p
-                            ref={subTitleRef}
-                            className="mt-6 md:w-[455px] text-[14px] leading-[1.3] uppercase tracking-wide font-sans text-obsidian-light pointer-events-none"
-                        >
-                            Структурированная система визового сопровождения. Мы открываем границы плавно, безопасно и эффективно.
-                        </p>
-
-                        <button
-                            ref={ctaRef}
-                            onClick={onOpenModal}
-                            className="mt-8 text-[14px] uppercase tracking-widest font-bold hover:underline underline-offset-4 pointer-events-auto transition-transform active:scale-95"
-                        >
-                            Начать путь →
-                        </button>
-                    </div>
-
-                    {/* Grid */}
-                    <div className="gallery absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] md:w-[736px] pointer-events-none z-0">
-                        <ul ref={gridRef} className="gallery__grid grid grid-cols-3 gap-x-8 gap-y-10 will-change-transform list-none p-0 m-0">
-                            {IMAGES.map((src, idx) => (
-                                <li
-                                    key={idx}
-                                    ref={(el) => { if (el) gridItemsRef.current[idx] = el; }}
-                                    className="gallery__item w-full aspect-square will-change-transform bg-gray-200"
-                                >
-                                    <img src={src} alt="Travel" className="w-full h-full object-cover" />
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
+                {/* Trust badge — "С 2007 года" */}
+                <div className="mb-6 flex items-center gap-2 bg-white/5 border border-champagne/20 rounded-full px-5 py-2 backdrop-blur-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-champagne animate-pulse shadow-[0_0_8px_#D4AF37]"></span>
+                    <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-champagne/80">С 2007 года · Хабаровск · Москва</span>
                 </div>
-            </section>
+
+                <h1 className="font-heading text-6xl md:text-9xl text-white font-bold tracking-tighter drop-shadow-[0_0_30px_rgba(247,231,206,0.2)] mb-4 text-center leading-[1.05]">
+                    Orient Express
+                </h1>
+
+                {/* Value prop */}
+                <p className="font-sans text-white/50 text-sm md:text-base text-center mb-8 tracking-wide">
+                    Визы · Авторские туры · Образование за рубежом
+                </p>
+
+                {/* Social proof row */}
+                <div className="flex items-center gap-4 mb-10 flex-wrap justify-center">
+                    <a
+                        href="https://2gis.ru/khabarovsk/firm/4926340373575901/tab/reviews"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-white/60 hover:text-champagne transition-colors text-xs font-mono"
+                    >
+                        <span className="text-champagne">★★★★★</span>
+                        <span>5.0 · 97 отзывов 2GIS</span>
+                    </a>
+                    <span className="w-px h-3 bg-white/20"></span>
+                    <span className="text-white/40 text-xs font-mono">18 лет на рынке</span>
+                    <span className="w-px h-3 bg-white/20"></span>
+                    <a href="tel:+74212000000" className="text-white/60 hover:text-champagne transition-colors text-xs font-mono">
+                        Позвонить эксперту →
+                    </a>
+                </div>
+
+                {/* Primary CTA */}
+                <Magnetic strength={30}>
+                    <button
+                        onClick={() => setLayer(1)}
+                        className="px-8 py-4 bg-champagne hover:bg-champagne-light text-obsidian-dark font-bold font-mono tracking-[0.2em] uppercase rounded flex items-center gap-3 transition-colors shadow-[0_0_30px_rgba(240,224,200,0.3)] mb-4"
+                    >
+                        Начать путешествие
+                        <span className="material-symbols-outlined text-base">arrow_forward_ios</span>
+                    </button>
+                </Magnetic>
+
+                {/* Scroll hint */}
+                <div className="mt-6 flex flex-col items-center gap-2 opacity-40">
+                    <span className="font-mono text-[9px] uppercase tracking-widest text-champagne">Прокрутите вниз</span>
+                    <div className="flex flex-col gap-1">
+                        <div className="w-px h-4 bg-champagne/60 mx-auto animate-bounce"></div>
+                    </div>
+                </div>
+            </div>
+
+            {/* LAYER 1: Experience Finder */}
+            <div className={`absolute inset-0 flex flex-col items-center justify-center px-4 md:px-8 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${getLayerStateClasses(1)}`}>
+                <ExperienceFinder images={IMAGES} onOpenModal={onOpenModal} />
+            </div>
+
+            {/* LAYER 2: Pricing (Core Offer) */}
+            <div className={`absolute inset-0 flex items-center justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${getLayerStateClasses(2)}`}>
+                <div className="w-full h-full md:h-auto overflow-y-auto hide-scrollbar pt-24 md:pt-0 pb-20 md:pb-0 relative z-10">
+                    <PricingSection />
+                </div>
+            </div>
+
+            {/* LAYER 3: Contact (Finale) */}
+            <div className={`absolute inset-0 flex items-center justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${getLayerStateClasses(3)}`}>
+                <div className="w-full h-full md:h-auto overflow-y-auto hide-scrollbar pt-24 md:pt-0 pb-20 md:pb-0 relative z-10">
+                    <ContactSection />
+                </div>
+            </div>
+
+            {/* Position Indicator (Replaces scrollbar) */}
+            <div className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-40 mix-blend-difference">
+                {[0, 1, 2, 3].map(i => (
+                    <div
+                        key={i}
+                        onClick={() => setLayer(i)}
+                        className={`w-1.5 h-12 rounded-full cursor-pointer transition-all duration-700 ${layer === i ? 'bg-champagne shadow-[0_0_10px_#F7E7CE]' : 'bg-white/20 hover:bg-white/40'}`}
+                    />
+                ))}
+            </div>
 
         </div>
     );
