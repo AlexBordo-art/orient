@@ -12,7 +12,7 @@ const SERVICES = [
 ];
 
 const ServicesHub: React.FC = () => (
-    <div className="min-h-screen bg-obsidian">
+    <div className="min-h-screen bg-t-bg">
         <SEO
             title="Авиабилеты, Страхование, Гиды"
             description="Полный комплекс туристических сервисов: авиабилеты, страхование путешествий, гиды и переводчики, Tax Free. Всё от Ориент Экспресс."
@@ -23,16 +23,16 @@ const ServicesHub: React.FC = () => (
         <div className="max-w-7xl mx-auto px-6 pb-20">
             <div className="mb-16">
                 <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-2xl bg-champagne/10 border border-champagne/20 flex items-center justify-center">
-                        <Briefcase className="text-champagne" size={24} />
+                    <div className="w-12 h-12 rounded-2xl bg-t-strong/10 border border-t-strong/20 flex items-center justify-center">
+                        <Briefcase className="text-t-strong" size={24} />
                     </div>
-                    <span className="text-champagne/60 text-sm font-mono tracking-widest uppercase">Сервисы</span>
+                    <span className="text-t-accent text-sm font-mono tracking-widest uppercase opacity-60">Сервисы</span>
                 </div>
-                <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6 tracking-tight">
+                <h1 className="text-4xl md:text-6xl font-heading font-bold text-t-text mb-6 tracking-tight">
                     Всё для вашего <br />
-                    <span className="text-champagne italic">путешествия</span>
+                    <span className="text-t-accent italic">путешествия</span>
                 </h1>
-                <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
+                <p className="text-t-muted text-lg max-w-2xl leading-relaxed">
                     Полная инфраструктура: от авиабилетов до страхования.
                     Все сервисы в одном месте.
                 </p>
@@ -43,15 +43,15 @@ const ServicesHub: React.FC = () => (
                     <Link
                         key={svc.slug}
                         to={`/services/${svc.slug}`}
-                        className="group flex items-start gap-5 p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] hover:border-champagne/20 transition-all duration-500"
+                        className="group flex items-start gap-5 p-8 rounded-2xl border border-t-border bg-t-card hover:border-t-strong/30 transition-all duration-500"
                     >
-                        <div className="shrink-0 w-12 h-12 rounded-xl bg-champagne/10 border border-champagne/20 flex items-center justify-center text-champagne">
+                        <div className="shrink-0 w-12 h-12 rounded-xl bg-t-strong/10 border border-t-strong/20 flex items-center justify-center text-t-strong">
                             {svc.icon}
                         </div>
                         <div>
-                            <h3 className="text-white font-semibold text-lg mb-2 group-hover:text-champagne transition-colors">{svc.name}</h3>
-                            <p className="text-slate-500 text-sm leading-relaxed mb-3">{svc.desc}</p>
-                            <div className="flex items-center gap-2 text-champagne/60 text-sm group-hover:text-champagne transition-colors">
+                            <h3 className="text-t-text font-semibold text-lg mb-2 group-hover:text-t-strong transition-colors">{svc.name}</h3>
+                            <p className="text-t-subtle text-sm leading-relaxed mb-3">{svc.desc}</p>
+                            <div className="flex items-center gap-2 text-t-accent opacity-60 text-sm group-hover:text-t-strong group-hover:opacity-100 transition-colors">
                                 <span>Подробнее</span>
                                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                             </div>

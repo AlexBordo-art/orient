@@ -58,16 +58,16 @@ const ExperienceFinder: React.FC<ExperienceFinderProps> = ({ images, onOpenModal
             {/* Header */}
             <div className="mb-6 md:mb-8 flex flex-col md:flex-row justify-between items-start md:items-end">
                 <div>
-                    <span className="font-mono text-champagne/70 text-[10px] tracking-[0.3em] uppercase block mb-2">Глобальная сеть</span>
-                    <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-white font-light tracking-tight">
+                    <span className="font-mono text-t-strong/70 text-[10px] tracking-[0.3em] uppercase block mb-2">Глобальная сеть</span>
+                    <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-t-text font-light tracking-tight">
                         {selected
-                            ? <>Маршруты для <span className="text-champagne italic">{FEELINGS.find(f => f.id === selected)?.genitive}</span></>
-                            : <>Как вы хотите <span className="text-white/90">путешествовать?</span></>
+                            ? <>Маршруты для <span className="text-t-strong italic">{FEELINGS.find(f => f.id === selected)?.genitive}</span></>
+                            : <>Как вы хотите <span className="text-t-text/90">путешествовать?</span></>
                         }
                     </h2>
                 </div>
-                <Link to="/tours" className="hidden md:flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 hover:border-champagne/50 hover:bg-white/5 transition-all text-[10px] font-mono uppercase tracking-[0.2em] text-white/70 hover:text-white mt-4 md:mt-0">
-                    Все направления <span className="text-champagne">→</span>
+                <Link to="/tours" className="hidden md:flex items-center gap-3 px-6 py-3 rounded-full border border-t-border hover:border-champagne/50 hover:bg-t-glass transition-all text-[10px] font-mono uppercase tracking-[0.2em] text-t-text/70 hover:text-t-text mt-4 md:mt-0">
+                    Все направления <span className="text-t-strong">→</span>
                 </Link>
             </div>
 
@@ -79,8 +79,8 @@ const ExperienceFinder: React.FC<ExperienceFinderProps> = ({ images, onOpenModal
                         onClick={() => setSelected(selected === f.id ? null : f.id)}
                         className={`flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-mono tracking-wide transition-all duration-300 ${
                             selected === f.id
-                                ? 'bg-champagne text-obsidian-dark border-champagne shadow-[0_0_20px_rgba(212,175,55,0.4)]'
-                                : 'bg-white/5 border-white/15 text-white/70 hover:border-champagne/40 hover:text-white'
+                                ? 'bg-t-strong text-t-bg border-champagne shadow-[0_0_20px_rgba(212,175,55,0.4)]'
+                                : 'bg-t-glass border-t-border text-t-text/70 hover:border-champagne/40 hover:text-t-text'
                         }`}
                     >
                         <span>{f.icon}</span>
@@ -96,7 +96,7 @@ const ExperienceFinder: React.FC<ExperienceFinderProps> = ({ images, onOpenModal
                         <Link
                             key={i}
                             to={dest.link}
-                            className="glass-card rounded-xl overflow-hidden bg-obsidian-dark/40 backdrop-blur border border-white/10 hover:border-champagne/30 transition-all duration-500 group flex flex-col"
+                            className="glass-card rounded-xl overflow-hidden bg-t-card backdrop-blur border border-t-border hover:border-champagne/30 transition-all duration-500 group flex flex-col"
                             style={{ animationDelay: `${i * 80}ms` }}
                         >
                             <div className="relative h-36 md:h-44 overflow-hidden">
@@ -106,16 +106,16 @@ const ExperienceFinder: React.FC<ExperienceFinderProps> = ({ images, onOpenModal
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-obsidian-dark/80 to-transparent" />
-                                <span className="absolute bottom-3 left-3 font-mono text-[9px] bg-black/60 backdrop-blur px-2 py-1 rounded tracking-[0.2em] text-champagne border border-champagne/20">
+                                <span className="absolute bottom-3 left-3 font-mono text-[9px] bg-black/60 backdrop-blur px-2 py-1 rounded tracking-[0.2em] text-t-strong border border-champagne/20">
                                     {dest.tag}
                                 </span>
                             </div>
                             <div className="p-4 flex justify-between items-center">
                                 <div>
-                                    <h3 className="font-heading text-lg text-white">{dest.name}</h3>
-                                    <p className="text-white/40 text-xs">{dest.country}</p>
+                                    <h3 className="font-heading text-lg text-t-text">{dest.name}</h3>
+                                    <p className="text-t-text/40 text-xs">{dest.country}</p>
                                 </div>
-                                <span className="text-champagne text-lg group-hover:translate-x-1 transition-transform">→</span>
+                                <span className="text-t-strong text-lg group-hover:translate-x-1 transition-transform">→</span>
                             </div>
                         </Link>
                     ))}
@@ -130,18 +130,18 @@ const ExperienceFinder: React.FC<ExperienceFinderProps> = ({ images, onOpenModal
                     ].map((card, i) => (
                         <div
                             key={i}
-                            className={`glass-card p-4 rounded-xl shadow-2xl bg-obsidian-dark/40 backdrop-blur border group flex flex-col hover:border-white/30 transition-colors duration-500 transform-gpu ${i === 1 ? 'border-champagne/30 md:-translate-y-4' : 'border-white/10'}`}
+                            className={`glass-card p-4 rounded-xl shadow-2xl bg-t-card backdrop-blur border group flex flex-col hover:border-white/30 transition-colors duration-500 transform-gpu ${i === 1 ? 'border-champagne/30 md:-translate-y-4' : 'border-t-border'}`}
                         >
                             <div className="relative w-full h-[22vh] overflow-hidden rounded-lg mb-4">
                                 <img className="w-full h-full object-cover group-hover:scale-110 transition-all duration-1000" src={card.img} alt={card.name} />
-                                <div className="absolute bottom-3 left-3 font-mono text-[9px] bg-black/60 backdrop-blur px-2 py-1 rounded tracking-[0.2em] text-champagne border border-champagne/20">{card.tag}</div>
-                                {i === 1 && <div className="absolute top-4 right-4 h-2 w-2 rounded-full bg-champagne shadow-[0_0_15px_rgba(247,231,206,0.8)] animate-pulse"></div>}
+                                <div className="absolute bottom-3 left-3 font-mono text-[9px] bg-black/60 backdrop-blur px-2 py-1 rounded tracking-[0.2em] text-t-strong border border-champagne/20">{card.tag}</div>
+                                {i === 1 && <div className="absolute top-4 right-4 h-2 w-2 rounded-full bg-t-strong shadow-[0_0_15px_rgba(247,231,206,0.8)] animate-pulse"></div>}
                             </div>
-                            <h3 className={`font-heading text-2xl mb-2 ${i === 1 ? 'text-champagne' : 'text-white'}`}>{card.name}</h3>
-                            <p className="font-sans text-xs text-white/50 leading-relaxed flex-grow mb-4">{card.desc}</p>
+                            <h3 className={`font-heading text-2xl mb-2 ${i === 1 ? 'text-t-strong' : 'text-t-text'}`}>{card.name}</h3>
+                            <p className="font-sans text-xs text-t-text/50 leading-relaxed flex-grow mb-4">{card.desc}</p>
                             <button
                                 onClick={onOpenModal}
-                                className={`w-full py-2 rounded text-[10px] font-mono tracking-widest uppercase transition-colors ${i === 1 ? 'bg-champagne hover:bg-champagne-light text-obsidian-dark font-bold' : 'bg-white/5 hover:bg-white/10 border border-white/10 text-white'}`}
+                                className={`w-full py-2 rounded text-[10px] font-mono tracking-widest uppercase transition-colors ${i === 1 ? 'bg-t-strong hover:bg-t-strong-light text-t-bg font-bold' : 'bg-t-glass hover:bg-white/10 border border-t-border text-t-text'}`}
                             >
                                 {i === 1 ? 'Рассчитать тур' : 'Подробнее'}
                             </button>

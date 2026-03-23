@@ -12,7 +12,7 @@ const TOUR_DESTINATIONS = [
 ];
 
 const ToursHub: React.FC = () => (
-    <div className="min-h-screen bg-obsidian">
+    <div className="min-h-screen bg-t-bg">
         <SEO
             title="Авторские туры — Путешествия"
             description="Индивидуальные туры в Китай, по России и горящие предложения от Ориент Экспресс. Авторские маршруты, проверенные экспертами лично. Экономия до 40%."
@@ -23,16 +23,16 @@ const ToursHub: React.FC = () => (
         <div className="max-w-7xl mx-auto px-6 pb-20">
             <div className="mb-16">
                 <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-2xl bg-champagne/10 border border-champagne/20 flex items-center justify-center">
-                        <Compass className="text-champagne" size={24} />
+                    <div className="w-12 h-12 rounded-2xl bg-t-strong/10 border border-t-strong/20 flex items-center justify-center">
+                        <Compass className="text-t-strong" size={24} />
                     </div>
-                    <span className="text-champagne/60 text-sm font-mono tracking-widest uppercase">Путешествия</span>
+                    <span className="text-t-accent text-sm font-mono tracking-widest uppercase opacity-60">Путешествия</span>
                 </div>
-                <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6 tracking-tight">
+                <h1 className="text-4xl md:text-6xl font-heading font-bold text-t-text mb-6 tracking-tight">
                     Авторские маршруты <br />
-                    <span className="text-champagne italic">по всему миру</span>
+                    <span className="text-t-accent italic">по всему миру</span>
                 </h1>
-                <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
+                <p className="text-t-muted text-lg max-w-2xl leading-relaxed">
                     Мы не продаём стандартные пакеты. Каждое путешествие — это индивидуальный маршрут,
                     проверенный нашими экспертами лично.
                 </p>
@@ -43,17 +43,17 @@ const ToursHub: React.FC = () => (
                     <Link
                         key={dest.slug}
                         to={`/tours/${dest.slug}`}
-                        className="group relative p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] hover:border-champagne/20 transition-all duration-500"
+                        className="group relative p-8 rounded-2xl border border-t-border bg-t-card hover:border-t-strong/30 transition-all duration-500"
                     >
                         {dest.popular && (
-                            <span className="absolute top-4 right-4 text-[10px] font-mono text-champagne/60 bg-champagne/10 px-2 py-0.5 rounded-full">
+                            <span className="absolute top-4 right-4 text-[10px] font-mono text-t-accent bg-t-strong/10 px-2 py-0.5 rounded-full">
                                 популярное
                             </span>
                         )}
                         <div className="text-5xl mb-6">{dest.icon}</div>
-                        <h3 className="text-white font-semibold text-xl mb-3 group-hover:text-champagne transition-colors">{dest.name}</h3>
-                        <p className="text-slate-500 text-sm leading-relaxed mb-6">{dest.desc}</p>
-                        <div className="flex items-center gap-2 text-champagne/60 text-sm group-hover:text-champagne transition-colors">
+                        <h3 className="text-t-text font-semibold text-xl mb-3 group-hover:text-t-strong transition-colors">{dest.name}</h3>
+                        <p className="text-t-subtle text-sm leading-relaxed mb-6">{dest.desc}</p>
+                        <div className="flex items-center gap-2 text-t-accent text-sm group-hover:text-t-strong transition-colors">
                             <span>Смотреть туры</span>
                             <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                         </div>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html class="dark" lang="ru">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Orient Express | Spatial Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;500;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface": "#131313",
+                        "surface-dim": "#131313",
+                        "surface-container": "#201f1f",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-container-highest": "#353534",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-bright": "#3a3939",
+                        "surface-variant": "#353534",
+                        "on-surface": "#e5e2e1",
+                        "on-surface-variant": "#cec5ba",
+                        "on-background": "#e5e2e1",
+                        "background": "#131313",
+                        "primary": "#ffffff",
+                        "primary-fixed": "#f0e0c8",
+                        "primary-fixed-dim": "#d3c5ad",
+                        "on-primary": "#382f1e",
+                        "on-primary-fixed": "#221b0b",
+                        "secondary": "#b5c8df",
+                        "secondary-fixed": "#d1e4fb",
+                        "secondary-fixed-dim": "#b5c8df",
+                        "tertiary": "#ffffff",
+                        "outline": "#979085",
+                        "outline-variant": "#4b463d",
+                        "inverse-surface": "#e5e2e1",
+                        "inverse-on-surface": "#313030",
+                        "champagne": "#F7E7CE",
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .glass-card {
+            background: rgba(28, 27, 27, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(75, 70, 61, 0.2);
+        }
+
+        .perspective-container {
+            perspective: 2000px;
+        }
+
+        .floating-element {
+            transform-style: preserve-3d;
+        }
+
+        .portal-bg {
+            background-image: linear-gradient(to bottom, rgba(11, 11, 11, 0.4), rgba(11, 11, 11, 0.9)),
+                url(https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&q=80&w=1920);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bg-spatial {
+            background: radial-gradient(circle at center, #1c1b1b 0%, #0e0e0e 100%);
+        }
+
+        /* Scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .layer {
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Scrollbar hiding */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body class="bg-surface-dim text-on-surface font-body select-none">
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- FIXED: TopAppBar -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <header
+        class="fixed top-0 w-full z-50 bg-stone-950/60 backdrop-blur-xl border-b border-[#4B463D]/20 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.5)] flex justify-between items-center px-6 md:px-8 py-5">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-champagne">menu</span>
+            <h1 class="font-serif italic text-champagne tracking-widest uppercase text-lg">Orient Express</h1>
+        </div>
+        <div class="flex items-center gap-6">
+            <nav class="hidden md:flex gap-8 font-label text-[10px] uppercase tracking-widest">
+                <a class="text-champagne brightness-125" href="#layer1">Генезис</a>
+                <a class="text-[#CEC5BA] hover:text-champagne transition-all duration-500 ease-out"
+                    href="#layer2">Направления</a>
+                <a class="text-[#CEC5BA] hover:text-champagne transition-all duration-500 ease-out"
+                    href="#layer3">Тарифы</a>
+            </nav>
+            <div class="w-10 h-10 rounded-full border border-outline-variant/30 overflow-hidden">
+                <img class="w-full h-full object-cover"
+                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200"
+                    alt="Profile" />
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- LAYER 1: The Portal Entry -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <section id="layer1" class="layer flex items-center justify-center overflow-hidden">
+        <!-- Background -->
+        <div class="absolute inset-0 z-0 scale-110 blur-sm brightness-75 portal-bg"></div>
+        <!-- Depth Overlays -->
+        <div class="absolute inset-0 z-10 bg-gradient-to-t from-background via-transparent to-transparent opacity-80">
+        </div>
+        <div class="absolute inset-0 z-10 bg-gradient-to-b from-stone-950/40 via-transparent to-transparent"></div>
+        <!-- Foreground Content -->
+        <div class="relative z-20 flex flex-col items-center text-center px-6">
+            <div class="mb-4">
+                <span class="font-label text-xs tracking-[0.4em] uppercase text-primary-fixed-dim opacity-70">Начните
+                    ваше путешествие</span>
+            </div>
+            <h1
+                class="font-headline text-6xl md:text-9xl text-primary font-bold tracking-tighter drop-shadow-[0_0_30px_rgba(247,231,206,0.2)] mb-8">
+                Orient Express
+            </h1>
+            <div class="mt-8 flex flex-col items-center gap-12">
+                <a href="#layer2"
+                    class="group relative flex items-center justify-center p-0.5 rounded-lg overflow-hidden transition-all duration-700">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-primary-fixed/0 via-primary-fixed to-primary-fixed/0 group-hover:via-white transition-all duration-700 opacity-20">
+                    </div>
+                    <div
+                        class="px-12 py-4 bg-surface-container-lowest/40 backdrop-blur-xl border border-outline-variant/20 rounded-lg flex items-center gap-4 group-hover:bg-primary-fixed group-hover:text-on-primary-fixed transition-all duration-500">
+                        <span class="font-label text-sm tracking-[0.2em] uppercase">Войти в портал</span>
+                        <span class="material-symbols-outlined text-lg">arrow_forward_ios</span>
+                    </div>
+                </a>
+                <div class="flex flex-col items-center gap-3">
+                    <div
+                        class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_15px_rgba(181,200,223,0.8)] animate-pulse">
+                    </div>
+                    <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Соединение
+                        установлено</p>
+                </div>
+            </div>
+        </div>
+        <!-- Floating Depth Elements -->
+        <div
+            class="absolute bottom-1/4 left-10 w-64 h-64 bg-primary-fixed/5 rounded-full blur-[100px] pointer-events-none">
+        </div>
+        <div class="absolute top-1/4 right-10 w-96 h-96 bg-secondary/5 rounded-full blur-[120px] pointer-events-none">
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- LAYER 2: The Grid Assembly -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <section id="layer2" class="layer flex items-center justify-center perspective-container overflow-hidden">
+        <!-- Blurred Background (Continuation of Layer 1) -->
+        <div class="absolute inset-0 z-0">
+            <img class="w-full h-full object-cover opacity-30 scale-110 blur-3xl"
+                src="https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&q=80&w=1920"
+                alt="bg" />
+            <div class="absolute inset-0 bg-gradient-to-b from-surface-dim via-transparent to-surface-dim"></div>
+        </div>
+        <!-- Asymmetrical Floating Grid -->
+        <div
+            class="relative z-10 w-full max-w-7xl px-4 md:px-8 grid grid-cols-1 md:grid-cols-3 gap-6 floating-element pt-24 md:pt-0">
+
+            <!-- Kyoto -> Токио Card -->
+            <div class="md:translate-y-[-40px]">
+                <div
+                    class="glass-card p-4 rounded-xl shadow-[0_40px_80px_-15px_rgba(0,0,0,0.7)] hover:scale-105 transition-transform duration-700">
+                    <div class="relative aspect-[3/4] overflow-hidden rounded-lg mb-6">
+                        <img class="w-full h-full object-cover grayscale-[0.2] contrast-125"
+                            src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=90&w=800"
+                            alt="Токио" />
+                        <div
+                            class="absolute bottom-4 left-4 font-label text-xs bg-black/40 backdrop-blur px-2 py-1 rounded tracking-[0.2em] text-champagne">
+                            TKY-01</div>
+                    </div>
+                    <h3 class="font-headline text-3xl text-primary mb-2">Токио</h3>
+                    <p class="font-body text-sm text-on-surface-variant leading-relaxed opacity-70">Где кремний
+                        встречается с духами древних императорских садов.</p>
+                </div>
+            </div>
+
+            <!-- Amalfi -> Дубай Card (Hero Center) -->
+            <div class="md:translate-y-[20px] z-20">
+                <div
+                    class="glass-card p-5 rounded-xl shadow-[0_60px_100px_-20px_rgba(0,0,0,0.8)] border-primary/20 md:scale-110">
+                    <div class="relative aspect-[4/5] overflow-hidden rounded-lg mb-8">
+                        <img class="w-full h-full object-cover contrast-110"
+                            src="https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&q=90&w=800"
+                            alt="Дубай" />
+                        <div
+                            class="absolute top-4 right-4 h-3 w-3 rounded-full bg-secondary shadow-[0_0_15px_rgba(181,200,223,0.8)]">
+                        </div>
+                        <div
+                            class="absolute bottom-4 left-4 font-label text-xs bg-black/40 backdrop-blur px-2 py-1 rounded tracking-[0.2em] text-champagne">
+                            DXB-07</div>
+                    </div>
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <h3 class="font-headline text-4xl text-primary mb-2">Дубай</h3>
+                            <p class="font-body text-sm text-on-surface-variant leading-relaxed">Вертикальная
+                                архитектура, подвешенная между лазурью и обсидианом.</p>
+                        </div>
+                        <a href="#layer3"
+                            class="bg-primary-fixed text-on-primary-fixed font-label text-[10px] tracking-widest uppercase px-4 py-3 rounded-lg shadow-[0_0_20px_rgba(240,224,200,0.3)] hover:brightness-110 transition-all shrink-0">Выбрать</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Santorini -> Рим Card -->
+            <div class="md:translate-y-[80px]">
+                <div
+                    class="glass-card p-4 rounded-xl shadow-[0_30px_60px_-10px_rgba(0,0,0,0.6)] hover:scale-105 transition-transform duration-700">
+                    <div class="relative aspect-[3/4] overflow-hidden rounded-lg mb-6">
+                        <img class="w-full h-full object-cover"
+                            src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&q=90&w=800"
+                            alt="Рим" />
+                        <div
+                            class="absolute bottom-4 left-4 font-label text-xs bg-black/40 backdrop-blur px-2 py-1 rounded tracking-[0.2em] text-champagne">
+                            ROM-04</div>
+                    </div>
+                    <h3 class="font-headline text-3xl text-primary mb-2">Рим</h3>
+                    <p class="font-body text-sm text-on-surface-variant leading-relaxed opacity-70">Вечный город,
+                        выкованный в огне, охлаждённый средиземноморским ветром.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Background orbs -->
+        <div
+            class="absolute top-1/4 left-10 w-32 h-32 border border-outline-variant/10 rounded-full blur-xl animate-pulse">
+        </div>
+        <div class="absolute bottom-1/4 right-20 w-48 h-48 border border-secondary/5 rounded-full blur-2xl"></div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- LAYER 3: Core Offer / Pricing -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <section id="layer3"
+        class="layer flex flex-col items-center justify-center px-4 md:px-6 bg-spatial overflow-hidden">
+        <!-- Background Structure -->
+        <div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
+            <div class="h-full w-full border-x border-outline-variant/10 flex justify-center">
+                <div class="w-[10%] h-full border-x border-outline-variant/10"></div>
+            </div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-6xl pt-24 md:pt-0">
+            <!-- Header Section -->
+            <div class="text-center mb-16 max-w-2xl mx-auto">
+                <span class="font-label text-secondary tracking-[0.4em] uppercase text-[10px] mb-4 block">Финальное
+                    направление</span>
+                <h2 class="font-headline text-5xl md:text-7xl text-primary mb-6 leading-tight">Выберите маршрут</h2>
+                <p class="font-body text-on-surface-variant text-sm md:text-base leading-relaxed max-w-lg mx-auto">
+                    Путешествие завершается здесь. Выберите уровень погружения в наследие Orient Express.
+                </p>
+            </div>
+
+            <!-- Pricing Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <!-- Card 1: Консультация -->
+                <div
+                    class="glass-card rounded-xl p-8 flex flex-col justify-between shadow-[0_24px_48px_-12px_rgba(0,0,0,0.5)] transition-all duration-700 hover:shadow-[0_0_30px_rgba(247,231,206,0.1)] group">
+                    <div>
+                        <span
+                            class="font-label text-on-surface-variant text-[10px] tracking-widest uppercase">Основа</span>
+                        <h3 class="font-headline text-3xl text-primary-fixed mt-2 mb-6 italic">Консультация</h3>
+                        <ul class="space-y-4 font-body text-sm text-on-surface-variant mb-8">
+                            <li class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-[18px] text-secondary">blur_on</span>
+                                Оценка шансов на визу
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-[18px] text-secondary">blur_on</span>
+                                Выбор типа визы
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-[18px] text-secondary">blur_on</span>
+                                Список документов
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-auto">
+                        <div class="font-label text-2xl text-primary mb-6">Бесплатно</div>
+                        <button
+                            class="w-full py-4 rounded-lg bg-surface-variant/40 border border-outline-variant/20 text-primary font-label text-[10px] uppercase tracking-[0.2em] group-hover:bg-primary-fixed group-hover:text-on-primary-fixed transition-all duration-500">
+                            Получить консультацию
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 2: Виза «Под ключ» (Core Offer) -->
+                <div
+                    class="glass-card rounded-xl p-8 flex flex-col justify-between shadow-[0_32px_64px_-16px_rgba(0,0,0,0.7)] border-primary-fixed/20 relative overflow-hidden transition-all duration-700 hover:scale-[1.02]">
+                    <div class="absolute top-0 right-0 p-4">
+                        <div class="w-2 h-2 rounded-full bg-primary-fixed animate-pulse shadow-[0_0_10px_#F7E7CE]">
+                        </div>
+                    </div>
+                    <div>
+                        <span
+                            class="font-label text-primary-fixed text-[10px] tracking-widest uppercase">Стандарт</span>
+                        <h3 class="font-headline text-4xl text-primary mt-2 mb-6 italic">Виза «Под ключ»</h3>
+                        <ul class="space-y-4 font-body text-sm text-on-surface">
+                            <li class="flex items-center gap-3">
+                                <span
+                                    class="material-symbols-outlined text-[18px] text-primary-fixed">filter_center_focus</span>
+                                Заполнение всех анкет
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span
+                                    class="material-symbols-outlined text-[18px] text-primary-fixed">filter_center_focus</span>
+                                Перевод документов
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span
+                                    class="material-symbols-outlined text-[18px] text-primary-fixed">filter_center_focus</span>
+                                Бронь авиа и отелей
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span
+                                    class="material-symbols-outlined text-[18px] text-primary-fixed">filter_center_focus</span>
+                                Запись в консульство/ВЦ
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span
+                                    class="material-symbols-outlined text-[18px] text-primary-fixed">filter_center_focus</span>
+                                Персональное сопровождение
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-12">
+                        <div class="font-label text-3xl text-primary mb-6">от 3 000 ₽ <span
+                                class="text-xs text-on-surface-variant uppercase tracking-tighter">/ услуга</span></div>
+                        <button
+                            class="w-full py-5 rounded-lg bg-primary-fixed text-on-primary-fixed font-label text-[11px] font-bold uppercase tracking-[0.25em] shadow-[0_0_20px_rgba(247,231,206,0.3)] hover:shadow-[0_0_35px_rgba(247,231,206,0.5)] transition-all duration-500">
+                            Оформить визу
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 3: Комплексный Тур -->
+                <div
+                    class="glass-card rounded-xl p-8 flex flex-col justify-between shadow-[0_24px_48px_-12px_rgba(0,0,0,0.5)] transition-all duration-700 hover:shadow-[0_0_30px_rgba(247,231,206,0.1)] group">
+                    <div>
+                        <span
+                            class="font-label text-on-surface-variant text-[10px] tracking-widest uppercase">Премиум</span>
+                        <h3 class="font-headline text-3xl text-primary-fixed mt-2 mb-6 italic">Комплексный Тур</h3>
+                        <ul class="space-y-4 font-body text-sm text-on-surface-variant mb-8">
+                            <li class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-[18px] text-secondary">layers</span>
+                                Оформление визы
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-[18px] text-secondary">layers</span>
+                                Билеты по лучшим ценам
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-[18px] text-secondary">layers</span>
+                                Подбор отелей и трансферы
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-[18px] text-secondary">layers</span>
+                                Ассистент 24/7
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-auto">
+                        <div class="font-label text-2xl text-primary mb-6">Индивидуально</div>
+                        <button
+                            class="w-full py-4 rounded-lg bg-surface-variant/40 border border-outline-variant/20 text-primary font-label text-[10px] uppercase tracking-[0.2em] group-hover:bg-primary-fixed group-hover:text-on-primary-fixed transition-all duration-500">
+                            Рассчитать тур
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- FIXED: Bottom Nav Bar -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <nav
+        class="fixed bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 w-auto z-50 flex gap-8 items-center justify-center bg-[#1C1B1B]/40 backdrop-blur-md rounded-full px-6 py-3 shadow-[0_0_30px_rgba(247,231,206,0.1)]">
+        <a href="#layer1" class="text-champagne rounded-full p-2 scale-110 shadow-[0_0_15px_rgba(247,231,206,0.4)]">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">layers</span>
+        </a>
+        <a href="#layer2"
+            class="text-[#CEC5BA] p-2 opacity-50 hover:opacity-100 hover:scale-105 transition-transform duration-700">
+            <span class="material-symbols-outlined">blur_on</span>
+        </a>
+        <a href="#layer3"
+            class="text-[#CEC5BA] p-2 opacity-50 hover:opacity-100 hover:scale-105 transition-transform duration-700">
+            <span class="material-symbols-outlined">filter_center_focus</span>
+        </a>
+    </nav>
+
+    <!-- Decorative Corner Label -->
+    <div class="fixed bottom-10 left-10 hidden lg:block z-40">
+        <div class="flex items-center gap-4">
+            <div class="h-[1px] w-12 bg-outline-variant/40"></div>
+            <span class="font-label text-[10px] text-on-surface-variant tracking-[0.5em] uppercase">V.01
+                Экспедиция</span>
+        </div>
+    </div>
+
+    <!-- Overlay "Grain" Texture -->
+    <div
+        class="fixed inset-0 pointer-events-none opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] z-[60]">
+    </div>
+
+</body>
+
+</html>

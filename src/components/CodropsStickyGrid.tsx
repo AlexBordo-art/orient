@@ -111,35 +111,23 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
     };
 
     return (
-        <div className="bg-obsidian-dark text-white font-sans selection:bg-champagne selection:text-obsidian-dark relative w-full h-[100dvh] md:h-screen overflow-hidden perspective-[2000px]">
-
-            {/* Global Cinematic Background Atmosphere */}
-            <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] z-[60]"></div>
-                <div className="absolute top-1/4 -left-20 w-[400px] h-[400px] bg-champagne/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
-                <div className="absolute bottom-1/4 -right-20 w-[400px] h-[400px] bg-champagne/5 rounded-full blur-[120px] pointer-events-none z-0"></div>
-            </div>
-
-            {/* Background Image that fades entirely when moving to Layer 2+ */}
-            <div className={`absolute inset-0 z-0 bg-[url('https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&q=80&w=1920')] bg-cover bg-center brightness-50 transition-all duration-[1500ms] ${layer === 0 ? 'opacity-50 scale-105' : 'opacity-10 shadow-[inset_0_0_100px_black] blur-xl grayscale'}`}></div>
-            <div className="absolute inset-0 z-10 bg-gradient-to-t from-obsidian-dark via-transparent to-transparent opacity-80 pointer-events-none"></div>
-            <div className="absolute inset-0 z-10 bg-gradient-to-b from-obsidian-dark/40 via-transparent to-transparent pointer-events-none"></div>
+        <div className="bg-transparent text-t-text font-sans selection:bg-t-strong selection:text-t-bg relative w-full h-[100dvh] md:h-screen overflow-hidden perspective-[2000px]">
 
             {/* LAYER 0: The Portal Entry (Genesis) */}
             <div className={`absolute inset-0 flex flex-col items-center justify-center px-6 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${getLayerStateClasses(0)}`}>
 
                 {/* Trust badge — "С 2007 года" */}
-                <div className="mb-6 flex items-center gap-2 bg-white/5 border border-champagne/20 rounded-full px-5 py-2 backdrop-blur-sm">
-                    <span className="w-1.5 h-1.5 rounded-full bg-champagne animate-pulse shadow-[0_0_8px_#D4AF37]"></span>
-                    <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-champagne/80">С 2007 года · Хабаровск · Москва</span>
+                <div className="mb-6 flex items-center gap-2 bg-t-glass border border-t-strong/20 rounded-full px-5 py-2 backdrop-blur-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-t-strong animate-pulse"></span>
+                    <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-t-strong/80">С 2007 года · Хабаровск · Москва</span>
                 </div>
 
-                <h1 className="font-heading text-6xl md:text-9xl text-white font-bold tracking-tighter drop-shadow-[0_0_30px_rgba(247,231,206,0.2)] mb-4 text-center leading-[1.05]">
+                <h1 className="font-heading text-6xl md:text-9xl text-t-text font-bold tracking-tighter mb-4 text-center leading-[1.05]">
                     Orient Express
                 </h1>
 
                 {/* Value prop */}
-                <p className="font-sans text-white/50 text-sm md:text-base text-center mb-8 tracking-wide">
+                <p className="font-sans text-t-text/50 text-sm md:text-base text-center mb-8 tracking-wide">
                     Визы · Авторские туры · Образование за рубежом
                 </p>
 
@@ -149,15 +137,15 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
                         href="https://2gis.ru/khabarovsk/firm/4926340373575901/tab/reviews"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-white/60 hover:text-champagne transition-colors text-xs font-mono"
+                        className="flex items-center gap-2 text-t-text/60 hover:text-t-strong transition-colors text-xs font-mono"
                     >
-                        <span className="text-champagne">★★★★★</span>
+                        <span className="text-t-strong">★★★★★</span>
                         <span>5.0 · 97 отзывов 2GIS</span>
                     </a>
-                    <span className="w-px h-3 bg-white/20"></span>
-                    <span className="text-white/40 text-xs font-mono">18 лет на рынке</span>
-                    <span className="w-px h-3 bg-white/20"></span>
-                    <a href="tel:+74212000000" className="text-white/60 hover:text-champagne transition-colors text-xs font-mono">
+                    <span className="w-px h-3 bg-t-text/20"></span>
+                    <span className="text-t-text/40 text-xs font-mono">18 лет на рынке</span>
+                    <span className="w-px h-3 bg-t-text/20"></span>
+                    <a href="tel:+74212000000" className="text-t-text/60 hover:text-t-strong transition-colors text-xs font-mono">
                         Позвонить эксперту →
                     </a>
                 </div>
@@ -166,7 +154,7 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
                 <Magnetic strength={30}>
                     <button
                         onClick={() => setLayer(1)}
-                        className="px-8 py-4 bg-champagne hover:bg-champagne-light text-obsidian-dark font-bold font-mono tracking-[0.2em] uppercase rounded flex items-center gap-3 transition-colors shadow-[0_0_30px_rgba(240,224,200,0.3)] mb-4"
+                        className="px-8 py-4 bg-t-strong hover:opacity-90 text-t-bg font-bold font-mono tracking-[0.2em] uppercase rounded flex items-center gap-3 transition-all mb-4"
                     >
                         Начать путешествие
                         <span className="material-symbols-outlined text-base">arrow_forward_ios</span>
@@ -175,9 +163,9 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
 
                 {/* Scroll hint */}
                 <div className="mt-6 flex flex-col items-center gap-2 opacity-40">
-                    <span className="font-mono text-[9px] uppercase tracking-widest text-champagne">Прокрутите вниз</span>
+                    <span className="font-mono text-[9px] uppercase tracking-widest text-t-strong">Прокрутите вниз</span>
                     <div className="flex flex-col gap-1">
-                        <div className="w-px h-4 bg-champagne/60 mx-auto animate-bounce"></div>
+                        <div className="w-px h-4 bg-t-strong/60 mx-auto animate-bounce"></div>
                     </div>
                 </div>
             </div>
@@ -207,7 +195,7 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
                     <div
                         key={i}
                         onClick={() => setLayer(i)}
-                        className={`w-1.5 h-12 rounded-full cursor-pointer transition-all duration-700 ${layer === i ? 'bg-champagne shadow-[0_0_10px_#F7E7CE]' : 'bg-white/20 hover:bg-white/40'}`}
+                        className={`w-1.5 h-12 rounded-full cursor-pointer transition-all duration-700 ${layer === i ? 'bg-t-strong' : 'bg-t-text/20 hover:bg-t-text/40'}`}
                     />
                 ))}
             </div>

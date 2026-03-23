@@ -100,7 +100,7 @@ const PricingFooter: React.FC = () => {
                     <div className="md:col-span-1">
                         <div className="flex items-center space-x-2 mb-6 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
                             <div className="w-8 h-8 rounded-full flex items-center justify-center text-primary text-sm font-data font-bold bg-accent">OE</div>
-                            <span className="font-heading text-2xl font-bold tracking-tight text-cream">Orient Express.</span>
+                            <span className="font-heading text-2xl font-bold tracking-tight text-cream">Ориент Экспресс.</span>
                         </div>
                         <p className="text-sm font-body font-light text-cream/50 leading-relaxed mb-6">
                             Специализированное бюро путешествий и визовой поддержки. Работаем с 2007 года.

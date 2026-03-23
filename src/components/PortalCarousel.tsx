@@ -7,7 +7,7 @@ const PORTAL_SECTIONS = [
         id: '01',
         title: 'Визовый Центр',
         desc: 'Оформление туристических, деловых и учебных виз. Индивидуальные стратегии для сложных кейсов.',
-        icon: <Globe2 className="w-8 h-8 text-champagne" strokeWidth={1.5} />,
+        icon: <Globe2 className="w-8 h-8 text-t-strong" strokeWidth={1.5} />,
         linkText: 'Подробнее',
         href: '/visas',
         accent: 'from-champagne/20 to-champagne/5',
@@ -16,7 +16,7 @@ const PORTAL_SECTIONS = [
         id: '02',
         title: 'Туры в Китай',
         desc: 'От высокотехнологичного Шэньчжэня до древних терракотовых армий с премиальным сопровождением.',
-        icon: <Compass className="w-8 h-8 text-champagne-light" strokeWidth={1.5} />,
+        icon: <Compass className="w-8 h-8 text-t-strong-light" strokeWidth={1.5} />,
         linkText: 'Направления',
         href: '/tours',
         accent: 'from-amber-500/20 to-amber-500/5',
@@ -73,7 +73,7 @@ const PortalCarousel: React.FC = () => {
     };
 
     return (
-        <section id="portal" className="py-20 md:py-28 relative bg-obsidian-dark z-20 border-t border-white/5">
+        <section id="portal" className="py-20 md:py-28 relative bg-t-bg/80 backdrop-blur-sm z-20 border-t border-t-border">
 
             {/* Ambient Background Glows */}
             <div className="absolute top-0 right-0 w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] bg-sapphire-dark/15 rounded-full blur-[150px] pointer-events-none" />
@@ -84,10 +84,10 @@ const PortalCarousel: React.FC = () => {
                 {/* Section Header */}
                 <div className="container-main flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12">
                     <div>
-                        <h2 className="text-champagne text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-3 font-mono">
+                        <h2 className="text-t-strong text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-3 font-mono">
                             Наши направления
                         </h2>
-                        <h3 className="text-3xl md:text-5xl lg:text-6xl font-heading font-medium text-slate-100 tracking-tight">
+                        <h3 className="text-3xl md:text-5xl lg:text-6xl font-heading font-medium text-t-text tracking-tight">
                             Выберите услугу
                         </h3>
                     </div>
@@ -96,8 +96,8 @@ const PortalCarousel: React.FC = () => {
                         <button
                             onClick={() => scroll('left')}
                             disabled={!canScrollLeft}
-                            className={`w-12 h-12 rounded-full border border-white/20 flex items-center justify-center transition-all duration-300 ${canScrollLeft
-                                ? 'hover:bg-champagne/10 hover:border-champagne/40 text-slate-300 hover:text-champagne cursor-pointer'
+                            className={`w-12 h-12 rounded-full border border-t-border flex items-center justify-center transition-all duration-300 ${canScrollLeft
+                                ? 'hover:bg-champagne/10 hover:border-champagne/40 text-t-muted hover:text-t-strong cursor-pointer'
                                 : 'text-white/10 cursor-not-allowed'
                                 }`}
                         >
@@ -106,8 +106,8 @@ const PortalCarousel: React.FC = () => {
                         <button
                             onClick={() => scroll('right')}
                             disabled={!canScrollRight}
-                            className={`w-12 h-12 rounded-full border border-white/20 flex items-center justify-center transition-all duration-300 ${canScrollRight
-                                ? 'hover:bg-champagne/10 hover:border-champagne/40 text-slate-300 hover:text-champagne cursor-pointer'
+                            className={`w-12 h-12 rounded-full border border-t-border flex items-center justify-center transition-all duration-300 ${canScrollRight
+                                ? 'hover:bg-champagne/10 hover:border-champagne/40 text-t-muted hover:text-t-strong cursor-pointer'
                                 : 'text-white/10 cursor-not-allowed'
                                 }`}
                         >
@@ -127,32 +127,32 @@ const PortalCarousel: React.FC = () => {
                         <Link
                             key={section.id}
                             to={section.href}
-                            className="portal-card group relative flex-shrink-0 w-[85vw] sm:w-[380px] lg:w-[420px] rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 sm:p-10 flex flex-col justify-between cursor-pointer snap-start transition-all duration-500 hover:border-champagne/20 hover:bg-white/[0.06] min-h-[340px] sm:min-h-[380px]"
+                            className="portal-card group relative flex-shrink-0 w-[85vw] sm:w-[380px] lg:w-[420px] rounded-3xl border border-t-border bg-t-card backdrop-blur-xl p-8 sm:p-10 flex flex-col justify-between cursor-pointer snap-start transition-all duration-500 hover:border-champagne/20 hover:bg-t-elevated min-h-[340px] sm:min-h-[380px]"
                         >
                             {/* Hover glow */}
                             <div className={`absolute inset-0 bg-gradient-to-br ${section.accent} rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
 
                             {/* Top: Icon + Number */}
                             <div className="flex justify-between items-start relative z-10 mb-auto">
-                                <div className="w-14 h-14 rounded-2xl bg-obsidian-light/50 border border-white/10 shadow-inner flex items-center justify-center backdrop-blur-md">
+                                <div className="w-14 h-14 rounded-2xl bg-obsidian-light/50 border border-t-border shadow-inner flex items-center justify-center backdrop-blur-md">
                                     {section.icon}
                                 </div>
-                                <span className="font-mono text-5xl font-bold text-white/[0.04] group-hover:text-white/[0.08] transition-colors duration-500">
+                                <span className="font-mono text-5xl font-bold text-t-text/[0.04] group-hover:text-t-text/[0.08] transition-colors duration-500">
                                     {section.id}
                                 </span>
                             </div>
 
                             {/* Bottom: Content */}
                             <div className="relative z-10 mt-8">
-                                <h4 className="text-2xl sm:text-3xl font-heading font-medium text-slate-100 mb-3 tracking-tight">
+                                <h4 className="text-2xl sm:text-3xl font-heading font-medium text-t-text mb-3 tracking-tight">
                                     {section.title}
                                 </h4>
-                                <p className="text-slate-400 font-sans font-light text-sm sm:text-base leading-relaxed mb-6">
+                                <p className="text-t-muted font-sans font-light text-sm sm:text-base leading-relaxed mb-6">
                                     {section.desc}
                                 </p>
 
-                                <div className="inline-flex items-center gap-3 text-slate-300 group-hover:text-champagne transition-colors duration-300">
-                                    <div className="w-10 h-10 rounded-full border border-white/20 group-hover:border-champagne/40 group-hover:bg-champagne/10 flex items-center justify-center transition-all duration-500">
+                                <div className="inline-flex items-center gap-3 text-t-muted group-hover:text-t-strong transition-colors duration-300">
+                                    <div className="w-10 h-10 rounded-full border border-t-border group-hover:border-champagne/40 group-hover:bg-champagne/10 flex items-center justify-center transition-all duration-500">
                                         <ArrowRight className="w-4 h-4 -rotate-45 group-hover:rotate-0 transition-transform duration-500" />
                                     </div>
                                     <span className="font-mono text-xs uppercase tracking-[0.15em] font-bold">

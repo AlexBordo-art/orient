@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 const SiteFooter: React.FC = () => {
     return (
-        <footer className="bg-obsidian/90 backdrop-blur-3xl border-t border-white/5 py-16 text-white relative z-10">
+        <footer className="bg-t-bg/90 backdrop-blur-3xl border-t border-t-border py-16 text-t-text relative z-10">
             <div className="container-main grid grid-cols-1 md:grid-cols-4 gap-12">
                 <div className="md:col-span-1">
                     <div className="flex items-center space-x-2 mb-6 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
-                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-obsidian-dark text-sm font-mono font-bold bg-champagne">OE</div>
-                        <span className="font-heading text-2xl font-bold tracking-tight text-white">Orient Express.</span>
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-t-bg text-sm font-mono font-bold bg-t-strong">OE</div>
+                        <span className="font-heading text-2xl font-bold tracking-tight text-t-text">Ориент Экспресс.</span>
                     </div>
                     <p className="text-sm font-sans font-light text-slate-400 leading-relaxed mb-6">
                         Специализированное бюро путешествий и визовой поддержки. Работаем с 2007 года.

@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ModalContext } from '../layouts/RootLayout';
-import { ChevronDown } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
+import { ChevronDown, Sun, Moon } from 'lucide-react';
 
 const NAV_LINKS = [
     {
@@ -26,6 +27,7 @@ const NAV_LINKS = [
 
 export function Navbar() {
     const { openLeadModal } = useContext(ModalContext);
+    const { theme, toggle: toggleTheme } = useTheme();
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -43,14 +45,18 @@ export function Navbar() {
         setMenuOpen(false);
     }, [location.pathname]);
 
-    const textColor = scrolled ? 'text-charcoal/70 hover:text-primary' : 'text-white/80 hover:text-white';
-    const activeColor = scrolled ? 'text-primary' : 'text-champagne';
+    const isDayTheme = theme === 'day';
+    const textColor = (scrolled || isDayTheme) ? 'text-charcoal/70 hover:text-primary' : 'text-white/80 hover:text-white';
+    const activeColor = (scrolled || isDayTheme) ? 'text-primary' : 'text-champagne';
 
     return (
         <nav
-            className={`fixed left-1/2 -translate-x-1/2 top-6 z-50 transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] rounded-pill ${scrolled
+            className={`fixed left-1/2 -translate-x-1/2 top-6 z-50 transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] rounded-pill ${
+                scrolled
                 ? 'w-[90%] max-w-5xl bg-white/60 backdrop-blur-xl border border-primary/10 shadow-2xl py-3 px-6'
-                : 'w-full max-w-7xl bg-transparent border-transparent py-5 px-8'
+                : isDayTheme
+                    ? 'w-full max-w-7xl bg-white/40 backdrop-blur-md border border-primary/5 py-5 px-8'
+                    : 'w-full max-w-7xl bg-transparent border-transparent py-5 px-8'
                 }`}
         >
             <div className="flex items-center justify-between">
@@ -60,8 +66,8 @@ export function Navbar() {
                         <span className="relative z-10">OE</span>
                         <div className="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
                     </div>
-                    <span className={`font-heading font-bold text-lg tracking-tight transition-colors duration-500 ${scrolled ? 'text-charcoal' : 'text-white'}`}>
-                        Orient Express.
+                    <span className={`font-heading font-bold text-lg tracking-tight transition-colors duration-500 ${(scrolled || isDayTheme) ? 'text-charcoal' : 'text-white'}`}>
+                        Ориент Экспресс.
                     </span>
                 </Link>
 
@@ -107,8 +113,24 @@ export function Navbar() {
                     })}
                 </div>
 
-                {/* CTA + Burger */}
-                <div className="flex items-center gap-4">
+                {/* Theme Toggle + CTA + Burger */}
+                <div className="flex items-center gap-3">
+                    {/* Day / Night Toggle */}
+                    <button
+                        onClick={toggleTheme}
+                        aria-label={theme === 'night' ? 'Включить дневной режим' : 'Включить ночной режим'}
+                        className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-500 ${
+                            scrolled
+                                ? 'bg-primary/5 hover:bg-primary/10 text-primary/60 hover:text-primary'
+                                : 'bg-white/5 hover:bg-white/15 text-white/60 hover:text-champagne'
+                        }`}
+                    >
+                        {theme === 'night'
+                            ? <Sun size={16} className="transition-transform duration-500 hover:rotate-90" />
+                            : <Moon size={16} className="transition-transform duration-500 hover:-rotate-12" />
+                        }
+                    </button>
+
                     <button
                         onClick={openLeadModal}
                         className="hidden md:flex items-center justify-center px-6 py-2.5 rounded-pill text-sm font-semibold transition-all duration-300 overflow-hidden relative group bg-gradient-to-r from-champagne-light to-champagne text-obsidian-dark hover:scale-105 shadow-lg shadow-champagne/20"
@@ -123,9 +145,9 @@ export function Navbar() {
                         onClick={() => setMenuOpen(v => !v)}
                         aria-label="Menu"
                     >
-                        <span className={`block w-6 h-[2px] rounded-full transition-all duration-300 ${scrolled || menuOpen ? 'bg-charcoal' : 'bg-white'} ${menuOpen ? 'rotate-45 translate-y-[8px]' : ''}`} />
-                        <span className={`block w-6 h-[2px] rounded-full transition-all duration-300 ${scrolled || menuOpen ? 'bg-charcoal' : 'bg-white'} ${menuOpen ? 'opacity-0' : ''}`} />
-                        <span className={`block w-6 h-[2px] rounded-full transition-all duration-300 ${scrolled || menuOpen ? 'bg-charcoal' : 'bg-white'} ${menuOpen ? '-rotate-45 -translate-y-[8px]' : ''}`} />
+                        <span className={`block w-6 h-[2px] rounded-full transition-all duration-300 ${scrolled || menuOpen || isDayTheme ? 'bg-charcoal' : 'bg-white'} ${menuOpen ? 'rotate-45 translate-y-[8px]' : ''}`} />
+                        <span className={`block w-6 h-[2px] rounded-full transition-all duration-300 ${scrolled || menuOpen || isDayTheme ? 'bg-charcoal' : 'bg-white'} ${menuOpen ? 'opacity-0' : ''}`} />
+                        <span className={`block w-6 h-[2px] rounded-full transition-all duration-300 ${scrolled || menuOpen || isDayTheme ? 'bg-charcoal' : 'bg-white'} ${menuOpen ? '-rotate-45 -translate-y-[8px]' : ''}`} />
                     </button>
                 </div>
             </div>

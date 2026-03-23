@@ -28,17 +28,32 @@ export default {
           DEFAULT: 'rgba(255, 255, 255, 0.08)',
           dark: 'rgba(255, 255, 255, 0.03)',
         },
-        // Semantic aliases — used across Navbar, LeadModal, PricingFooter, Process, Destinations
-        primary: '#0F172A',      // obsidian — dark brand anchor
-        charcoal: '#1E293B',     // obsidian.light — text on light bg
-        cream: '#F8FAFC',        // slate-50 — light bg & text on dark
-        accent: '#D4AF37',       // champagne — CTA highlights
-        cta: '#D4AF37',          // champagne — CTA text color
+        // Semantic aliases
+        primary: '#0F172A',
+        charcoal: '#1E293B',
+        cream: '#F8FAFC',
+        accent: '#D4AF37',
+        cta: '#D4AF37',
+
+        // Theme-aware tokens — resolve via CSS custom properties
+        t: {
+          bg:       'var(--color-bg)',
+          elevated: 'var(--color-bg-elevated)',
+          card:     'var(--color-bg-card)',
+          text:     'var(--color-text)',
+          muted:    'var(--color-text-muted)',
+          subtle:   'var(--color-text-subtle)',
+          accent:   'var(--color-accent)',
+          strong:   'var(--color-accent-strong)',
+          border:   'var(--color-border)',
+          glass:    'var(--color-glass-bg)',
+          'glass-border': 'var(--color-glass-border)',
+        },
       },
       fontFamily: {
-        heading: ['\"Playfair Display\"', 'serif'], // Luxury Cyrillic headings — high contrast elegant serifs
-        sans: ['\"Inter\"', 'sans-serif'], // Clean readable body — perfect Cyrillic rendering
-        mono: ['\"Space Mono\"', 'monospace'], // Formatted numbers/data
+        heading: ['"Cormorant Garamond"', 'serif'], // Luxury Cyrillic headings from Stitch
+        sans: ['"Inter"', 'sans-serif'], // Clean readable body 
+        mono: ['"Space Grotesk"', 'sans-serif'], // Technical / Label font from Stitch
       },
       fontSize: {
         'display': ['clamp(3rem, 10vw, 12rem)', { lineHeight: '0.9', letterSpacing: '-0.02em' }],

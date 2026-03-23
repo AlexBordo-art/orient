@@ -77,10 +77,10 @@ const PopularDestinations: React.FC = () => {
         <section ref={sectionRef} className="section-padding relative z-10">
             <div className="container-main">
                 <div ref={headerRef} className="text-center mb-16 flex flex-col items-center">
-                    <h3 className="text-champagne text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-4 font-mono">
+                    <h3 className="text-t-strong text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-4 font-mono">
                         Популярные направления
                     </h3>
-                    <p className="text-slate-300 font-sans font-light text-lg md:text-xl max-w-2xl text-center">
+                    <p className="text-t-muted font-sans font-light text-lg md:text-xl max-w-2xl text-center">
                         Синтез лучших точек для бизнес-интервенций и премиального отдыха.
                     </p>
                 </div>
@@ -100,16 +100,16 @@ const PopularDestinations: React.FC = () => {
                             />
 
                             {/* Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-obsidian-dark/90 via-obsidian-dark/30 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-t-bg/90 via-t-bg/30 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
 
                             {/* Content */}
                             <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                                <h4 className="text-3xl font-heading font-semibold text-slate-100 mb-1">{dest.title}</h4>
-                                <p className="text-slate-300 font-sans font-light text-sm mb-6">{dest.desc}</p>
+                                <h4 className="text-3xl font-heading font-semibold text-t-text mb-1">{dest.title}</h4>
+                                <p className="text-t-muted font-sans font-light text-sm mb-6">{dest.desc}</p>
 
                                 {/* Action Button that slides up */}
                                 <div className="overflow-hidden">
-                                    <span className="inline-flex items-center gap-2 text-champagne text-xs font-bold font-mono tracking-widest uppercase translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                                    <span className="inline-flex items-center gap-2 text-t-strong text-xs font-bold font-mono tracking-widest uppercase translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
                                         Исследовать
                                         <ArrowRight className="w-4 h-4" />
                                     </span>

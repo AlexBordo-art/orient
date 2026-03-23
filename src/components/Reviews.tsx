@@ -52,15 +52,15 @@ const Reviews: React.FC = () => {
         <section id="reviews" className="section-padding relative overflow-hidden z-10" ref={sectionRef}>
             <div className="container-main relative z-10">
                 <div className="text-center mb-16 lg:mb-24 flex flex-col items-center review-header">
-                    <h3 className="text-champagne text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-4 font-mono">
+                    <h3 className="text-t-strong text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-4 font-mono">
                         Социальное доказательство
                     </h3>
                     <KineticTitle
                         text="Репутация без компромиссов"
                         tag="h2"
-                        className="text-slate-100 text-4xl md:text-5xl lg:text-6xl font-heading font-medium tracking-tight text-center mb-6"
+                        className="text-t-text text-4xl md:text-5xl lg:text-6xl font-heading font-medium tracking-tight text-center mb-6"
                     />
-                    <p className="text-slate-300 font-sans font-light text-lg md:text-xl max-w-2xl text-center">
+                    <p className="text-t-muted font-sans font-light text-lg md:text-xl max-w-2xl text-center">
                         Мы гордимся своей открытой репутацией на независимых площадках, где каждый может оценить уровень нашей экспертизы.
                     </p>
                 </div>
@@ -75,18 +75,18 @@ const Reviews: React.FC = () => {
                             <div>
                                 <div className="flex justify-between items-start mb-10">
                                     <div className="flex items-center space-x-3">
-                                        <h4 className="text-3xl font-heading font-medium text-slate-100">{review.platform}</h4>
+                                        <h4 className="text-3xl font-heading font-medium text-t-text">{review.platform}</h4>
                                     </div>
                                     <div className="text-right flex flex-col items-end">
-                                        <div className="flex items-center space-x-2 text-champagne mb-1">
+                                        <div className="flex items-center space-x-2 text-t-strong mb-1">
                                             <span className="text-2xl font-bold font-mono tracking-tighter">{review.rating}</span>
                                             <Star className="w-5 h-5 fill-current" />
                                         </div>
-                                        <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">{review.count} отзывов</div>
+                                        <div className="text-[10px] font-mono text-t-muted uppercase tracking-widest">{review.count} отзывов</div>
                                     </div>
                                 </div>
 
-                                <p className="text-slate-300 font-sans font-light text-lg leading-relaxed mb-10">
+                                <p className="text-t-muted font-sans font-light text-lg leading-relaxed mb-10">
                                     "{review.desc}"
                                 </p>
                             </div>

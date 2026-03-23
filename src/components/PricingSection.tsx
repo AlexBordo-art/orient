@@ -1,97 +1,115 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Check, ArrowRight } from 'lucide-react';
 import Magnetic from './Magnetic';
 
 const PricingSection: React.FC = () => {
     return (
-        <section id="pricing" className="bg-transparent relative pt-24 pb-16 z-10">
-            <div className="container-main">
-                <div className="text-center mb-16">
-                    <h2 className="text-accent text-sm font-mono font-bold tracking-[0.2em] uppercase mb-4">Инвестиции в спокойствие</h2>
-                    <h3 className="text-cream text-5xl md:text-6xl font-heading italic">Прозрачные тарифы</h3>
+        <section id="pricing" className="bg-transparent relative w-full h-full flex flex-col justify-center px-4 sm:px-6">
+            <div className="container-main w-full max-w-7xl mx-auto flex flex-col justify-center stretch lg:h-auto min-h-0">
+                <div className="text-center mb-6 md:mb-10 shrink-0">
+                    <span className="text-t-strong drop-shadow-xl text-[10px] font-mono font-bold tracking-[0.4em] uppercase mb-2 md:mb-3 block">Инвестиции в спокойствие</span>
+                    <h2 className="text-t-text text-4xl md:text-5xl lg:text-6xl font-heading font-light tracking-tight leading-tight">Прозрачные <span className="text-t-text/90">тарифы</span></h2>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div
+                    className="flex flex-row md:grid md:grid-cols-3 gap-4 lg:gap-6 overflow-x-auto md:overflow-visible pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 items-stretch"
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
                     {/* Base Tier */}
-                    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-sm flex flex-col justify-between hover:bg-white/10 transition-colors duration-300">
+                    <div className="snap-center shrink-0 w-[85vw] sm:w-[400px] md:w-auto bg-t-card backdrop-blur-xl border border-t-border rounded-xl p-5 lg:p-6 flex flex-col justify-between shadow-2xl transition-all duration-500 hover:border-white/30 group">
                         <div>
-                            <h4 className="text-2xl font-heading text-cream mb-2">Консультация</h4>
-                            <p className="text-cream/60 text-sm font-sans font-light mb-6">Аудит вашей ситуации и точный план действий.</p>
-                            <div className="text-4xl font-bold font-sans text-cream mb-8">
-                                Бесплатно
-                            </div>
-                            <ul className="space-y-4 mb-10">
+                            <span className="font-mono text-t-text/50 text-[10px] tracking-widest uppercase">Основа</span>
+                            <h3 className="text-2xl font-heading text-t-text mt-1 mb-2 italic">Консультация</h3>
+                            <p className="text-t-text/60 text-xs font-sans font-light mb-4">Аудит вашей ситуации и точный план действий.</p>
+
+                            <ul className="space-y-2 lg:space-y-3 mb-6">
                                 {['Оценка шансов на визу', 'Выбор типа визы', 'Список документов', 'Расчет стоимости'].map((feature, i) => (
-                                    <li key={i} className="flex items-start text-sm font-sans text-cream/80">
-                                        <Check className="w-5 h-5 text-accent mr-3 shrink-0" />
+                                    <li key={i} className="flex items-center text-xs lg:text-sm font-sans text-t-text/80">
+                                        <span className="material-symbols-outlined text-[14px] lg:text-[16px] text-t-strong/70 mr-3 shrink-0">blur_on</span>
                                         {feature}
                                     </li>
                                 ))}
                             </ul>
                         </div>
-                        <Magnetic strength={10}>
-                            <button className="w-full inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium cursor-pointer text-cream border-[1.5px] border-white/20 hover:border-accent hover:bg-accent/10 transition-all duration-300 justify-center">
-                                Получить консультацию
-                            </button>
-                        </Magnetic>
-                        <p className="text-center text-cream/30 text-xs mt-3">Ответим за 15 минут в рабочее время</p>
+                        <div className="mt-auto">
+                            <div className="text-2xl lg:text-3xl font-bold font-heading text-t-text mb-4">
+                                Бесплатно
+                            </div>
+                            <Magnetic strength={10}>
+                                <button className="w-full inline-flex items-center gap-2 px-4 py-3 lg:py-4 rounded-lg font-mono text-[9px] lg:text-[10px] uppercase tracking-[0.2em] cursor-pointer text-t-text border border-t-border hover:border-champagne hover:bg-t-strong hover:text-t-bg transition-all duration-500 justify-center">
+                                    Получить консультацию
+                                </button>
+                            </Magnetic>
+                            <p className="text-center text-t-text/30 text-[10px] mt-3">Ответим за 15 минут в рабочее время</p>
+                        </div>
                     </div>
 
                     {/* Mid Tier — Highlighted */}
-                    <div className="bg-obsidian-light/80 backdrop-blur-xl border-2 border-champagne/30 rounded-3xl p-8 shadow-2xl shadow-champagne/10 flex flex-col justify-between relative">
-                        <span className="absolute -top-3 right-6 bg-champagne text-obsidian-dark text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-lg">хит продаж</span>
+                    <div className="snap-center shrink-0 w-[85vw] sm:w-[400px] md:w-auto bg-t-card backdrop-blur-xl border border-champagne/30 rounded-xl p-5 lg:p-8 flex flex-col justify-between shadow-[0_20px_60px_rgba(0,0,0,0.8)] relative overflow-hidden group md:-translate-y-3">
+                        <div className="absolute top-0 right-0 p-4 lg:p-6 flex items-center gap-2">
+                            <span className="text-[9px] font-mono uppercase tracking-widest text-t-strong/80">Хит продаж</span>
+                            <div className="w-2 h-2 rounded-full bg-t-strong animate-pulse shadow-[0_0_10px_#F7E7CE]"></div>
+                        </div>
                         <div>
-                            <h4 className="text-2xl font-heading text-cream mb-2">Виза «Под ключ»</h4>
-                            <p className="text-cream/70 text-sm font-sans font-light mb-6">Снимаем бюрократию. От вас только паспорт.</p>
-                            <div className="text-4xl font-bold font-sans text-cream mb-8">
-                                от 3 000 ₽ <span className="text-base font-light text-cream/50">/ услуга</span>
-                            </div>
-                            <ul className="space-y-4 mb-10">
+                            <span className="font-mono text-t-strong text-[10px] tracking-widest uppercase">Стандарт</span>
+                            <h3 className="text-3xl lg:text-4xl font-heading text-t-strong mt-1 mb-2 italic drop-shadow-md">Виза «Под ключ»</h3>
+                            <p className="text-t-text/70 text-xs font-sans font-light mb-4">Снимаем бюрократию. От вас только паспорт.</p>
+
+                            <ul className="space-y-2 lg:space-y-3 mb-6">
                                 {['Заполнение всех анкет', 'Перевод документов', 'Бронь авиа и отелей', 'Запись в консульство/ВЦ', 'Сопровождение'].map((feature, i) => (
-                                    <li key={i} className="flex items-start text-sm font-sans text-cream/90">
-                                        <Check className="w-5 h-5 text-champagne mr-3 shrink-0" />
+                                    <li key={i} className="flex items-center text-xs lg:text-sm font-sans text-t-text/90">
+                                        <span className="material-symbols-outlined text-[14px] lg:text-[16px] text-t-strong mr-3 shrink-0">filter_center_focus</span>
                                         {feature}
                                     </li>
                                 ))}
                             </ul>
                         </div>
-                        <Magnetic strength={10}>
-                            <Link
-                                to="/visas"
-                                className="w-full inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold cursor-pointer bg-gradient-to-r from-champagne-light to-champagne text-obsidian-dark hover:opacity-90 transition-all duration-300 justify-center"
-                            >
-                                Оформить визу <ArrowRight className="w-4 h-4 ml-1" />
-                            </Link>
-                        </Magnetic>
-                        <p className="text-center text-cream/40 text-xs mt-3">Гарантия: вернём деньги при отказе консульства</p>
+                        <div className="mt-auto">
+                            <div className="text-2xl lg:text-3xl font-bold font-heading text-t-text mb-4">
+                                от 3 000 ₽ <span className="text-[10px] font-mono tracking-tighter text-t-text/50 uppercase">/ услуга</span>
+                            </div>
+                            <Magnetic strength={10}>
+                                <Link
+                                    to="/visas"
+                                    className="w-full inline-flex items-center gap-2 px-4 py-3 lg:py-4 rounded-lg font-mono text-[9px] lg:text-[11px] font-bold tracking-[0.2em] cursor-pointer bg-t-strong text-t-bg shadow-[0_0_20px_rgba(247,231,206,0.3)] hover:shadow-[0_0_35px_rgba(247,231,206,0.5)] transition-all duration-500 justify-center uppercase"
+                                >
+                                    Оформить визу
+                                </Link>
+                            </Magnetic>
+                            <p className="text-center text-t-text/40 text-[10px] mt-3">Гарантия: вернём деньги при отказе</p>
+                        </div>
                     </div>
 
                     {/* High Tier */}
-                    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-sm flex flex-col justify-between hover:bg-white/10 transition-colors duration-300">
+                    <div className="snap-center shrink-0 w-[85vw] sm:w-[400px] md:w-auto bg-t-card backdrop-blur-xl border border-t-border rounded-xl p-5 lg:p-6 flex flex-col justify-between shadow-2xl transition-all duration-500 hover:border-white/30 group">
                         <div>
-                            <h4 className="text-2xl font-heading text-cream mb-2">Комплексный Тур</h4>
-                            <p className="text-cream/60 text-sm font-sans font-light mb-6">Виза + билеты + отель + страховка + программа.</p>
-                            <div className="text-4xl font-bold font-sans text-cream mb-8">
-                                Индивид.
-                            </div>
-                            <ul className="space-y-4 mb-10">
+                            <span className="font-mono text-t-text/50 text-[10px] tracking-widest uppercase">Премиум</span>
+                            <h3 className="text-2xl font-heading text-t-text mt-1 mb-2 italic">Комплексный Тур</h3>
+                            <p className="text-t-text/60 text-xs font-sans font-light mb-4">Виза + билеты + отель + страховка + программа.</p>
+
+                            <ul className="space-y-2 lg:space-y-3 mb-6">
                                 {['Оформление визы', 'Билеты по лучшим ценам', 'Подбор отелей', 'Трансферы и гиды', 'Ассистент 24/7'].map((feature, i) => (
-                                    <li key={i} className="flex items-start text-sm font-sans text-cream/80">
-                                        <Check className="w-5 h-5 text-accent mr-3 shrink-0" />
+                                    <li key={i} className="flex items-center text-xs lg:text-sm font-sans text-t-text/80">
+                                        <span className="material-symbols-outlined text-[14px] lg:text-[16px] text-t-strong/70 mr-3 shrink-0">layers</span>
                                         {feature}
                                     </li>
                                 ))}
                             </ul>
                         </div>
-                        <Magnetic strength={10}>
-                            <Link
-                                to="/tours"
-                                className="w-full inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium cursor-pointer text-cream border-[1.5px] border-white/20 hover:border-accent hover:bg-accent/10 transition-all duration-300 justify-center"
-                            >
-                                Рассчитать тур
-                            </Link>
-                        </Magnetic>
+                        <div className="mt-auto">
+                            <div className="text-2xl lg:text-3xl font-bold font-heading text-t-text mb-4">
+                                Индивид.
+                            </div>
+                            <Magnetic strength={10}>
+                                <Link
+                                    to="/tours"
+                                    className="w-full inline-flex items-center gap-2 px-4 py-3 lg:py-4 rounded-lg font-mono text-[9px] lg:text-[10px] uppercase tracking-[0.2em] cursor-pointer text-t-text border border-t-border hover:border-champagne hover:bg-t-strong hover:text-t-bg transition-all duration-500 justify-center"
+                                >
+                                    Рассчитать тур
+                                </Link>
+                            </Magnetic>
+                            <p className="text-center text-transparent text-[10px] mt-3">_</p>
+                        </div>
                     </div>
                 </div>
             </div>

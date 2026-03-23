@@ -56,7 +56,7 @@ const StickyGridFunnel: React.FC<StickyGridFunnelProps> = ({ onOpenModal }) => {
     }, { scope: containerRef });
 
     return (
-        <section ref={containerRef} className="h-screen w-full relative overflow-hidden bg-obsidian text-white flex items-center justify-center p-4 lg:p-12">
+        <section ref={containerRef} className="h-screen w-full relative overflow-hidden bg-t-bg text-t-text flex items-center justify-center p-4 lg:p-12">
 
             <div className="relative w-full h-full max-w-7xl mx-auto flex flex-col md:flex-row gap-4 md:gap-6 items-center justify-center">
 
@@ -67,9 +67,9 @@ const StickyGridFunnel: React.FC<StickyGridFunnelProps> = ({ onOpenModal }) => {
                         alt="Paris"
                         className="absolute inset-0 w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-obsidian-dark/90 via-obsidian-dark/30 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-t-bg/90 via-t-bg/30 to-transparent" />
                     <div className="absolute bottom-10 left-10 right-10">
-                        <h2 className="text-4xl md:text-6xl font-heading font-normal italic text-champagne leading-tight">
+                        <h2 className="text-4xl md:text-6xl font-heading font-normal italic text-t-strong leading-tight">
                             Ваше идеальное
                             <br />путешествие начинается
                             <br /><span className="text-white">здесь.</span>
@@ -83,13 +83,13 @@ const StickyGridFunnel: React.FC<StickyGridFunnelProps> = ({ onOpenModal }) => {
                     <div className="card-pain absolute inset-0 md:inset-auto md:relative w-full h-1/2 glass-dark p-8 md:p-10 flex flex-col justify-center border border-red-900/30">
                         <ShieldAlert className="text-red-400 w-12 h-12 mb-6" />
                         <h3 className="text-2xl font-sans font-bold mb-4">Самостоятельное оформление — это риск.</h3>
-                        <p className="text-slate-400 text-lg leading-relaxed">
+                        <p className="text-t-muted text-lg leading-relaxed">
                             Отказы в визе? Очереди в посольствах? Потерянные деньги на невозвратных авиабилетах? Бюрократия убивает радость поездки.
                         </p>
                     </div>
 
                     {/* 3. SOLUTION */}
-                    <div className="card-solution absolute inset-0 md:inset-auto md:relative w-full h-1/2 bg-champagne text-obsidian-dark rounded-3xl p-8 md:p-10 flex flex-col justify-center shadow-[0_0_50px_rgba(212,175,55,0.15)]">
+                    <div className="card-solution absolute inset-0 md:inset-auto md:relative w-full h-1/2 bg-t-strong text-t-bg rounded-3xl p-8 md:p-10 flex flex-col justify-center shadow-[0_0_50px_rgba(212,175,55,0.15)]">
                         <div className="flex items-center gap-3 mb-6">
                             <CheckCircle2 className="w-8 h-8" />
                             <span className="font-mono text-sm uppercase tracking-widest font-bold">Наше решение</span>
@@ -110,10 +110,10 @@ const StickyGridFunnel: React.FC<StickyGridFunnelProps> = ({ onOpenModal }) => {
                     <div className="absolute inset-0 z-30 grid grid-cols-2 gap-4 pointer-events-none">
                         <div className="card-product col-span-2 glass-panel p-6 flex justify-between items-center pointer-events-auto hover:bg-white/10 transition-colors cursor-pointer" onClick={() => navigate('/visas')}>
                             <div>
-                                <h4 className="text-xl font-bold text-champagne mb-1">Визовый Бутик</h4>
-                                <p className="text-sm text-slate-400">Азия, Европа, CША, АТЭС</p>
+                                <h4 className="text-xl font-bold text-t-strong mb-1">Визовый Бутик</h4>
+                                <p className="text-sm text-t-muted">Азия, Европа, CША, АТЭС</p>
                             </div>
-                            <ArrowRight className="text-champagne" />
+                            <ArrowRight className="text-t-strong" />
                         </div>
                         <div className="card-product glass-panel p-6 flex flex-col justify-between pointer-events-auto hover:bg-white/10 transition-colors cursor-pointer" onClick={() => navigate('/tours')}>
                             <h4 className="text-lg font-bold mb-2">Приватные Туры</h4>
@@ -126,7 +126,7 @@ const StickyGridFunnel: React.FC<StickyGridFunnelProps> = ({ onOpenModal }) => {
 
                         {/* 5. CTA */}
                         <div className="card-cta col-span-2 relative mt-4 pointer-events-auto">
-                            <div className="absolute inset-0 bg-champagne filter blur-xl opacity-20 rounded-full"></div>
+                            <div className="absolute inset-0 bg-t-strong filter blur-xl opacity-20 rounded-full"></div>
                             <button
                                 onClick={onOpenModal}
                                 className="w-full btn-premium py-6 rounded-3xl text-xl font-bold"

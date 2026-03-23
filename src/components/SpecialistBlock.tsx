@@ -40,34 +40,34 @@ const SpecialistBlock: React.FC<SpecialistBlockProps> = ({ type }) => {
             {/* Background */}
             <div className="absolute inset-0">
                 <img src={s.bgImage} alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-r from-obsidian-dark/95 via-obsidian-dark/80 to-obsidian-dark/40" />
+                <div className="absolute inset-0 bg-gradient-to-r from-t-bg/95 via-t-bg/80 to-t-bg/40" />
             </div>
 
             {/* Content */}
             <div className="relative z-10 p-8 md:p-12 max-w-2xl">
                 {/* Label */}
-                <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-champagne/60 block mb-6">
+                <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-t-accent opacity-60 block mb-6">
                     Ваш личный эксперт
                 </span>
 
                 {/* Name + title */}
                 <div className="mb-6">
-                    <h3 className="font-heading text-4xl md:text-5xl text-white font-light tracking-tight mb-1">
+                    <h3 className="font-heading text-4xl md:text-5xl text-t-text font-light tracking-tight mb-1">
                         {s.name}
                     </h3>
-                    <p className="text-champagne/70 text-sm font-mono tracking-wide">{s.region}</p>
+                    <p className="text-t-accent opacity-70 text-sm font-mono tracking-wide">{s.region}</p>
                 </div>
 
                 {/* Quote — this is the hero element */}
-                <blockquote className="text-white/80 text-lg md:text-xl font-heading font-light italic leading-relaxed mb-8 border-l-2 border-champagne/40 pl-5">
+                <blockquote className="text-t-text/80 text-lg md:text-xl font-heading font-light italic leading-relaxed mb-8 border-l-2 border-t-strong/40 pl-5">
                     {s.quote}
                 </blockquote>
 
                 {/* Facts — expertise signals, not bio */}
                 <ul className="flex flex-col gap-2 mb-8">
                     {s.facts.map((fact, i) => (
-                        <li key={i} className="flex items-center gap-3 text-sm text-white/60">
-                            <span className="w-1 h-1 rounded-full bg-champagne shrink-0" />
+                        <li key={i} className="flex items-center gap-3 text-sm text-t-text/60">
+                            <span className="w-1 h-1 rounded-full bg-t-strong shrink-0" />
                             {fact}
                         </li>
                     ))}
@@ -78,14 +78,14 @@ const SpecialistBlock: React.FC<SpecialistBlockProps> = ({ type }) => {
                     href={`https://wa.me/${s.whatsapp}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 px-6 py-3 bg-white/10 hover:bg-white/15 border border-white/20 hover:border-champagne/40 rounded-full text-white text-sm font-mono tracking-wide transition-all duration-300 group"
+                    className="inline-flex items-center gap-3 px-6 py-3 bg-t-card hover:bg-t-card/80 border border-t-border hover:border-t-strong/40 rounded-full text-t-text text-sm font-mono tracking-wide transition-all duration-300 group"
                 >
                     <svg className="w-4 h-4 text-[#25D366]" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
                         <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.857L.057 23.882l6.198-1.625A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.894a9.876 9.876 0 01-5.031-1.376l-.36-.214-3.733.979 1.001-3.656-.235-.376A9.862 9.862 0 012.106 12C2.106 6.54 6.54 2.106 12 2.106S21.894 6.54 21.894 12 17.46 21.894 12 21.894z"/>
                     </svg>
                     <span>Написать {s.name}</span>
-                    <span className="text-champagne group-hover:translate-x-0.5 transition-transform">→</span>
+                    <span className="text-t-strong group-hover:translate-x-0.5 transition-transform">→</span>
                 </a>
             </div>
         </div>

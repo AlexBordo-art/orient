@@ -50,20 +50,20 @@ const Breadcrumbs: React.FC = () => {
 
     return (
         <nav aria-label="Breadcrumb" className="w-full max-w-7xl mx-auto px-6 pt-28 pb-4">
-            <ol className="flex items-center gap-2 text-sm text-slate-400 font-sans">
+            <ol className="flex items-center gap-2 text-sm text-t-muted font-sans">
                 <li>
-                    <Link to="/" className="hover:text-champagne transition-colors flex items-center gap-1">
+                    <Link to="/" className="hover:text-t-strong transition-colors flex items-center gap-1">
                         <Home size={14} />
                         <span>Главная</span>
                     </Link>
                 </li>
                 {crumbs.map(crumb => (
                     <li key={crumb.path} className="flex items-center gap-2">
-                        <ChevronRight size={14} className="text-slate-600" />
+                        <ChevronRight size={14} className="text-t-subtle" />
                         {crumb.isLast ? (
-                            <span className="text-champagne font-medium">{crumb.label}</span>
+                            <span className="text-t-strong font-medium">{crumb.label}</span>
                         ) : (
-                            <Link to={crumb.path} className="hover:text-champagne transition-colors">
+                            <Link to={crumb.path} className="hover:text-t-strong transition-colors">
                                 {crumb.label}
                             </Link>
                         )}

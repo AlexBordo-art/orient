@@ -83,13 +83,13 @@ const ServicesGrid: React.FC = () => {
         <section ref={sectionRef} className="section-padding relative z-10">
             <div className="container-main">
                 <div ref={headerRef} className="text-center mb-16 lg:mb-24 flex flex-col items-center">
-                    <h3 ref={headerRef} className="text-champagne text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-4 font-mono">
+                    <h3 ref={headerRef} className="text-t-strong text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-4 font-mono">
                         Инфраструктура Услуг
                     </h3>
                     <KineticTitle
                         text="Экосистема для людей, которые ценят свое время"
                         tag="h2"
-                        className="text-slate-100 text-4xl md:text-5xl lg:text-6xl font-heading font-medium tracking-tight max-w-3xl text-center"
+                        className="text-t-text text-4xl md:text-5xl lg:text-6xl font-heading font-medium tracking-tight max-w-3xl text-center"
                     />
                 </div>
 
@@ -117,19 +117,19 @@ const ServicesGrid: React.FC = () => {
                                 <div className="absolute -top-12 -right-12 w-48 h-48 bg-sapphire/20 rounded-full blur-[50px] group-hover:bg-champagne/10 transition-colors duration-700 z-0" />
 
                                 <div className="relative z-10 flex justify-between items-start">
-                                    <div className="bg-obsidian w-14 h-14 rounded-2xl flex items-center justify-center border border-white/5 shadow-inner">
-                                        <Icon className="w-7 h-7 text-champagne-light" strokeWidth={1.5} />
+                                    <div className="bg-t-card w-14 h-14 rounded-2xl flex items-center justify-center border border-white/5 shadow-inner">
+                                        <Icon className="w-7 h-7 text-t-strong-light" strokeWidth={1.5} />
                                     </div>
                                     <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300">
-                                        <ArrowRight className="w-5 h-5 text-champagne" />
+                                        <ArrowRight className="w-5 h-5 text-t-strong" />
                                     </div>
                                 </div>
 
                                 <div className="relative z-10 mt-auto pt-8">
-                                    <h4 className={`font-heading font-medium text-slate-100 tracking-tight leading-tight mb-3 ${isLarge ? 'text-4xl pr-12' : 'text-2xl'}`}>
+                                    <h4 className={`font-heading font-medium text-t-text tracking-tight leading-tight mb-3 ${isLarge ? 'text-4xl pr-12' : 'text-2xl'}`}>
                                         {service.title}
                                     </h4>
-                                    <p className={`text-slate-300 font-sans font-light leading-relaxed max-w-xl ${isLarge ? 'text-lg' : 'text-base line-clamp-2'}`}>
+                                    <p className={`text-t-muted font-sans font-light leading-relaxed max-w-xl ${isLarge ? 'text-lg' : 'text-base line-clamp-2'}`}>
                                         {service.desc}
                                     </p>
                                 </div>

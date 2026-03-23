@@ -18,7 +18,7 @@ const VISA_COUNTRIES = [
 
 const VisaHub: React.FC = () => {
     return (
-        <div className="min-h-screen bg-obsidian">
+        <div className="min-h-screen bg-t-bg">
             <SEO
                 title="Оформление виз — Визовый центр"
                 description="Визовый центр Ориент Экспресс: визы в Китай, Корею, Таиланд, Шенген, Сингапур, Индию, Болгарию, Кипр. 99.8% одобрений. Оформление под ключ от 3000₽."
@@ -27,41 +27,39 @@ const VisaHub: React.FC = () => {
             />
             <Breadcrumbs />
             <div className="max-w-7xl mx-auto px-6 pb-20">
-                {/* Hub Header */}
                 <div className="mb-16">
                     <div className="flex items-center gap-3 mb-4">
-                        <div className="w-12 h-12 rounded-2xl bg-champagne/10 border border-champagne/20 flex items-center justify-center">
-                            <Stamp className="text-champagne" size={24} />
+                        <div className="w-12 h-12 rounded-2xl bg-t-strong/10 border border-t-strong/20 flex items-center justify-center">
+                            <Stamp className="text-t-strong" size={24} />
                         </div>
-                        <span className="text-champagne/60 text-sm font-mono tracking-widest uppercase">Визовый Центр</span>
+                        <span className="text-t-accent text-sm font-mono tracking-widest uppercase opacity-60">Визовый Центр</span>
                     </div>
-                    <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6 tracking-tight">
+                    <h1 className="text-4xl md:text-6xl font-heading font-bold text-t-text mb-6 tracking-tight">
                         Оформление виз <br />
-                        <span className="text-champagne italic">без бюрократии</span>
+                        <span className="text-t-accent italic">без бюрократии</span>
                     </h1>
-                    <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
+                    <p className="text-t-muted text-lg max-w-2xl leading-relaxed">
                         12+ лет экспертизы. 15,000+ успешно оформленных виз. Офисы в Хабаровске и Москве.
                         Мы берём весь процесс на себя — от аудита документов до подачи.
                     </p>
                 </div>
 
-                {/* Country Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {VISA_COUNTRIES.map(country => (
                         <Link
                             key={country.slug}
                             to={`/visas/${country.slug}`}
-                            className="group relative p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] hover:border-champagne/20 transition-all duration-500"
+                            className="group relative p-6 rounded-2xl border border-t-border bg-t-card hover:border-t-strong/30 transition-all duration-500"
                         >
                             {country.popular && (
-                                <span className="absolute top-3 right-3 text-[10px] font-mono text-champagne/60 bg-champagne/10 px-2 py-0.5 rounded-full">
+                                <span className="absolute top-3 right-3 text-[10px] font-mono text-t-accent bg-t-strong/10 px-2 py-0.5 rounded-full">
                                     популярное
                                 </span>
                             )}
                             <div className="text-4xl mb-4">{country.icon}</div>
-                            <h3 className="text-white font-semibold text-lg mb-2 group-hover:text-champagne transition-colors">{country.name}</h3>
-                            <p className="text-slate-500 text-sm leading-relaxed mb-4">{country.desc}</p>
-                            <div className="flex items-center gap-2 text-champagne/60 text-sm group-hover:text-champagne transition-colors">
+                            <h3 className="text-t-text font-semibold text-lg mb-2 group-hover:text-t-strong transition-colors">{country.name}</h3>
+                            <p className="text-t-subtle text-sm leading-relaxed mb-4">{country.desc}</p>
+                            <div className="flex items-center gap-2 text-t-accent text-sm group-hover:text-t-strong transition-colors">
                                 <span>Подробнее</span>
                                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                             </div>
@@ -71,20 +69,19 @@ const VisaHub: React.FC = () => {
 
                 <SpecialistBlock type="visa" />
 
-                {/* Trust Block */}
-                <div className="mt-8 p-8 rounded-2xl border border-white/5 bg-white/[0.02]">
+                <div className="mt-8 p-8 rounded-2xl border border-t-border bg-t-card">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                         <div>
-                            <div className="text-3xl font-bold text-champagne mb-2">99.8%</div>
-                            <div className="text-slate-400 text-sm">Одобренных заявок</div>
+                            <div className="text-3xl font-bold text-t-strong mb-2">99.8%</div>
+                            <div className="text-t-muted text-sm">Одобренных заявок</div>
                         </div>
                         <div>
-                            <div className="text-3xl font-bold text-champagne mb-2">12+ лет</div>
-                            <div className="text-slate-400 text-sm">На рынке</div>
+                            <div className="text-3xl font-bold text-t-strong mb-2">12+ лет</div>
+                            <div className="text-t-muted text-sm">На рынке</div>
                         </div>
                         <div>
-                            <div className="text-3xl font-bold text-champagne mb-2">15,000+</div>
-                            <div className="text-slate-400 text-sm">Оформленных виз</div>
+                            <div className="text-3xl font-bold text-t-strong mb-2">15,000+</div>
+                            <div className="text-t-muted text-sm">Оформленных виз</div>
                         </div>
                     </div>
                 </div>

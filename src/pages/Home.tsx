@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import CodropsStickyGrid from '../components/CodropsStickyGrid';
-import PricingSection from '../components/PricingSection';
 import SEO from '../components/SEO';
 import { ModalContext } from '../layouts/RootLayout';
 
@@ -27,7 +26,6 @@ const Home: React.FC = () => {
                 }}
             />
             <CodropsStickyGrid onOpenModal={openLeadModal} />
-            <PricingSection />
         </main>
     );
 };
