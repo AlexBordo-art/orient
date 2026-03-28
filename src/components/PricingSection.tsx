@@ -36,7 +36,7 @@ const PricingSection: React.FC = () => {
                                 Бесплатно
                             </div>
                             <Magnetic strength={10}>
-                                <button className="w-full inline-flex items-center gap-2 px-4 py-3 lg:py-4 rounded-lg font-mono text-[9px] lg:text-[10px] uppercase tracking-[0.2em] cursor-pointer text-t-text border border-t-border hover:border-champagne hover:bg-t-strong hover:text-t-bg transition-all duration-500 justify-center">
+                                <button className="btn-card btn-card-secondary justify-center py-3 lg:py-4 rounded-lg">
                                     Получить консультацию
                                 </button>
                             </Magnetic>
@@ -71,7 +71,7 @@ const PricingSection: React.FC = () => {
                             <Magnetic strength={10}>
                                 <Link
                                     to="/visas"
-                                    className="w-full inline-flex items-center gap-2 px-4 py-3 lg:py-4 rounded-lg font-mono text-[9px] lg:text-[11px] font-bold tracking-[0.2em] cursor-pointer bg-t-strong text-t-bg shadow-[0_0_20px_rgba(247,231,206,0.3)] hover:shadow-[0_0_35px_rgba(247,231,206,0.5)] transition-all duration-500 justify-center uppercase"
+                                    className="btn-card btn-card-primary justify-center py-3 lg:py-4 rounded-lg"
                                 >
                                     Оформить визу
                                 </Link>
@@ -103,7 +103,7 @@ const PricingSection: React.FC = () => {
                             <Magnetic strength={10}>
                                 <Link
                                     to="/tours"
-                                    className="w-full inline-flex items-center gap-2 px-4 py-3 lg:py-4 rounded-lg font-mono text-[9px] lg:text-[10px] uppercase tracking-[0.2em] cursor-pointer text-t-text border border-t-border hover:border-champagne hover:bg-t-strong hover:text-t-bg transition-all duration-500 justify-center"
+                                    className="btn-card btn-card-secondary justify-center py-3 lg:py-4 rounded-lg"
                                 >
                                     Рассчитать тур
                                 </Link>

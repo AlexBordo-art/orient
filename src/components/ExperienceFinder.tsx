@@ -66,8 +66,9 @@ const ExperienceFinder: React.FC<ExperienceFinderProps> = ({ images, onOpenModal
                         }
                     </h2>
                 </div>
-                <Link to="/tours" className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full border border-t-strong/30 bg-t-strong/8 hover:border-t-strong/60 hover:bg-t-strong/15 transition-all duration-300 text-xs font-mono uppercase tracking-[0.15em] text-t-strong hover:text-t-strong mt-4 md:mt-0">
-                    Все направления <span className="ml-0.5">→</span>
+                <Link to="/tours" className="hidden md:flex items-center gap-2 px-6 py-3 rounded-full border-2 border-t-strong/60 text-t-strong font-mono text-xs uppercase tracking-[0.15em] font-bold hover:bg-t-strong hover:text-t-bg transition-all duration-300 mt-4 md:mt-0 group">
+                    Все направления
+                    <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
                 </Link>
             </div>
 
@@ -89,66 +90,36 @@ const ExperienceFinder: React.FC<ExperienceFinderProps> = ({ images, onOpenModal
                 ))}
             </div>
 
-            {/* Destination cards */}
-            {destinations ? (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                    {destinations.map((dest, i) => (
-                        <Link
-                            key={i}
-                            to={dest.link}
-                            className="glass-card rounded-xl overflow-hidden bg-t-card backdrop-blur border border-t-border hover:border-champagne/30 transition-all duration-500 group flex flex-col"
-                            style={{ animationDelay: `${i * 80}ms` }}
-                        >
-                            <div className="relative h-36 md:h-44 overflow-hidden">
-                                <img
-                                    src={dest.img}
-                                    alt={dest.name}
-                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-obsidian-dark/80 to-transparent" />
-                                <span className="absolute bottom-3 left-3 font-mono text-[9px] bg-black/60 backdrop-blur px-2 py-1 rounded tracking-[0.2em] text-t-strong border border-champagne/20">
-                                    {dest.tag}
-                                </span>
-                            </div>
-                            <div className="p-4 flex justify-between items-center">
-                                <div>
-                                    <h3 className="font-heading text-lg text-t-text">{dest.name}</h3>
-                                    <p className="text-t-text/40 text-xs">{dest.country}</p>
-                                </div>
-                                <span className="text-t-strong text-lg group-hover:translate-x-1 transition-transform">→</span>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            ) : (
-                /* Default: 3 featured cards when nothing selected */
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                    {[
-                        { name: 'Токио', tag: 'TKY-01', img: images[0], desc: 'Визы за 4 дня. Культура, технологии, гастрономия.' },
-                        { name: 'Дубай', tag: 'DXB-07', img: images[1], desc: 'Резидентские визы. Роскошь без компромиссов.' },
-                        { name: 'Рим', tag: 'ROM-04', img: images[2], desc: 'Шенген. Вечный город, архитектура, история.' },
-                    ].map((card, i) => (
+            {/* Destination cards — center (i===1) always featured */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                {(destinations ?? [
+                    { name: 'Токио', tag: 'TKY-01', img: images[0], desc: 'Визы за 4 дня. Культура, технологии, гастрономия.', link: '/tours' },
+                    { name: 'Дубай', tag: 'DXB-07', img: images[1], desc: 'Резидентские визы. Роскошь без компромиссов.', link: '/tours' },
+                    { name: 'Рим', tag: 'ROM-04', img: images[2], desc: 'Шенген. Вечный город, архитектура, история.', link: '/tours' },
+                ]).map((card, i) => {
+                    const featured = i === 1;
+                    return (
                         <div
                             key={i}
-                            className={`glass-card p-4 rounded-xl shadow-2xl bg-t-card backdrop-blur border group flex flex-col hover:border-white/30 transition-colors duration-500 transform-gpu ${i === 1 ? 'border-champagne/30 md:-translate-y-4' : 'border-t-border'}`}
+                            className={`glass-card p-4 rounded-xl shadow-2xl bg-t-card backdrop-blur border group flex flex-col transition-all duration-500 transform-gpu ${featured ? 'border-champagne/30 md:-translate-y-4' : 'border-t-border hover:border-white/30'}`}
                         >
                             <div className="relative w-full h-[22vh] overflow-hidden rounded-lg mb-4">
                                 <img className="w-full h-full object-cover group-hover:scale-110 transition-all duration-1000" src={card.img} alt={card.name} />
                                 <div className="absolute bottom-3 left-3 font-mono text-[9px] bg-black/60 backdrop-blur px-2 py-1 rounded tracking-[0.2em] text-t-strong border border-champagne/20">{card.tag}</div>
-                                {i === 1 && <div className="absolute top-4 right-4 h-2 w-2 rounded-full bg-t-strong shadow-[0_0_15px_rgba(247,231,206,0.8)] animate-pulse"></div>}
+                                {featured && <div className="absolute top-4 right-4 h-2 w-2 rounded-full bg-t-strong shadow-[0_0_15px_rgba(247,231,206,0.8)] animate-pulse" />}
                             </div>
-                            <h3 className={`font-heading text-2xl mb-2 ${i === 1 ? 'text-t-strong' : 'text-t-text'}`}>{card.name}</h3>
+                            <h3 className={`font-heading text-2xl mb-2 ${featured ? 'text-t-strong' : 'text-t-text'}`}>{card.name}</h3>
                             <p className="font-sans text-xs text-t-text/50 leading-relaxed flex-grow mb-4">{card.desc}</p>
                             <button
                                 onClick={onOpenModal}
-                                className={`w-full py-2 rounded text-[10px] font-mono tracking-widest uppercase transition-colors ${i === 1 ? 'bg-t-strong hover:bg-t-strong-light text-t-bg font-bold' : 'bg-t-glass hover:bg-white/10 border border-t-border text-t-text'}`}
+                                className={`btn-card ${featured ? 'btn-card-primary' : 'btn-card-secondary'}`}
                             >
-                                {i === 1 ? 'Рассчитать тур' : 'Подробнее'}
+                                {featured ? 'Рассчитать тур' : 'Подробнее'}
                             </button>
                         </div>
-                    ))}
-                </div>
-            )}
+                    );
+                })}
+            </div>
         </div>
     );
 };

@@ -199,6 +199,45 @@
     letter-spacing: -0.01em;
   }
 
+  /* === Button System — 3 tiers === */
+
+  /* Primary: amber filled — main CTA */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-mono font-bold text-[11px] tracking-[0.25em] uppercase transition-all duration-300;
+    background: var(--color-accent-strong);
+    color: #FFFBEB;
+  }
+  .btn-primary:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+
+  /* Secondary: amber outline — secondary actions */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-mono font-bold text-xs tracking-[0.15em] uppercase transition-all duration-300;
+    border: 2px solid var(--color-accent-strong);
+    color: var(--color-accent-strong);
+    background: transparent;
+  }
+  .btn-secondary:hover {
+    background: var(--color-accent-strong);
+    color: #FFFBEB;
+  }
+
+  /* Card buttons — smaller, for inside cards */
+  .btn-card {
+    @apply w-full py-2 rounded text-[10px] font-mono tracking-widest uppercase transition-colors duration-300;
+  }
+  .btn-card-primary {
+    background: var(--color-accent-strong);
+    color: #FFFBEB;
+    font-weight: 700;
+  }
+  .btn-card-primary:hover { opacity: 0.88; }
+  .btn-card-secondary {
+    @apply bg-t-glass hover:bg-white/10 border border-t-border text-t-text;
+  }
+
   /* === Premium CTA Button — theme-aware === */
   .btn-premium {
     @apply relative overflow-hidden inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-medium transition-all duration-300;
