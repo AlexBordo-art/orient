@@ -226,7 +226,7 @@
 
   /* Card buttons — smaller, for inside cards */
   .btn-card {
-    @apply w-full py-2 rounded text-[10px] font-mono tracking-widest uppercase transition-colors duration-300;
+    @apply w-full flex items-center justify-center py-3 rounded text-[10px] font-mono tracking-widest uppercase transition-colors duration-300;
   }
   .btn-card-primary {
     background: var(--color-accent-strong);

@@ -190,17 +190,6 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
                 </div>
             </div>
 
-            {/* Position Indicator (Replaces scrollbar) */}
-            <div className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-40 mix-blend-difference">
-                {[0, 1, 2, 3].map(i => (
-                    <div
-                        key={i}
-                        onClick={() => setLayer(i)}
-                        className={`w-1.5 h-12 rounded-full cursor-pointer transition-all duration-700 ${layer === i ? 'bg-t-strong' : 'bg-t-text/20 hover:bg-t-text/40'}`}
-                    />
-                ))}
-            </div>
-
         </div>
     );
 };
