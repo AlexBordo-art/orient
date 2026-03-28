@@ -43,19 +43,19 @@
 [data-theme="day"] {
   --color-bg:          #FFFBEB;
   --color-bg-elevated: #FEF3C7;
-  --color-bg-card:     rgba(0, 0, 0, 0.03);
+  --color-bg-card:     rgba(255, 255, 255, 0.82);
   --color-text:        #1C1917;
   --color-text-muted:  #57534E;
   --color-text-subtle: #78716C;
   --color-accent:      #92400E;  /* dark amber on light */
   --color-accent-strong: #B45309;
   --color-glass-bg:    rgba(255, 255, 255, 0.70);
-  --color-glass-border: rgba(0, 0, 0, 0.08);
-  --color-border:      rgba(0, 0, 0, 0.06);
+  --color-glass-border: rgba(0, 0, 0, 0.14);
+  --color-border:      rgba(0, 0, 0, 0.11);
 
   /* Photo treatment — same image, day mood */
-  --photo-brightness:  1.15;
-  --photo-saturate:    1.20;
+  --photo-brightness:  1.0;
+  --photo-saturate:    0.88;
   --photo-overlay:     rgba(255, 251, 235, 0.25);
   --photo-overlay-hero: rgba(255, 251, 235, 0.40);
 
@@ -171,6 +171,25 @@
     background: var(--photo-overlay-hero);
     transition: background 0.8s ease;
     pointer-events: none;
+  }
+
+  /* === Day theme: cream halo keeps text readable over background photos === */
+  [data-theme="day"] h1,
+  [data-theme="day"] h2,
+  [data-theme="day"] h3 {
+    text-shadow:
+      0 0 50px rgba(255, 251, 235, 1),
+      0 0 100px rgba(255, 251, 235, 0.85),
+      0 2px 4px rgba(255, 251, 235, 0.95);
+  }
+  [data-theme="day"] p {
+    font-weight: 400;
+    color: var(--color-text-muted);
+    text-shadow:
+      0 0 24px rgba(255, 251, 235, 1),
+      0 0 48px rgba(255, 251, 235, 1),
+      0 0 72px rgba(255, 251, 235, 0.9),
+      0 1px 0 rgba(255, 251, 235, 1);
   }
 
   /* === Typography === */

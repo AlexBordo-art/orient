@@ -2,15 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
 import SEO from '../components/SEO';
-import { GraduationCap, ArrowRight } from 'lucide-react';
+import { GraduationCap, Globe, ArrowRight } from 'lucide-react';
 
 const PROGRAMS = [
-    { slug: 'abroad', name: 'Образование за рубежом', icon: '🎓', desc: 'Университеты Китая, Кореи и Европы. Программы бакалавриата, магистратуры и стажировки.' },
-    { slug: 'languages', name: 'Языковые школы', icon: '🌍', desc: 'Языковые курсы за рубежом: китайский, корейский, английский. Все уровни, от начального до продвинутого.' },
+    { slug: 'abroad', name: 'Образование за рубежом', Icon: GraduationCap, desc: 'Университеты Китая, Кореи и Европы. Программы бакалавриата, магистратуры и стажировки.' },
+    { slug: 'languages', name: 'Языковые школы', Icon: Globe, desc: 'Языковые курсы за рубежом: китайский, корейский, английский. Все уровни, от начального до продвинутого.' },
 ];
 
 const EducationHub: React.FC = () => (
-    <div className="min-h-screen bg-t-bg">
+    <div className="min-h-screen bg-transparent">
         <SEO
             title="Образование за рубежом"
             description="Обучение в университетах Китая, Кореи и Европы. Языковые курсы за рубежом. Помощь с поступлением, документами и визами от Ориент Экспресс."
@@ -43,7 +43,9 @@ const EducationHub: React.FC = () => (
                         to={`/education/${prog.slug}`}
                         className="group relative p-8 rounded-2xl border border-t-border bg-t-card hover:border-t-strong/30 transition-all duration-500"
                     >
-                        <div className="text-5xl mb-6">{prog.icon}</div>
+                        <div className="w-12 h-12 rounded-2xl bg-t-strong/10 border border-t-strong/20 flex items-center justify-center mb-6">
+                            <prog.Icon className="text-t-strong" size={22} />
+                        </div>
                         <h3 className="text-t-text font-semibold text-xl mb-3 group-hover:text-t-strong transition-colors">{prog.name}</h3>
                         <p className="text-t-subtle text-sm leading-relaxed mb-6">{prog.desc}</p>
                         <div className="flex items-center gap-2 text-t-accent opacity-60 text-sm group-hover:text-t-strong group-hover:opacity-100 transition-colors">

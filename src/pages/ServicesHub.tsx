@@ -12,7 +12,7 @@ const SERVICES = [
 ];
 
 const ServicesHub: React.FC = () => (
-    <div className="min-h-screen bg-t-bg">
+    <div className="min-h-screen bg-transparent">
         <SEO
             title="Авиабилеты, Страхование, Гиды"
             description="Полный комплекс туристических сервисов: авиабилеты, страхование путешествий, гиды и переводчики, Tax Free. Всё от Ориент Экспресс."

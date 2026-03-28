@@ -6,19 +6,19 @@ import SpecialistBlock from '../components/SpecialistBlock';
 import { Stamp, ArrowRight } from 'lucide-react';
 
 const VISA_COUNTRIES = [
-    { slug: 'china', name: 'Китай', icon: '🇨🇳', desc: 'Туристические, деловые и групповые визы', popular: true },
-    { slug: 'korea', name: 'Южная Корея', icon: '🇰🇷', desc: 'K-ETA, деловые, этнические и учебные визы', popular: true },
-    { slug: 'thailand', name: 'Таиланд', icon: '🇹🇭', desc: 'TR, пенсионные и визы цифрового кочевника', popular: true },
-    { slug: 'schengen', name: 'Шенгенская зона', icon: '🇪🇺', desc: 'Единая виза для 27 стран Европы', popular: true },
-    { slug: 'singapore', name: 'Сингапур', icon: '🇸🇬', desc: 'Электронная виза eVisa' },
-    { slug: 'india', name: 'Индия', icon: '🇮🇳', desc: 'Электронная туристическая виза ETA' },
-    { slug: 'bulgaria', name: 'Болгария', icon: '🇧🇬', desc: 'Гостевые, туристические и долгосрочные визы' },
-    { slug: 'cyprus', name: 'Кипр', icon: '🇨🇾', desc: 'Национальные и визы по недвижимости' },
+    { slug: 'china', name: 'Китай', code: 'CN', desc: 'Туристические, деловые и групповые визы', popular: true },
+    { slug: 'korea', name: 'Южная Корея', code: 'KR', desc: 'K-ETA, деловые, этнические и учебные визы', popular: true },
+    { slug: 'thailand', name: 'Таиланд', code: 'TH', desc: 'TR, пенсионные и визы цифрового кочевника', popular: true },
+    { slug: 'schengen', name: 'Шенгенская зона', code: 'EU', desc: 'Единая виза для 27 стран Европы', popular: true },
+    { slug: 'singapore', name: 'Сингапур', code: 'SG', desc: 'Электронная виза eVisa' },
+    { slug: 'india', name: 'Индия', code: 'IN', desc: 'Электронная туристическая виза ETA' },
+    { slug: 'bulgaria', name: 'Болгария', code: 'BG', desc: 'Гостевые, туристические и долгосрочные визы' },
+    { slug: 'cyprus', name: 'Кипр', code: 'CY', desc: 'Национальные и визы по недвижимости' },
 ];
 
 const VisaHub: React.FC = () => {
     return (
-        <div className="min-h-screen bg-t-bg">
+        <div className="min-h-screen bg-transparent">
             <SEO
                 title="Оформление виз — Визовый центр"
                 description="Визовый центр Ориент Экспресс: визы в Китай, Корею, Таиланд, Шенген, Сингапур, Индию, Болгарию, Кипр. 99.8% одобрений. Оформление под ключ от 3000₽."
@@ -56,7 +56,9 @@ const VisaHub: React.FC = () => {
                                     популярное
                                 </span>
                             )}
-                            <div className="text-4xl mb-4">{country.icon}</div>
+                            <div className="inline-flex items-center justify-center w-12 h-7 rounded bg-t-strong/10 border border-t-strong/20 mb-4">
+                                <span className="font-mono text-[11px] font-bold text-t-strong tracking-widest">{country.code}</span>
+                            </div>
                             <h3 className="text-t-text font-semibold text-lg mb-2 group-hover:text-t-strong transition-colors">{country.name}</h3>
                             <p className="text-t-subtle text-sm leading-relaxed mb-4">{country.desc}</p>
                             <div className="flex items-center gap-2 text-t-accent text-sm group-hover:text-t-strong transition-colors">

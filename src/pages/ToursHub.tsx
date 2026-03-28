@@ -6,13 +6,13 @@ import SpecialistBlock from '../components/SpecialistBlock';
 import { ArrowRight, Compass } from 'lucide-react';
 
 const TOUR_DESTINATIONS = [
-    { slug: 'china', name: 'Туры в Китай', icon: '🇨🇳', desc: 'Пекин, Шанхай, Харбин, Хайнань — авторские маршруты от знатоков региона', popular: true },
-    { slug: 'russia', name: 'Туры по России', icon: '🇷🇺', desc: 'Сахалин, Камчатка, Байкал — лучшее Дальнего Востока и за его пределами' },
-    { slug: 'hot-deals', name: 'Горящие туры', icon: '🔥', desc: 'Специальные предложения с вылетом в ближайшие даты. Экономия до 40%', popular: true },
+    { slug: 'china', name: 'Туры в Китай', code: 'CN', desc: 'Пекин, Шанхай, Харбин, Хайнань — авторские маршруты от знатоков региона', popular: true },
+    { slug: 'russia', name: 'Туры по России', code: 'RU', desc: 'Сахалин, Камчатка, Байкал — лучшее Дальнего Востока и за его пределами' },
+    { slug: 'hot-deals', name: 'Горящие туры', code: '★', desc: 'Специальные предложения с вылетом в ближайшие даты. Экономия до 40%', popular: true },
 ];
 
 const ToursHub: React.FC = () => (
-    <div className="min-h-screen bg-t-bg">
+    <div className="min-h-screen bg-transparent">
         <SEO
             title="Авторские туры — Путешествия"
             description="Индивидуальные туры в Китай, по России и горящие предложения от Ориент Экспресс. Авторские маршруты, проверенные экспертами лично. Экономия до 40%."
@@ -50,7 +50,9 @@ const ToursHub: React.FC = () => (
                                 популярное
                             </span>
                         )}
-                        <div className="text-5xl mb-6">{dest.icon}</div>
+                        <div className="inline-flex items-center justify-center w-12 h-7 rounded bg-t-strong/10 border border-t-strong/20 mb-6">
+                            <span className="font-mono text-[11px] font-bold text-t-strong tracking-widest">{dest.code}</span>
+                        </div>
                         <h3 className="text-t-text font-semibold text-xl mb-3 group-hover:text-t-strong transition-colors">{dest.name}</h3>
                         <p className="text-t-subtle text-sm leading-relaxed mb-6">{dest.desc}</p>
                         <div className="flex items-center gap-2 text-t-accent text-sm group-hover:text-t-strong transition-colors">

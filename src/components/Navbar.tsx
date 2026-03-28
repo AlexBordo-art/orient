@@ -7,18 +7,18 @@ import { ChevronDown, Sun, Moon } from 'lucide-react';
 const NAV_LINKS = [
     {
         label: 'Визы', href: '/visas', children: [
-            { label: '🇨🇳 Китай', href: '/visas/china' },
-            { label: '🇰🇷 Южная Корея', href: '/visas/korea' },
-            { label: '🇹🇭 Таиланд', href: '/visas/thailand' },
-            { label: '🇪🇺 Шенген', href: '/visas/schengen' },
+            { label: 'Китай', href: '/visas/china' },
+            { label: 'Южная Корея', href: '/visas/korea' },
+            { label: 'Таиланд', href: '/visas/thailand' },
+            { label: 'Шенген', href: '/visas/schengen' },
             { label: 'Все визы →', href: '/visas' },
         ]
     },
     {
         label: 'Путешествия', href: '/tours', children: [
-            { label: '🇨🇳 Туры в Китай', href: '/tours/china' },
-            { label: '🇷🇺 По России', href: '/tours/russia' },
-            { label: '🔥 Горящие туры', href: '/tours/hot-deals' },
+            { label: 'Туры в Китай', href: '/tours/china' },
+            { label: 'По России', href: '/tours/russia' },
+            { label: 'Горящие туры', href: '/tours/hot-deals' },
         ]
     },
     { label: 'Образование', href: '/education' },
@@ -120,7 +120,7 @@ export function Navbar() {
                         onClick={toggleTheme}
                         aria-label={theme === 'night' ? 'Включить дневной режим' : 'Включить ночной режим'}
                         className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-500 ${
-                            scrolled
+                            scrolled || isDayTheme
                                 ? 'bg-primary/5 hover:bg-primary/10 text-primary/60 hover:text-primary'
                                 : 'bg-white/5 hover:bg-white/15 text-white/60 hover:text-champagne'
                         }`}

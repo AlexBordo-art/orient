@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const FEELINGS = [
-    { id: 'adventure', label: 'Приключение', genitive: 'приключений', icon: '⛰️', desc: 'Горы, экспедиции, активный отдых' },
-    { id: 'culture', label: 'Культура', genitive: 'культуры', icon: '🏛️', desc: 'История, музеи, гастрономия' },
-    { id: 'romance', label: 'Романтика', genitive: 'романтики', icon: '🌅', desc: 'Для двоих, медовый месяц' },
-    { id: 'family', label: 'Семья', genitive: 'семьи', icon: '👨‍👩‍👧', desc: 'Безопасно, комфортно, интересно детям' },
-    { id: 'business', label: 'Бизнес', genitive: 'бизнеса', icon: '💼', desc: 'Деловые визы, релокация, рабочие поездки' },
-    { id: 'education', label: 'Образование', genitive: 'образования', icon: '🎓', desc: 'Университеты, языковые школы, стажировки' },
+    { id: 'adventure', label: 'Приключение', genitive: 'приключений', icon: 'terrain', desc: 'Горы, экспедиции, активный отдых' },
+    { id: 'culture', label: 'Культура', genitive: 'культуры', icon: 'account_balance', desc: 'История, музеи, гастрономия' },
+    { id: 'romance', label: 'Романтика', genitive: 'романтики', icon: 'wb_twilight', desc: 'Для двоих, медовый месяц' },
+    { id: 'family', label: 'Семья', genitive: 'семьи', icon: 'family_restroom', desc: 'Безопасно, комфортно, интересно детям' },
+    { id: 'business', label: 'Бизнес', genitive: 'бизнеса', icon: 'work', desc: 'Деловые визы, релокация, рабочие поездки' },
+    { id: 'education', label: 'Образование', genitive: 'образования', icon: 'school', desc: 'Университеты, языковые школы, стажировки' },
 ];
 
 const DESTINATIONS: Record<string, { name: string; country: string; img: string; tag: string; link: string }[]> = {
@@ -66,8 +66,8 @@ const ExperienceFinder: React.FC<ExperienceFinderProps> = ({ images, onOpenModal
                         }
                     </h2>
                 </div>
-                <Link to="/tours" className="hidden md:flex items-center gap-3 px-6 py-3 rounded-full border border-t-border hover:border-champagne/50 hover:bg-t-glass transition-all text-[10px] font-mono uppercase tracking-[0.2em] text-t-text/70 hover:text-t-text mt-4 md:mt-0">
-                    Все направления <span className="text-t-strong">→</span>
+                <Link to="/tours" className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full border border-t-strong/30 bg-t-strong/8 hover:border-t-strong/60 hover:bg-t-strong/15 transition-all duration-300 text-xs font-mono uppercase tracking-[0.15em] text-t-strong hover:text-t-strong mt-4 md:mt-0">
+                    Все направления <span className="ml-0.5">→</span>
                 </Link>
             </div>
 
@@ -83,7 +83,7 @@ const ExperienceFinder: React.FC<ExperienceFinderProps> = ({ images, onOpenModal
                                 : 'bg-t-glass border-t-border text-t-text/70 hover:border-champagne/40 hover:text-t-text'
                         }`}
                     >
-                        <span>{f.icon}</span>
+                        <span className="material-symbols-outlined text-base leading-none">{f.icon}</span>
                         <span>{f.label}</span>
                     </button>
                 ))}
