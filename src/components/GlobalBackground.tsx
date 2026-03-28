@@ -4,7 +4,6 @@ import { useTheme } from '../contexts/ThemeContext';
 
 const HOME_IMAGES = [
     "/backgrounds/bg-sakura.webp",
-    "/backgrounds/bg-sakura-petals.webp",
     "/backgrounds/bg-bonsai.webp",
     "/backgrounds/bg-pion.webp",
     "/backgrounds/bg-ginkgo.webp",
