@@ -109,7 +109,7 @@ const ExperienceFinder: React.FC<ExperienceFinderProps> = ({ images, onOpenModal
                                 {featured && <div className="absolute top-4 right-4 h-2 w-2 rounded-full bg-t-strong shadow-[0_0_15px_rgba(247,231,206,0.8)] animate-pulse" />}
                             </div>
                             <h3 className={`font-heading text-2xl mb-2 ${featured ? 'text-t-strong' : 'text-t-text'}`}>{card.name}</h3>
-                            <p className="font-sans text-xs text-t-text/50 leading-relaxed flex-grow mb-4">{card.desc}</p>
+                            <p className="font-sans text-xs text-t-text/50 leading-relaxed flex-grow mb-4">{'desc' in card ? card.desc : card.country}</p>
                             <button
                                 onClick={onOpenModal}
                                 className={`btn-card ${featured ? 'btn-card-primary' : 'btn-card-secondary'}`}

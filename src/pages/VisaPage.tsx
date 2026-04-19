@@ -2,14 +2,19 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
 import SEO from '../components/SEO';
-import { Clock, CheckCircle, FileText, Shield, ChevronDown, MessageCircle, Star } from 'lucide-react';
+import { Clock, CheckCircle, FileText, Shield, ChevronDown } from 'lucide-react';
+
+const GHOST: Record<string, string> = {
+    china: '中', korea: '韓', thailand: 'ไ', schengen: 'E',
+    singapore: '星', india: 'भ', bulgaria: 'Б', cyprus: 'Κ',
+};
 
 // Visa data
 const VISA_DATA: Record<string, { name: string; icon: string; types: { name: string; desc: string }[] }> = {
     china: {
         name: 'Китай', icon: '🇨🇳',
         types: [
-            { name: 'Туристическая виза (L)', desc: 'Для индивидуальных путешественников. Срок рассмотрения: 5-7 рабочих дней.' },
+            { name: 'Туристическая виза (L)', desc: 'Для индивидуальных путешественников.' },
             { name: 'Деловая виза (M)', desc: 'Для деловых встреч и коммерческой деятельности.' },
             { name: 'Групповая виза', desc: 'Для организованных туристических групп от 5 человек.' },
         ],
@@ -64,11 +69,11 @@ const FAQ_ITEMS = [
     },
     {
         q: 'Что будет, если мне откажут в визе?',
-        a: 'За 12 лет работы наш процент одобрений — 99.8%. Но если отказ всё же произойдёт, мы вернём стоимость наших услуг. Консульский сбор не возвращается по правилам консульства.'
+        a: 'Если отказ произойдёт, мы вернём стоимость наших услуг. Консульский сбор не возвращается по правилам консульства.'
     },
     {
         q: 'Насколько сложно всё оформить?',
-        a: 'С нашей стороны — ничего сложного. Вы предоставляете паспорт и базовые данные, мы делаем всё остальное: анкеты, переводы, запись, подачу. Среднее время оформления: 5-7 рабочих дней.'
+        a: 'С нашей стороны — ничего сложного. Вы предоставляете паспорт и базовые данные, мы делаем всё остальное: анкеты, переводы, запись, подачу.'
     },
     {
         q: 'Могу ли я отслеживать статус моей визы?',
@@ -119,7 +124,7 @@ const VisaPage: React.FC = () => {
         <div className="min-h-screen">
             <SEO
                 title={`Виза в ${visa.name} — оформление под ключ`}
-                description={`Оформление визы в ${visa.name}: ${visa.types.map(t => t.name).join(', ')}. 99.8% одобрений, оформление за 5-7 дней. Бесплатная консультация.`}
+                description={`Оформление визы в ${visa.name}: ${visa.types.map(t => t.name).join(', ')}. Бесплатная консультация за 15 минут.`}
                 canonical={`/visas/${country}`}
                 keywords={`виза в ${visa.name}, оформление визы ${visa.name}, ${visa.name} виза стоимость`}
                 schema={{
@@ -133,34 +138,30 @@ const VisaPage: React.FC = () => {
             />
             <Breadcrumbs />
             <div className="max-w-5xl mx-auto px-6 pb-20">
-                {/* Page Header */}
-                <div className="mb-12">
-                    <div className="text-6xl mb-4">{visa.icon}</div>
-                    <h1 className="text-4xl md:text-5xl font-heading font-bold text-t-text mb-4 tracking-tight">
-                        Визы в {visa.name}
-                    </h1>
-                    <p className="text-t-muted text-lg max-w-xl">
-                        Полный комплекс услуг: консультация, сбор документов, подача заявки и сопровождение до получения визы.
-                    </p>
-                </div>
-
-                {/* Trust Cascade — Step 3: Credibility Trust (Social Proof) */}
-                <div className="flex flex-wrap gap-6 mb-12 p-5 rounded-xl border border-t-border bg-t-card">
-                    <div className="flex items-center gap-2">
-                        <Shield size={16} className="text-t-strong" />
-                        <span className="text-t-muted text-sm">99.8% одобрений</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Clock size={16} className="text-t-strong" />
-                        <span className="text-t-muted text-sm">5-7 дней оформление</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Star size={16} className="text-t-strong" />
-                        <span className="text-t-muted text-sm">12+ лет экспертизы</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <MessageCircle size={16} className="text-t-strong" />
-                        <span className="text-t-muted text-sm">Персональный менеджер</span>
+                {/* Page Header with ghost watermark */}
+                <div className="mb-12 relative">
+                    <span
+                        aria-hidden="true"
+                        className="absolute font-heading select-none pointer-events-none"
+                        style={{
+                            right: '-0.05em',
+                            top: '-0.25em',
+                            fontSize: '20rem',
+                            lineHeight: 1,
+                            color: 'var(--color-accent-strong)',
+                            opacity: 0.07,
+                            fontWeight: 400,
+                        }}
+                    >
+                        {GHOST[country!] ?? ''}
+                    </span>
+                    <div className="relative z-10">
+                        <h1 className="text-4xl md:text-5xl font-heading font-bold text-t-text mb-4 tracking-tight">
+                            Визы в {visa.name}
+                        </h1>
+                        <p className="text-t-muted text-lg max-w-xl">
+                            Полный комплекс услуг: консультация, сбор документов, подача заявки и сопровождение до получения визы.
+                        </p>
                     </div>
                 </div>
 
@@ -225,7 +226,7 @@ const VisaPage: React.FC = () => {
                         Получить бесплатную консультацию
                     </button>
 
-                    {/* Risk Reversal (Trust Cascade Step 4) */}
+                    {/* Risk Reversal */}
                     <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-t-subtle mt-4">
                         <span className="flex items-center gap-1">
                             <Shield size={12} className="text-t-strong/60" />
@@ -235,11 +236,6 @@ const VisaPage: React.FC = () => {
                         <span className="flex items-center gap-1">
                             <Clock size={12} className="text-t-strong/60" />
                             Ответ за 15 минут
-                        </span>
-                        <span>·</span>
-                        <span className="flex items-center gap-1">
-                            <Star size={12} className="text-t-strong/60" />
-                            15,000+ виз оформлено
                         </span>
                     </div>
                 </div>

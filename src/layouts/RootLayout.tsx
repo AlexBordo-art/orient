@@ -1,9 +1,9 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import SiteFooter from '../components/SiteFooter';
 import GlobalBackground from '../components/GlobalBackground';
 import LeadModal from '../components/LeadModal';
+import ChatButton from '../components/ChatButton';
 import { useTheme } from '../contexts/ThemeContext';
 import { Sun, Moon } from 'lucide-react';
 
@@ -61,14 +61,12 @@ const RootLayout: React.FC = () => {
                     </button>
                 )}
 
-                <main className="flex-grow flex flex-col relative z-10">
+                <main key={location.pathname} className="page-transition flex-grow flex flex-col relative z-10">
                     <Outlet />
                 </main>
 
-                {/* Completely hide the standard footer on the Spatial Portal so it cannot be scrolled to */}
-                {!isHome && <SiteFooter />}
-
                 <LeadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+                <ChatButton />
             </div>
         </ModalContext.Provider>
     );

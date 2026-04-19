@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import PricingSection from './PricingSection';
-import ContactSection from './ContactSection';
 import Magnetic from './Magnetic';
 import ExperienceFinder from './ExperienceFinder';
 
@@ -183,10 +181,10 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
                 </div>
             </div>
 
-            {/* LAYER 3: Contact (Finale) */}
+            {/* LAYER 3: Placeholder (replaces premium application — content TBD) */}
             <div className="absolute inset-0 flex items-center justify-center" style={{ ...getLayerStyle(3), transition: 'all 800ms cubic-bezier(0.22, 1, 0.36, 1)' }}>
-                <div className="w-full h-full md:h-auto overflow-y-auto hide-scrollbar pt-24 md:pt-0 pb-20 md:pb-0 relative z-10">
-                    <ContactSection />
+                <div className="w-full h-full flex items-center justify-center relative z-10">
+                    <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-t-text/30">Скоро</span>
                 </div>
             </div>
 

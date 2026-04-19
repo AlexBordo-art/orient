@@ -1,73 +1,77 @@
-# React + TypeScript + Vite
+# Orient Express — Mobile Design Brief
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Это handoff-ветка для Claude Design. Код в этой ветке = то, что крутится в продакшене (свежак на 2026-04-19). Ветка `main` устарела — **смотри только `mobile-handoff`**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Стек
 
-## React Compiler
+React 19 + TypeScript + Vite + Tailwind + GSAP + react-router-dom v7
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Задача
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Спроектировать **мобильную версию** портала Orient Express (визы / образование за рубежом).
+
+Мобилка — это **80%+ трафика**, основная ЦА, а не адаптив-довесок.
+
+Нужен полноценный дизайн-проход: layout, навигация, жесты, производительность — не «сожмём десктоп в одну колонку».
+
+---
+
+## Что уже есть (десктоп в продакшене)
+
+- **Home** (`src/pages/Home.tsx`) — cinematic: CodropsStickyGrid, Expert Spotlight, Experience Finder, trust-слои
+- **VisaHub** (`src/pages/VisaHub.tsx`) — 4 больших карточки стран (CN, KR, TH, Шенген) + 4 компактных (SG, IN, BG, CY), ghost-знаки родных символов (中, 韓, ไ, E, 星, भ, Б, Κ) как watermark (opacity 0.06, Cormorant)
+- **VisaPage** (`src/pages/VisaPage.tsx`) — типы виз, 4-шаговый процесс
+- **LeadModal**, **Navbar**, **ChatButton**
+- **Тема день / ночь** с плавным cross-fade 2500ms
+- **Route-based фоны:** sakura (home), bamboo (/visas), book (/education)
+- **Типографика:** Cormorant для кириллицы / латиницы, системный fallback для CJK / тайского / деванагари
+- **Copy:** русский, психология конверсии уже настроена — не переписывать
+
+---
+
+## Известные мобильные риски (из аудита)
+
+1. **Touch-hijack на Home** — `CodropsStickyGrid` перехватывает вертикальный скролл на мобилке (бесит). Решение: либо снять `preventDefault` на `matchMedia('(max-width: 768px)')`, либо полностью переосмыслить жест.
+2. **Flora-фоны (sakura / bamboo / book)** — тяжёлые для слабых устройств. Нужна стратегия: статический fallback, `prefers-reduced-motion`, упрощённая версия.
+3. **Material Symbols 340KB** — иконочный шрифт, режет FCP на 3G. Предложить subset или замену на SVG-спрайт.
+4. **Ghost-знаки стран** — на маленьком экране могут стать шумом. Проверить размер / позицию.
+
+---
+
+## Что нужно вернуть
+
+1. **Mobile layout** для ключевых экранов (Home, VisaHub, VisaPage-карточки, Navbar, LeadModal) — HTML-прототип или JSX-модули
+2. **Навигационный паттерн** — bottom tab bar / hamburger / гибрид? Обосновать выбор
+3. **Жесты и микро-интеракции** — что заменяет hover, как работает «листание» карточек стран
+4. **Performance plan** — конкретные замены для Flora / Material Symbols / GSAP на мобилке
+5. **Breakpoints** — где ломается раскладка (320 / 375 / 414 / 768), какие компоненты прячутся / сворачиваются
+
+---
+
+## Правила
+
+- **Дизайн-система неприкосновенна**: токены цвета, Cormorant, ghost-знаки, day / night тема — всё остаётся. Адаптируем, не переизобретаем.
+- **Не выдумывать контент**: в карточках стран сейчас `—` вместо цифр (одобрение%, сроки, цена). Реальных данных пока нет — **не подставляй фейки**.
+- **Русский язык** основной. Копирайт уже психологически настроен — не трогать.
+- **Handoff-формат**: HTML-прототип + JSX-модули + короткий отчёт с обоснованиями.
+
+---
+
+## Контекст проекта
+
+Orient Express — портал для русскоязычной аудитории по визам и образованию в Азии / Европе.
+
+Эстетика — **Audley Travel + Black Tomato**: cinematic, editorial, trust-driven. Не «визовый центр №152», а премиум-консьерж.
+
+---
+
+Начни с беглого тура по `src/pages/` и `src/components/` — там весь контекст дизайн-системы.
