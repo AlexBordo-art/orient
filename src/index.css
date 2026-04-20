@@ -68,11 +68,6 @@
   --selection-text:    #FFFBEB;
 }
 
-/* Smooth transition when switching themes */
-[data-theme] * {
-  transition: background-color 0.6s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-}
-
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -185,120 +180,106 @@
     pointer-events: none;
   }
 
-  /* === Day theme: cream halo keeps text readable over background photos === */
-  [data-theme="day"] h1,
-  [data-theme="day"] h2,
-  [data-theme="day"] h3 {
-    text-shadow:
-      0 0 50px rgba(255, 251, 235, 1),
-      0 0 100px rgba(255, 251, 235, 0.85),
-      0 2px 4px rgba(255, 251, 235, 0.95);
-  }
-  [data-theme="day"] p {
-    font-weight: 400;
-    color: var(--color-text-muted);
-    text-shadow:
-      0 0 24px rgba(255, 251, 235, 1),
-      0 0 48px rgba(255, 251, 235, 1),
-      0 0 72px rgba(255, 251, 235, 0.9),
-      0 1px 0 rgba(255, 251, 235, 1);
-  }
+  /* === Button System — designer vocabulary: premium (gold) + ghost (glass) === */
 
-  /* === Typography === */
-  .text-title-elegant {
-    font-family: var(--font-heading);
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-
-  /* === Button System — 3 tiers === */
-
-  /* Primary: amber filled — main CTA */
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-mono font-bold text-[11px] tracking-[0.25em] uppercase transition-all duration-300;
-    background: var(--color-accent-strong);
-    color: #FFFBEB;
-  }
-  .btn-primary:hover {
-    opacity: 0.88;
-    transform: translateY(-1px);
-  }
-
-  /* Secondary: amber outline — secondary actions */
-  .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-mono font-bold text-xs tracking-[0.15em] uppercase transition-all duration-300;
-    border: 2px solid var(--color-accent-strong);
-    color: var(--color-accent-strong);
-    background: transparent;
-  }
-  .btn-secondary:hover {
-    background: var(--color-accent-strong);
-    color: #FFFBEB;
-  }
-
-  /* Card buttons — smaller, for inside cards */
-  .btn-card {
-    @apply w-full flex items-center justify-center py-3 rounded text-[10px] font-mono tracking-widest uppercase transition-colors duration-300;
-  }
-  .btn-card-primary {
-    background: var(--color-accent-strong);
-    color: #FFFBEB;
-    font-weight: 700;
-  }
-  .btn-card-primary:hover { opacity: 0.88; }
-  .btn-card-secondary {
-    @apply bg-t-glass hover:bg-white/10 border border-t-border text-t-text;
-  }
-
-  /* === Premium CTA Button — theme-aware === */
+  /* Premium CTA — gold gradient on obsidian */
   .btn-premium {
-    @apply relative overflow-hidden inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-medium transition-all duration-300;
+    @apply relative overflow-hidden inline-flex items-center justify-center gap-[10px] px-7 py-4 rounded-full font-mono font-bold text-[11px] tracking-[0.25em] uppercase;
     background: linear-gradient(135deg, #FEF08A, #D4AF37);
     color: #020617;
-    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.30);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-
-  .btn-premium::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, #D4AF37, #A16207);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 0;
-  }
-
-  .btn-premium > * {
-    position: relative;
-    z-index: 1;
-  }
-
   .btn-premium:hover {
-    transform: scale(1.02) translateY(-2px);
-    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.45);
   }
-
-  .btn-premium:hover::after {
-    opacity: 1;
-  }
-
   .btn-premium:active {
     transform: scale(0.98);
   }
 
-  /* === Ghost Button — theme-aware === */
+  /* Ghost — glass with hairline border */
   .btn-ghost-premium {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-medium transition-all duration-300;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-[14px] rounded-full font-mono font-semibold text-[11px] tracking-[0.2em] uppercase;
     border: 1px solid var(--color-glass-border);
     background: var(--color-glass-bg);
     color: var(--color-text);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-
   .btn-ghost-premium:hover {
     border-color: var(--color-accent-strong);
-    background: var(--color-bg-card);
-    transform: translateY(-2px);
+    color: var(--color-accent);
+  }
+
+  /* Card buttons — compact premium/ghost for inside cards */
+  .btn-card {
+    @apply w-full flex items-center justify-center py-3 rounded font-mono font-bold text-[10px] tracking-[0.25em] uppercase;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s, color 0.3s;
+    cursor: pointer;
+  }
+  .btn-card-primary {
+    background: linear-gradient(135deg, #FEF08A, #D4AF37);
+    color: #020617;
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.28);
+    border: none;
+  }
+  .btn-card-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.40);
+  }
+  .btn-card-secondary {
+    border: 1px solid var(--color-glass-border);
+    background: var(--color-glass-bg);
+    color: var(--color-text);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .btn-card-secondary:hover {
+    border-color: var(--color-accent-strong);
+    color: var(--color-accent);
+  }
+
+  /* === Designer primitives: hairline, seal, mono labels === */
+  .hairline {
+    display: inline-block;
+    height: 1px;
+    width: 48px;
+    background: var(--color-accent-strong);
+    opacity: 0.5;
+  }
+
+  .seal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--color-accent-strong);
+    opacity: 0.7;
+    font-family: var(--font-heading);
+    color: var(--color-accent);
+    font-size: 14px;
+    font-style: italic;
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .mono-sm {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    font-size: 10px;
   }
 
   /* === Container === */

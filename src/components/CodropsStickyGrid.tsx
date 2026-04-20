@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PricingSection from './PricingSection';
 import Magnetic from './Magnetic';
 import ExperienceFinder from './ExperienceFinder';
@@ -15,6 +16,7 @@ interface CodropsStickyGridProps {
 
 const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) => {
     const [layer, setLayer] = useState(0);
+    const navigate = useNavigate();
 
     // Global wheel, touch, and keyboard handler to control the spatial transition
     useEffect(() => {
@@ -152,7 +154,7 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
                 {/* Primary CTA */}
                 <Magnetic strength={30}>
                     <button
-                        onClick={() => setLayer(1)}
+                        onClick={() => navigate('/visas')}
                         className="px-8 py-4 bg-t-strong hover:opacity-90 text-t-bg font-bold font-mono tracking-[0.2em] uppercase rounded flex items-center gap-3 transition-all mb-4"
                     >
                         Начать путешествие

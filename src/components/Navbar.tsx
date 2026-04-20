@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ModalContext } from '../layouts/RootLayout';
 import { useTheme } from '../contexts/ThemeContext';
-import { ChevronDown, Sun, Moon } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 
 const NAV_LINKS = [
     {
@@ -30,7 +30,6 @@ export function Navbar() {
     const { theme, toggle: toggleTheme } = useTheme();
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-    const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const location = useLocation();
 
     useEffect(() => {
@@ -40,7 +39,6 @@ export function Navbar() {
     }, []);
 
     useEffect(() => {
-        setOpenDropdown(null);
         setMenuOpen(false);
     }, [location.pathname]);
 
@@ -67,39 +65,15 @@ export function Navbar() {
                 <div className="hidden md:flex items-center gap-6">
                     {NAV_LINKS.map(link => {
                         const isActive = location.pathname.startsWith(link.href);
-                        const hasChildren = 'children' in link && link.children;
 
                         return (
-                            <div
+                            <Link
                                 key={link.label}
-                                className="relative"
-                                onMouseEnter={() => hasChildren && setOpenDropdown(link.label)}
-                                onMouseLeave={() => hasChildren && setOpenDropdown(null)}
+                                to={link.href}
+                                className={`text-sm tracking-wide font-medium transition-colors duration-300 ${isActive ? 'text-t-strong' : 'text-t-muted hover:text-t-text'}`}
                             >
-                                <Link
-                                    to={link.href}
-                                    className={`text-sm tracking-wide font-medium transition-colors duration-300 flex items-center gap-1 ${isActive ? 'text-t-strong' : 'text-t-muted hover:text-t-text'}`}
-                                >
-                                    <span>{link.label}</span>
-                                    {hasChildren && <ChevronDown size={14} className={`transition-transform ${openDropdown === link.label ? 'rotate-180' : ''}`} />}
-                                </Link>
-
-                                {hasChildren && openDropdown === link.label && (
-                                    <div className="absolute top-full left-0 pt-3 z-50">
-                                        <div className="py-2 min-w-[220px] rounded-xl shadow-2xl glass-panel !rounded-xl">
-                                            {link.children!.map(child => (
-                                                <Link
-                                                    key={child.href}
-                                                    to={child.href}
-                                                    className="block px-5 py-3 text-sm text-t-muted hover:text-t-strong transition-colors"
-                                                >
-                                                    {child.label}
-                                                </Link>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
+                                {link.label}
+                            </Link>
                         );
                     })}
                 </div>
