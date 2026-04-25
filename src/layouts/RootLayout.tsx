@@ -3,7 +3,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import GlobalBackground from '../components/GlobalBackground';
 import LeadModal from '../components/LeadModal';
-import ChatButton from '../components/ChatButton';
 import { useTheme } from '../contexts/ThemeContext';
 import { Sun, Moon } from 'lucide-react';
 
@@ -80,7 +79,6 @@ const RootLayout: React.FC = () => {
                 </main>
 
                 <LeadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-                <ChatButton />
             </div>
         </ModalContext.Provider>
     );

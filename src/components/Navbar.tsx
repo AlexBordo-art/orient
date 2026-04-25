@@ -1,198 +1,334 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ModalContext } from '../layouts/RootLayout';
 import { useTheme } from '../contexts/ThemeContext';
 import { Sun, Moon } from 'lucide-react';
 
 const NAV_LINKS = [
     {
-        label: 'Визы', href: '/visas', children: [
+        index: '01',
+        label: 'Визы',
+        href: '/visas',
+        children: [
             { label: 'Китай', href: '/visas/china' },
             { label: 'Южная Корея', href: '/visas/korea' },
             { label: 'Таиланд', href: '/visas/thailand' },
             { label: 'Шенген', href: '/visas/schengen' },
-            { label: 'Все визы →', href: '/visas' },
-        ]
+            { label: 'Все направления', href: '/visas' },
+        ],
     },
     {
-        label: 'Путешествия', href: '/tours', children: [
+        index: '02',
+        label: 'Путешествия',
+        href: '/tours',
+        children: [
             { label: 'Туры в Китай', href: '/tours/china' },
             { label: 'По России', href: '/tours/russia' },
             { label: 'Горящие туры', href: '/tours/hot-deals' },
-        ]
+        ],
     },
-    { label: 'Образование', href: '/education' },
-    { label: 'Сервисы', href: '/services' },
+    { index: '03', label: 'Образование', href: '/education' },
+    { index: '04', label: 'Сервисы', href: '/services' },
 ];
 
+// Detect reduced-motion preference (stable, read once)
+const prefersReduced =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export function Navbar() {
-    const { openLeadModal } = useContext(ModalContext);
     const { theme, toggle: toggleTheme } = useTheme();
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const location = useLocation();
 
+    // Scroll detector for subtle backdrop
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 50);
+        const onScroll = () => setScrolled(window.scrollY > 40);
         window.addEventListener('scroll', onScroll, { passive: true });
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
-    // Close menu on route change
+    // Close on route change
     useEffect(() => {
         setMenuOpen(false);
     }, [location.pathname]);
 
-    // Body lock when mobile menu is open
+    // Body lock when menu open (iOS-correct pattern)
     useEffect(() => {
         if (menuOpen) {
-            document.body.style.overflow = 'hidden';
+            const scrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
+            document.body.style.overscrollBehavior = 'none';
         } else {
-            document.body.style.overflow = '';
+            const scrollY = parseInt(document.body.style.top || '0') * -1;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overscrollBehavior = '';
+            if (scrollY) window.scrollTo(0, scrollY);
         }
         return () => {
-            document.body.style.overflow = '';
+            const scrollY = parseInt(document.body.style.top || '0') * -1;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overscrollBehavior = '';
+            if (scrollY) window.scrollTo(0, scrollY);
         };
     }, [menuOpen]);
 
+    // Close on Esc
+    const handleKeyDown = useCallback((e: KeyboardEvent) => {
+        if (e.key === 'Escape' && menuOpen) setMenuOpen(false);
+    }, [menuOpen]);
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [handleKeyDown]);
+
+    // Transition config — instant when prefers-reduced-motion
+    const DURATION = prefersReduced ? '0ms' : '320ms';
+    const EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
+    const STAGGER_BASE = prefersReduced ? 0 : 60;
+
     return (
-        <nav
-            className={`fixed left-1/2 -translate-x-1/2 top-6 z-50 transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] rounded-pill ${
-                scrolled
-                    ? 'w-[90%] max-w-5xl glass-panel !rounded-pill py-3 px-6'
-                    : 'w-full max-w-7xl bg-transparent border border-transparent py-5 px-8'
-            }`}
-        >
-            <div className="flex items-center justify-between">
+        <>
+            {/* ── Bar ─────────────────────────────────────────────────────── */}
+            <nav
+                aria-label="Навигация"
+                className={`fixed top-0 left-0 right-0 z-[70]
+                    flex items-center justify-between
+                    px-6 md:px-10 lg:px-14
+                    h-14 md:h-16
+                    transition-all
+                    ${scrolled
+                        ? 'bg-[var(--color-bg)]/70 backdrop-blur-[18px] -webkit-backdrop-blur-[18px]'
+                        : 'bg-transparent'
+                    }`}
+                style={{ transitionDuration: DURATION, transitionTimingFunction: EASE }}
+            >
                 {/* Logo */}
-                <Link to="/" className="flex items-center gap-3 group" onClick={() => setMenuOpen(false)}>
-                    <div className="w-8 h-8 rounded-full bg-t-strong flex items-center justify-center text-t-bg font-bold font-mono text-xs overflow-hidden relative">
-                        <span className="relative z-10">OE</span>
+                <Link
+                    to="/"
+                    className="flex items-center gap-2.5 group"
+                    onClick={() => setMenuOpen(false)}
+                    aria-label="Ориент Экспресс — на главную"
+                >
+                    <div
+                        className="w-6 h-6 rounded-full flex items-center justify-center
+                            bg-[var(--color-accent-strong)] text-[var(--color-bg)]
+                            font-mono font-bold text-[9px] tracking-wider flex-shrink-0"
+                    >
+                        OE
                     </div>
-                    <span className="font-heading font-bold text-lg tracking-tight transition-colors duration-500 text-t-text">
+                    <span
+                        className="font-heading font-semibold tracking-tight
+                            text-[var(--color-text)] text-[15px] md:text-base
+                            transition-opacity duration-300 group-hover:opacity-70"
+                    >
                         Ориент Экспресс.
                     </span>
                 </Link>
 
-                {/* Desktop Nav */}
-                <div className="hidden md:flex items-center gap-6">
-                    {NAV_LINKS.map(link => {
-                        const isActive = location.pathname.startsWith(link.href);
-                        return (
-                            <Link
-                                key={link.label}
-                                to={link.href}
-                                className={`text-sm tracking-wide font-medium transition-colors duration-300 ${
-                                    isActive ? 'text-t-strong' : 'text-t-muted hover:text-t-text'
-                                }`}
-                            >
-                                {link.label}
-                            </Link>
-                        );
-                    })}
-                </div>
-
-                {/* Theme Toggle + CTA + Burger */}
-                <div className="flex items-center gap-3">
+                {/* Right: theme toggle + burger trigger */}
+                <div className="flex items-center gap-5">
+                    {/* Theme toggle — no background, just icon */}
                     <button
                         onClick={toggleTheme}
                         aria-label={theme === 'night' ? 'Включить дневной режим' : 'Включить ночной режим'}
-                        className="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full flex items-center justify-center
-                            transition-all duration-500 bg-t-glass hover:border-t-strong
-                            border border-t-glass-border text-t-muted hover:text-t-strong"
+                        className="min-w-[44px] min-h-[44px] flex items-center justify-center
+                            text-[var(--color-text-subtle)] hover:text-[var(--color-text)]
+                            transition-colors duration-300"
+                        style={{ transitionDuration: DURATION }}
                     >
                         {theme === 'night'
-                            ? <Sun size={16} strokeWidth={1.5} className="transition-transform duration-500 hover:rotate-90" />
-                            : <Moon size={16} strokeWidth={1.5} className="transition-transform duration-500 hover:-rotate-12" />
+                            ? <Sun size={14} strokeWidth={1.5} />
+                            : <Moon size={14} strokeWidth={1.5} />
                         }
                     </button>
 
+                    {/* Burger / Close trigger */}
                     <button
-                        onClick={openLeadModal}
-                        className="hidden md:flex btn-premium !py-2.5 !px-6 !text-[11px]"
-                    >
-                        Консультация
-                    </button>
-
-                    {/* Burger — min 44×44px hit target */}
-                    <button
-                        className="md:hidden flex flex-col gap-1.5
-                            min-w-[44px] min-h-[44px] w-11 h-11
-                            items-center justify-center z-50 relative"
                         onClick={() => setMenuOpen(v => !v)}
-                        aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
                         aria-expanded={menuOpen}
+                        aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
+                        className="min-w-[44px] min-h-[44px] flex items-center justify-center gap-2.5
+                            text-[var(--color-text-subtle)] hover:text-[var(--color-text)]
+                            transition-colors duration-300 relative"
+                        style={{ transitionDuration: DURATION }}
                     >
-                        <span className={`block w-6 h-[2px] rounded-full transition-all duration-300 bg-t-text ${menuOpen ? 'rotate-45 translate-y-[8px]' : ''}`} />
-                        <span className={`block w-6 h-[2px] rounded-full transition-all duration-300 bg-t-text ${menuOpen ? 'opacity-0' : ''}`} />
-                        <span className={`block w-6 h-[2px] rounded-full transition-all duration-300 bg-t-text ${menuOpen ? '-rotate-45 -translate-y-[8px]' : ''}`} />
+                        {/* Icon — thin lines or cross */}
+                        <span className="relative flex flex-col gap-[5px] w-[18px]" aria-hidden="true">
+                            <span
+                                className="block h-px rounded-full bg-current transition-all"
+                                style={{
+                                    transitionDuration: DURATION,
+                                    transitionTimingFunction: EASE,
+                                    transform: menuOpen ? 'translateY(6px) rotate(45deg)' : 'none',
+                                    width: menuOpen ? '18px' : '18px',
+                                }}
+                            />
+                            <span
+                                className="block h-px rounded-full bg-current transition-all"
+                                style={{
+                                    transitionDuration: DURATION,
+                                    transitionTimingFunction: EASE,
+                                    opacity: menuOpen ? 0 : 1,
+                                    width: '13px',
+                                }}
+                            />
+                            <span
+                                className="block h-px rounded-full bg-current transition-all"
+                                style={{
+                                    transitionDuration: DURATION,
+                                    transitionTimingFunction: EASE,
+                                    transform: menuOpen ? 'translateY(-6px) rotate(-45deg)' : 'none',
+                                    width: menuOpen ? '18px' : '10px',
+                                }}
+                            />
+                        </span>
+
+                        {/* Label */}
+                        <span
+                            className="font-mono text-[10px] md:text-[11px] uppercase
+                                tracking-[0.18em] leading-none select-none"
+                            style={{
+                                transitionDuration: DURATION,
+                                transitionTimingFunction: EASE,
+                            }}
+                        >
+                            {menuOpen ? 'Закрыть' : 'Меню'}
+                        </span>
                     </button>
                 </div>
-            </div>
+            </nav>
 
-            {/* Mobile menu — full-screen overlay */}
+            {/* ── Overlay ─────────────────────────────────────────────────── */}
+            {/* Backdrop — click to close */}
             <div
-                className={`fixed inset-0 min-h-[100dvh] md:hidden flex flex-col pt-28 px-8
-                    transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]
-                    ${menuOpen ? 'translate-y-0' : '-translate-y-full'}`}
+                aria-hidden="true"
+                onClick={() => setMenuOpen(false)}
+                className="fixed inset-0 z-[60]"
                 style={{
-                    zIndex: -1,
                     background: 'var(--color-bg)',
-                    overscrollBehavior: 'contain',
-                    WebkitOverflowScrolling: 'touch' as React.CSSProperties['WebkitOverflowScrolling'],
+                    opacity: menuOpen ? 1 : 0,
+                    pointerEvents: menuOpen ? 'auto' : 'none',
+                    transition: `opacity ${DURATION} ${EASE}`,
                 }}
-                aria-hidden={!menuOpen}
+            />
+
+            {/* Menu panel */}
+            <div
+                role="dialog"
+                aria-modal="true"
+                aria-label="Навигационное меню"
+                className="fixed inset-0 z-[61] flex flex-col
+                    px-8 md:px-14 lg:px-20
+                    pt-[72px] md:pt-20
+                    pb-10 overflow-y-auto"
+                style={{
+                    pointerEvents: menuOpen ? 'auto' : 'none',
+                    opacity: menuOpen ? 1 : 0,
+                    transform: menuOpen ? 'translateY(0)' : 'translateY(-12px)',
+                    transition: prefersReduced
+                        ? 'none'
+                        : `opacity 280ms ${EASE}, transform 320ms ${EASE}`,
+                }}
             >
-                <div className="flex flex-col gap-6 overflow-y-auto pb-10">
-                    {NAV_LINKS.map((link, i) => (
-                        <div key={link.label}>
-                            <Link
-                                to={link.href}
-                                onClick={() => setMenuOpen(false)}
-                                className="text-left text-3xl font-heading font-medium text-t-text border-b border-t-border pb-3 block min-h-[44px] flex items-center"
+                {/* Nav items */}
+                <nav className="flex flex-col mt-6 md:mt-10">
+                    {NAV_LINKS.map((link, i) => {
+                        const isActive = location.pathname.startsWith(link.href);
+                        return (
+                            <div
+                                key={link.label}
+                                className="border-t border-[var(--color-border)]"
                                 style={{
                                     opacity: menuOpen ? 1 : 0,
-                                    transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
-                                    transition: `all 0.4s ease ${i * 0.1}s`,
+                                    transform: menuOpen ? 'translateY(0)' : 'translateY(16px)',
+                                    transition: prefersReduced
+                                        ? 'none'
+                                        : `opacity 360ms ${EASE} ${i * STAGGER_BASE}ms,
+                                           transform 400ms ${EASE} ${i * STAGGER_BASE}ms`,
                                 }}
                             >
-                                {link.label}
-                            </Link>
-                            {'children' in link && link.children && (
-                                <div className="flex flex-wrap gap-2 mt-2 ml-2">
-                                    {link.children.map(child => (
+                                <div className="py-5 md:py-6 flex items-start justify-between gap-6 group">
+                                    <div className="flex items-baseline gap-5 md:gap-8">
+                                        {/* Index label */}
+                                        <span className="font-mono text-[10px] tracking-[0.3em] uppercase
+                                            text-[var(--color-text-subtle)] flex-shrink-0 mt-1.5">
+                                            {link.index}
+                                        </span>
+
+                                        {/* Primary link */}
                                         <Link
-                                            key={child.href}
-                                            to={child.href}
+                                            to={link.href}
                                             onClick={() => setMenuOpen(false)}
-                                            className="text-sm text-t-muted hover:text-t-strong
-                                                px-3 py-2 min-h-[44px] flex items-center
-                                                bg-t-glass rounded-full border border-t-glass-border"
+                                            className={`font-heading font-medium leading-[1.05]
+                                                transition-colors duration-200
+                                                text-[clamp(2.2rem,6vw,4.5rem)]
+                                                ${isActive
+                                                    ? 'text-[var(--color-text)]'
+                                                    : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
+                                                }`}
                                         >
-                                            {child.label}
+                                            {link.label}
                                         </Link>
-                                    ))}
+                                    </div>
                                 </div>
-                            )}
-                        </div>
-                    ))}
-                    <button
-                        onClick={() => {
-                            setMenuOpen(false);
-                            openLeadModal();
-                        }}
-                        className="mt-4 btn-premium !rounded-pill !py-4 !text-base"
-                        style={{
-                            opacity: menuOpen ? 1 : 0,
-                            transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
-                            transition: 'all 0.4s ease 0.4s',
-                        }}
+
+                                {/* Sub-links */}
+                                {'children' in link && link.children && (
+                                    <div className="flex flex-wrap gap-x-5 gap-y-1.5 pb-5 pl-10 md:pl-16">
+                                        {link.children.map(child => (
+                                            <Link
+                                                key={child.href}
+                                                to={child.href}
+                                                onClick={() => setMenuOpen(false)}
+                                                className="font-mono text-[11px] tracking-[0.15em] uppercase
+                                                    text-[var(--color-text-subtle)] hover:text-[var(--color-text-muted)]
+                                                    transition-colors duration-200 py-1"
+                                            >
+                                                {child.label}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
+
+                    {/* Last border */}
+                    <div className="border-t border-[var(--color-border)]" />
+                </nav>
+
+                {/* Footer of menu — contact line */}
+                <div
+                    className="mt-auto pt-8 flex items-center gap-6 flex-wrap"
+                    style={{
+                        opacity: menuOpen ? 1 : 0,
+                        transition: prefersReduced
+                            ? 'none'
+                            : `opacity 400ms ${EASE} ${NAV_LINKS.length * STAGGER_BASE + 80}ms`,
+                    }}
+                >
+                    <a
+                        href="tel:+74212000000"
+                        className="font-mono text-[11px] tracking-[0.2em] uppercase
+                            text-[var(--color-text-subtle)] hover:text-[var(--color-text-muted)]
+                            transition-colors duration-200"
                     >
-                        Получить консультацию
-                    </button>
+                        Позвонить
+                    </a>
+                    <span className="w-px h-3 bg-[var(--color-border)]" aria-hidden="true" />
+                    <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--color-text-subtle)]">
+                        С 2007 года · Хабаровск · Москва
+                    </span>
                 </div>
             </div>
-        </nav>
+        </>
     );
 }
 
