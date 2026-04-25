@@ -10,6 +10,20 @@ const IMAGES = [
     "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&q=90&w=1200", // Rome
 ];
 
+// Detects touch-primary devices; re-checks on resize/orientation change.
+const useIsMobile = (): boolean => {
+    const [isMobile, setIsMobile] = useState<boolean>(
+        () => window.matchMedia('(max-width: 767px)').matches
+    );
+    useEffect(() => {
+        const mq = window.matchMedia('(max-width: 767px)');
+        const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+        mq.addEventListener('change', handler);
+        return () => mq.removeEventListener('change', handler);
+    }, []);
+    return isMobile;
+};
+
 interface CodropsStickyGridProps {
     onOpenModal: () => void;
 }
@@ -17,13 +31,16 @@ interface CodropsStickyGridProps {
 const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) => {
     const [layer, setLayer] = useState(0);
     const navigate = useNavigate();
+    const isMobile = useIsMobile();
 
-    // Global wheel, touch, and keyboard handler to control the spatial transition
+    // Global wheel, touch, and keyboard handler — DESKTOP ONLY.
+    // On mobile we render a normal document-flow layout (no touch capture).
     useEffect(() => {
-        let lastActionTime = 0;
-        const DEBOUNCE_MS = 900; // slightly longer than the 800ms transition
+        if (isMobile) return; // ← guard: skip all event registration on mobile
 
-        // Function to handle moving forward (down/next)
+        let lastActionTime = 0;
+        const DEBOUNCE_MS = 900;
+
         const goNext = () => {
             const now = Date.now();
             if (now - lastActionTime < DEBOUNCE_MS) return;
@@ -31,7 +48,6 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
             lastActionTime = now;
         };
 
-        // Function to handle moving backward (up/prev)
         const goPrev = () => {
             const now = Date.now();
             if (now - lastActionTime < DEBOUNCE_MS) return;
@@ -39,20 +55,14 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
             lastActionTime = now;
         };
 
-        // Wheel Event Handler
         const handleWheel = (e: WheelEvent) => {
-            // e.deltaY > 0 -> scrolling down (moving forward in layers)
-            if (e.deltaY > 30) {
-                goNext();
-            } else if (e.deltaY < -30) {
-                goPrev();
-            }
+            if (e.deltaY > 30) goNext();
+            else if (e.deltaY < -30) goPrev();
         };
 
-        // Keyboard Event Handler
         const handleKeyDown = (e: KeyboardEvent) => {
             if (['ArrowDown', 'PageDown', ' '].includes(e.key)) {
-                e.preventDefault(); // Prevent native scroll even if overflow is not caught
+                e.preventDefault();
                 goNext();
             } else if (['ArrowUp', 'PageUp'].includes(e.key)) {
                 e.preventDefault();
@@ -60,28 +70,18 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
             }
         };
 
-        // Touch Event Handlers
         let touchStartY = 0;
         const handleTouchStart = (e: TouchEvent) => {
             touchStartY = e.touches[0].clientY;
         };
 
         const handleTouchMove = (e: TouchEvent) => {
-            const touchEndY = e.touches[0].clientY;
-            const deltaY = touchStartY - touchEndY;
-
+            const deltaY = touchStartY - e.touches[0].clientY;
             if (Math.abs(deltaY) > 50) {
-                if (deltaY > 0) { // swipe up = scroll down = next layer
-                    goNext();
-                } else {
-                    goPrev();
-                }
+                if (deltaY > 0) goNext();
+                else goPrev();
             }
-
-            // Prevent actual scrolling to maintain single-page spatial feel
-            if (e.cancelable) {
-                e.preventDefault();
-            }
+            if (e.cancelable) e.preventDefault();
         };
 
         window.addEventListener('wheel', handleWheel, { passive: false });
@@ -95,29 +95,95 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
             window.removeEventListener('touchstart', handleTouchStart);
             window.removeEventListener('touchmove', handleTouchMove);
         };
-    }, []);
+    }, [isMobile]); // re-run when breakpoint changes
 
-    // Helper: inline styles for smooth spatial transitions
     const getLayerStyle = (index: number): React.CSSProperties => {
         const diff = index - layer;
         if (diff === 0) {
             return { opacity: 1, transform: 'translateY(0) scale(1)', filter: 'blur(0px)', pointerEvents: 'auto', zIndex: 20 };
         } else if (diff > 0) {
-            // Below: slide up from bottom
             return { opacity: 0, transform: `translateY(${diff * 60}px) scale(0.96)`, filter: 'blur(12px)', pointerEvents: 'none', zIndex: 0 };
         } else {
-            // Above: slide up and fade
             return { opacity: 0, transform: `translateY(${diff * 80}px) scale(1.03)`, filter: 'blur(8px)', pointerEvents: 'none', zIndex: 0 };
         }
     };
 
+    // ─── MOBILE: normal document flow, no touch capture ──────────────────────
+    if (isMobile) {
+        return (
+            <div className="flex flex-col bg-transparent text-t-text font-sans">
+
+                {/* Section 0: Hero */}
+                <section className="min-h-[100dvh] flex flex-col items-center justify-center px-5 text-center">
+                    <div className="mb-5 flex items-center gap-2 bg-t-glass border border-t-strong/20 rounded-full px-4 py-1.5 backdrop-blur-sm">
+                        <span className="w-1.5 h-1.5 rounded-full bg-t-strong animate-pulse"></span>
+                        <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-t-strong/80">С 2007 года · Хабаровск · Москва</span>
+                    </div>
+
+                    <h1 className="font-heading text-5xl text-t-text font-bold tracking-tighter mb-3 leading-[1.05]">
+                        Orient Express
+                    </h1>
+
+                    <p className="font-sans text-t-text/50 text-sm mb-8 tracking-wide">
+                        Визы · Авторские туры · Образование за рубежом
+                    </p>
+
+                    <div className="flex items-center gap-3 mb-8 flex-wrap justify-center">
+                        <a
+                            href="https://2gis.ru/khabarovsk/firm/4926340373575901/tab/reviews"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-t-text/60 text-xs font-mono"
+                        >
+                            <span className="text-t-strong">★★★★★</span>
+                            <span>5.0 · 97 отзывов 2GIS</span>
+                        </a>
+                        <span className="w-px h-3 bg-t-text/20"></span>
+                        <span className="text-t-text/40 text-xs font-mono">18 лет на рынке</span>
+                    </div>
+
+                    <div className="flex flex-col gap-3 w-full max-w-xs">
+                        <button
+                            onClick={() => navigate('/visas')}
+                            className="btn-premium w-full !py-4 !text-sm"
+                        >
+                            Начать путешествие
+                        </button>
+                        <button
+                            onClick={onOpenModal}
+                            className="btn-ghost-premium w-full !py-4 !text-sm"
+                        >
+                            Получить консультацию
+                        </button>
+                    </div>
+
+                    <div className="mt-8 flex flex-col items-center gap-2 opacity-40">
+                        <span className="font-mono text-[9px] uppercase tracking-widest text-t-strong">Прокрутите вниз</span>
+                        <div className="w-px h-4 bg-t-strong/60 mx-auto animate-bounce"></div>
+                    </div>
+                </section>
+
+                {/* Section 1: Experience Finder */}
+                <section className="px-4 py-14">
+                    <ExperienceFinder images={IMAGES} onOpenModal={onOpenModal} />
+                </section>
+
+                {/* Section 2: Pricing */}
+                <section className="py-8">
+                    <PricingSection />
+                </section>
+
+            </div>
+        );
+    }
+
+    // ─── DESKTOP: original spatial portal ────────────────────────────────────
     return (
         <div className="bg-transparent text-t-text font-sans selection:bg-t-strong selection:text-t-bg relative w-full h-[100dvh] md:h-screen overflow-hidden perspective-[2000px]">
 
             {/* LAYER 0: The Portal Entry (Genesis) */}
             <div className="absolute inset-0 flex flex-col items-center justify-center px-6" style={{ ...getLayerStyle(0), transition: 'all 800ms cubic-bezier(0.22, 1, 0.36, 1)' }}>
 
-                {/* Trust badge — "С 2007 года" */}
                 <div className="mb-6 flex items-center gap-2 bg-t-glass border border-t-strong/20 rounded-full px-5 py-2 backdrop-blur-sm">
                     <span className="w-1.5 h-1.5 rounded-full bg-t-strong animate-pulse"></span>
                     <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-t-strong/80">С 2007 года · Хабаровск · Москва</span>
@@ -127,12 +193,10 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
                     Orient Express
                 </h1>
 
-                {/* Value prop */}
                 <p className="font-sans text-t-text/50 text-sm md:text-base text-center mb-8 tracking-wide">
                     Визы · Авторские туры · Образование за рубежом
                 </p>
 
-                {/* Social proof row */}
                 <div className="flex items-center gap-4 mb-10 flex-wrap justify-center">
                     <a
                         href="https://2gis.ru/khabarovsk/firm/4926340373575901/tab/reviews"
@@ -151,18 +215,16 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
                     </a>
                 </div>
 
-                {/* Primary CTA */}
                 <Magnetic strength={30}>
                     <button
                         onClick={() => navigate('/visas')}
                         className="px-8 py-4 bg-t-strong hover:opacity-90 text-t-bg font-bold font-mono tracking-[0.2em] uppercase rounded flex items-center gap-3 transition-all mb-4"
                     >
                         Начать путешествие
-                        <span className="material-symbols-outlined text-base">arrow_forward_ios</span>
+                        <span aria-hidden="true">→</span>
                     </button>
                 </Magnetic>
 
-                {/* Scroll hint */}
                 <div className="mt-6 flex flex-col items-center gap-2 opacity-40">
                     <span className="font-mono text-[9px] uppercase tracking-widest text-t-strong">Прокрутите вниз</span>
                     <div className="flex flex-col gap-1">
@@ -183,7 +245,7 @@ const CodropsStickyGrid: React.FC<CodropsStickyGridProps> = ({ onOpenModal }) =>
                 </div>
             </div>
 
-            {/* LAYER 3: Placeholder (replaces premium application — content TBD) */}
+            {/* LAYER 3: Placeholder */}
             <div className="absolute inset-0 flex items-center justify-center" style={{ ...getLayerStyle(3), transition: 'all 800ms cubic-bezier(0.22, 1, 0.36, 1)' }}>
                 <div className="w-full h-full flex items-center justify-center relative z-10">
                     <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-t-text/30">Скоро</span>

@@ -38,9 +38,22 @@ export function Navbar() {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
+    // Close menu on route change
     useEffect(() => {
         setMenuOpen(false);
     }, [location.pathname]);
+
+    // Body lock when mobile menu is open
+    useEffect(() => {
+        if (menuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [menuOpen]);
 
     return (
         <nav
@@ -65,12 +78,13 @@ export function Navbar() {
                 <div className="hidden md:flex items-center gap-6">
                     {NAV_LINKS.map(link => {
                         const isActive = location.pathname.startsWith(link.href);
-
                         return (
                             <Link
                                 key={link.label}
                                 to={link.href}
-                                className={`text-sm tracking-wide font-medium transition-colors duration-300 ${isActive ? 'text-t-strong' : 'text-t-muted hover:text-t-text'}`}
+                                className={`text-sm tracking-wide font-medium transition-colors duration-300 ${
+                                    isActive ? 'text-t-strong' : 'text-t-muted hover:text-t-text'
+                                }`}
                             >
                                 {link.label}
                             </Link>
@@ -83,7 +97,9 @@ export function Navbar() {
                     <button
                         onClick={toggleTheme}
                         aria-label={theme === 'night' ? 'Включить дневной режим' : 'Включить ночной режим'}
-                        className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-500 bg-t-glass hover:border-t-strong border border-t-glass-border text-t-muted hover:text-t-strong"
+                        className="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full flex items-center justify-center
+                            transition-all duration-500 bg-t-glass hover:border-t-strong
+                            border border-t-glass-border text-t-muted hover:text-t-strong"
                     >
                         {theme === 'night'
                             ? <Sun size={16} strokeWidth={1.5} className="transition-transform duration-500 hover:rotate-90" />
@@ -98,11 +114,14 @@ export function Navbar() {
                         Консультация
                     </button>
 
-                    {/* Burger */}
+                    {/* Burger — min 44×44px hit target */}
                     <button
-                        className="md:hidden flex flex-col gap-1.5 w-8 h-8 items-center justify-center z-50 relative"
+                        className="md:hidden flex flex-col gap-1.5
+                            min-w-[44px] min-h-[44px] w-11 h-11
+                            items-center justify-center z-50 relative"
                         onClick={() => setMenuOpen(v => !v)}
-                        aria-label="Menu"
+                        aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
+                        aria-expanded={menuOpen}
                     >
                         <span className={`block w-6 h-[2px] rounded-full transition-all duration-300 bg-t-text ${menuOpen ? 'rotate-45 translate-y-[8px]' : ''}`} />
                         <span className={`block w-6 h-[2px] rounded-full transition-all duration-300 bg-t-text ${menuOpen ? 'opacity-0' : ''}`} />
@@ -111,19 +130,31 @@ export function Navbar() {
                 </div>
             </div>
 
-            {/* Mobile menu */}
+            {/* Mobile menu — full-screen overlay */}
             <div
-                className={`fixed inset-0 min-h-screen md:hidden flex flex-col pt-32 px-8 transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${menuOpen ? 'translate-y-0' : '-translate-y-full'}`}
-                style={{ zIndex: -1, background: 'var(--color-bg)' }}
+                className={`fixed inset-0 min-h-[100dvh] md:hidden flex flex-col pt-28 px-8
+                    transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                    ${menuOpen ? 'translate-y-0' : '-translate-y-full'}`}
+                style={{
+                    zIndex: -1,
+                    background: 'var(--color-bg)',
+                    overscrollBehavior: 'contain',
+                    WebkitOverflowScrolling: 'touch' as React.CSSProperties['WebkitOverflowScrolling'],
+                }}
+                aria-hidden={!menuOpen}
             >
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-6 overflow-y-auto pb-10">
                     {NAV_LINKS.map((link, i) => (
                         <div key={link.label}>
                             <Link
                                 to={link.href}
                                 onClick={() => setMenuOpen(false)}
-                                className="text-left text-3xl font-heading font-medium text-t-text border-b border-t-border pb-3 block"
-                                style={{ opacity: menuOpen ? 1 : 0, transform: menuOpen ? 'translateY(0)' : 'translateY(20px)', transition: `all 0.4s ease ${i * 0.1}s` }}
+                                className="text-left text-3xl font-heading font-medium text-t-text border-b border-t-border pb-3 block min-h-[44px] flex items-center"
+                                style={{
+                                    opacity: menuOpen ? 1 : 0,
+                                    transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
+                                    transition: `all 0.4s ease ${i * 0.1}s`,
+                                }}
                             >
                                 {link.label}
                             </Link>
@@ -134,7 +165,9 @@ export function Navbar() {
                                             key={child.href}
                                             to={child.href}
                                             onClick={() => setMenuOpen(false)}
-                                            className="text-sm text-t-muted hover:text-t-strong px-3 py-1.5 bg-t-glass rounded-full border border-t-glass-border"
+                                            className="text-sm text-t-muted hover:text-t-strong
+                                                px-3 py-2 min-h-[44px] flex items-center
+                                                bg-t-glass rounded-full border border-t-glass-border"
                                         >
                                             {child.label}
                                         </Link>
@@ -148,8 +181,12 @@ export function Navbar() {
                             setMenuOpen(false);
                             openLeadModal();
                         }}
-                        className="mt-6 btn-premium !rounded-pill !py-4 !text-base"
-                        style={{ opacity: menuOpen ? 1 : 0, transform: menuOpen ? 'translateY(0)' : 'translateY(20px)', transition: `all 0.4s ease 0.4s` }}
+                        className="mt-4 btn-premium !rounded-pill !py-4 !text-base"
+                        style={{
+                            opacity: menuOpen ? 1 : 0,
+                            transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
+                            transition: 'all 0.4s ease 0.4s',
+                        }}
                     >
                         Получить консультацию
                     </button>

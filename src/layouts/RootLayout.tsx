@@ -16,13 +16,15 @@ const RootLayout: React.FC = () => {
     const location = useLocation();
     const { theme, toggle } = useTheme();
 
-    // The spatial portal must not allow native vertical scrolling.
-    // It captures all vertical screen space and traps the user in its own Z-axis engine.
     const isHome = location.pathname === '/';
 
-    // Forcefully kill any native body scrollbars when on the spatial portal
+    // Body scroll lock:
+    // - Desktop home: lock (spatial portal owns the viewport)
+    // - Mobile home: allow scroll (CodropsStickyGrid renders static flow on mobile)
+    // - All other pages: allow scroll
     React.useEffect(() => {
-        if (isHome) {
+        const isMobileViewport = window.matchMedia('(max-width: 767px)').matches;
+        if (isHome && !isMobileViewport) {
             document.body.style.overflow = 'hidden';
             document.body.style.height = '100dvh';
         } else {
@@ -37,22 +39,34 @@ const RootLayout: React.FC = () => {
 
     return (
         <ModalContext.Provider value={{ openLeadModal: () => setIsModalOpen(true) }}>
-            <div className={`flex flex-col ${isHome ? 'h-[100dvh] overflow-hidden' : 'min-h-screen overflow-x-hidden'}`} style={{ backgroundColor: 'var(--color-bg)', color: 'var(--color-text)' }}>
+            <div
+                className={`flex flex-col ${
+                    isHome
+                        // Desktop: locked viewport for spatial portal.
+                        // Mobile: normal scroll (md:overflow-hidden only applies ≥768px).
+                        ? 'md:h-[100dvh] md:overflow-hidden'
+                        : 'min-h-screen overflow-x-hidden'
+                }`}
+                style={{ backgroundColor: 'var(--color-bg)', color: 'var(--color-text)' }}
+            >
                 <GlobalBackground />
 
-                {/* Hide the global Navbar on the Spatial Portal so it doesn't drag into the 3D layers */}
-                {!isHome && <Navbar />}
+                {/* On desktop home the spatial portal has no Navbar — it owns the whole screen.
+                    On mobile home we show the Navbar so users can navigate away. */}
+                {(!isHome || window.matchMedia('(max-width: 767px)').matches) && <Navbar />}
 
-                {/* Floating theme toggle — only on home (Spatial Portal has no Navbar) */}
+                {/* Floating theme toggle — only on desktop home */}
                 {isHome && (
                     <button
                         onClick={toggle}
                         aria-label={theme === 'night' ? 'Включить дневной режим' : 'Включить ночной режим'}
-                        className={`fixed top-6 right-6 z-50 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 ${
-                            theme === 'day'
+                        className={`fixed top-6 right-6 z-50 min-w-[44px] min-h-[44px] w-11 h-11 rounded-full
+                            flex items-center justify-center transition-all duration-500
+                            md:flex hidden
+                            ${theme === 'day'
                                 ? 'bg-primary/8 hover:bg-primary/15 text-primary/70 hover:text-primary'
                                 : 'bg-white/10 hover:bg-white/20 text-white/60 hover:text-champagne'
-                        }`}
+                            }`}
                     >
                         {theme === 'night'
                             ? <Sun size={16} />

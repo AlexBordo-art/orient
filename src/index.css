@@ -20,21 +20,17 @@
   --color-glass-border: rgba(255, 255, 255, 0.10);
   --color-border:      rgba(255, 255, 255, 0.08);
 
-  /* Photo treatment — same image, night mood */
   --photo-brightness:  0.45;
   --photo-saturate:    0.75;
   --photo-overlay:     rgba(2, 6, 23, 0.55);
   --photo-overlay-hero: rgba(2, 6, 23, 0.70);
 
-  /* Scrollbar */
   --scrollbar-track:   #020617;
   --scrollbar-thumb:   #1E293B;
 
-  /* Selection */
   --selection-bg:      #D4AF37;
   --selection-text:    #020617;
 
-  /* Font families */
   --font-heading: 'Cormorant Garamond', serif;
   --font-body:    'Inter', sans-serif;
   --font-mono:    'Space Grotesk', sans-serif;
@@ -53,17 +49,14 @@
   --color-glass-border: rgba(0, 0, 0, 0.14);
   --color-border:      rgba(0, 0, 0, 0.11);
 
-  /* Photo treatment — same image, day mood */
   --photo-brightness:  1.0;
   --photo-saturate:    0.88;
   --photo-overlay:     rgba(255, 251, 235, 0.25);
   --photo-overlay-hero: rgba(255, 251, 235, 0.40);
 
-  /* Scrollbar */
   --scrollbar-track:   #FFFBEB;
   --scrollbar-thumb:   #D6D3D1;
 
-  /* Selection */
   --selection-bg:      #D4AF37;
   --selection-text:    #FFFBEB;
 }
@@ -72,7 +65,10 @@
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    max-width: 100vw;
     background-color: var(--color-bg);
+    /* Use dynamic viewport height units — avoids iOS Safari toolbar jank */
+    height: 100%;
   }
 
   body {
@@ -80,8 +76,11 @@
     background-color: var(--color-bg);
     color: var(--color-text);
     overflow-x: hidden;
+    max-width: 100vw;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Prevents rubber-band bleed-through on iOS when modals are open */
+    overscroll-behavior-x: none;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -94,6 +93,44 @@
     font-weight: 300;
     line-height: 1.7;
     color: var(--color-text-muted);
+  }
+
+  /* ── Mobile touch fixes ── */
+
+  /* Remove 300ms tap delay and blue flash on iOS */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Buttons and links: instant tap, no delay */
+  button, a, [role="button"] {
+    touch-action: manipulation;
+  }
+
+  /* Minimum 44×44px touch targets for all interactive controls */
+  button:not([class*="w-"]):not([class*="h-"]) {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* iOS momentum scrolling on all scroll containers */
+  .overflow-y-auto,
+  .overflow-auto,
+  .overflow-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+
+  /* Input zoom fix: iOS zooms in when font-size < 16px */
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="search"],
+  input[type="password"],
+  input[type="number"],
+  select,
+  textarea {
+    font-size: max(16px, 1rem);
   }
 
   ::selection {
@@ -117,7 +154,7 @@
 
 @layer utilities {
 
-  /* === Page transition — route entry (pairs with GlobalBackground's 2500ms crossfade) === */
+  /* === Page transition — route entry === */
   @keyframes page-enter {
     from { opacity: 0; transform: translateY(8px); filter: blur(4px); }
     to   { opacity: 1; transform: translateY(0);   filter: blur(0); }
@@ -125,8 +162,15 @@
   .page-transition {
     animation: page-enter 700ms cubic-bezier(0.4, 0, 0.2, 1) both;
   }
+
+  /* === Reduced motion: kill heavy animations globally === */
   @media (prefers-reduced-motion: reduce) {
     .page-transition { animation: none; }
+    .animate-ken-burns,
+    .animate-float,
+    .animate-bounce,
+    .animate-ping,
+    .animate-pulse { animation: none !important; }
   }
 
   /* === Glassmorphism — theme-aware === */
@@ -156,7 +200,7 @@
     background: var(--color-glass-bg);
   }
 
-  /* === Photo container — applies day/night filter to images === */
+  /* === Photo container === */
   .photo-atmosphere {
     filter: brightness(var(--photo-brightness)) saturate(var(--photo-saturate));
     transition: filter 0.8s ease;
@@ -180,9 +224,8 @@
     pointer-events: none;
   }
 
-  /* === Button System — designer vocabulary: premium (gold) + ghost (glass) === */
+  /* === Button System === */
 
-  /* Premium CTA — gold gradient on obsidian */
   .btn-premium {
     @apply relative overflow-hidden inline-flex items-center justify-center gap-[10px] px-7 py-4 rounded-full font-mono font-bold text-[11px] tracking-[0.25em] uppercase;
     background: linear-gradient(135deg, #FEF08A, #D4AF37);
@@ -190,6 +233,7 @@
     box-shadow: 0 4px 20px rgba(212, 175, 55, 0.30);
     border: none;
     cursor: pointer;
+    /* Use touch-action: manipulation (inherited from base) */
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .btn-premium:hover {
@@ -200,7 +244,6 @@
     transform: scale(0.98);
   }
 
-  /* Ghost — glass with hairline border */
   .btn-ghost-premium {
     @apply inline-flex items-center justify-center gap-2 px-6 py-[14px] rounded-full font-mono font-semibold text-[11px] tracking-[0.2em] uppercase;
     border: 1px solid var(--color-glass-border);
@@ -216,7 +259,6 @@
     color: var(--color-accent);
   }
 
-  /* Card buttons — compact premium/ghost for inside cards */
   .btn-card {
     @apply w-full flex items-center justify-center py-3 rounded font-mono font-bold text-[10px] tracking-[0.25em] uppercase;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s, color 0.3s;
@@ -244,7 +286,7 @@
     color: var(--color-accent);
   }
 
-  /* === Designer primitives: hairline, seal, mono labels === */
+  /* === Designer primitives === */
   .hairline {
     display: inline-block;
     height: 1px;
@@ -282,9 +324,10 @@
     font-size: 10px;
   }
 
-  /* === Container === */
+  /* === Container — mobile-first padding === */
   .section-padding {
-    @apply py-24 md:py-32 px-4 md:px-8;
+    /* Mobile: less vertical breathing room */
+    @apply py-14 md:py-24 lg:py-32 px-4 md:px-8;
   }
 
   .container-main {
@@ -304,4 +347,11 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     mix-blend-mode: overlay;
   }
+
+  /* === iOS safe-area helpers === */
+  /* Use these on fixed bars that sit near device edges */
+  .safe-top    { padding-top:    env(safe-area-inset-top); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+  .safe-left   { padding-left:   env(safe-area-inset-left); }
+  .safe-right  { padding-right:  env(safe-area-inset-right); }
 }
