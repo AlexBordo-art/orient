@@ -4,8 +4,12 @@ import Home from './pages/Home';
 import VisaHub from './pages/VisaHub';
 import VisaPage from './pages/VisaPage';
 import ToursHub from './pages/ToursHub';
+import ToursCategory from './pages/ToursCategory';
+import TourPage from './pages/TourPage';
 import EducationHub from './pages/EducationHub';
+import EducationProgram from './pages/EducationProgram';
 import ServicesHub from './pages/ServicesHub';
+import ServicePage from './pages/ServicePage';
 import ComingSoon from './pages/ComingSoon';
 
 function App() {
@@ -20,15 +24,16 @@ function App() {
 
         {/* Силос 2: Путешествия */}
         <Route path="tours" element={<ToursHub />} />
-        <Route path="tours/:destination" element={<ComingSoon />} /> {/* Fallback */}
+        <Route path="tours/:destination" element={<ToursCategory />} />
+        <Route path="tours/:destination/:tourId" element={<TourPage />} />
 
         {/* Силос 3: Образование */}
         <Route path="education" element={<EducationHub />} />
-        <Route path="education/:program" element={<ComingSoon />} /> {/* Fallback */}
+        <Route path="education/:program" element={<EducationProgram />} />
 
         {/* Силос 4: Сервисы */}
         <Route path="services" element={<ServicesHub />} />
-        <Route path="services/:service" element={<ComingSoon />} /> {/* Fallback */}
+        <Route path="services/:service" element={<ServicePage />} />
 
         {/* Утилиты и контент (Заглушки) */}
         <Route path="blog" element={<ComingSoon />} />

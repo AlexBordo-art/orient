@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Sparkles, Compass, Layers } from 'lucide-react';
 import Magnetic from './Magnetic';
 
 const PricingSection: React.FC = () => {
@@ -25,7 +26,7 @@ const PricingSection: React.FC = () => {
                             <ul className="space-y-2 lg:space-y-3 mb-6">
                                 {['Оценка шансов на визу', 'Выбор типа визы', 'Список документов', 'Расчет стоимости'].map((feature, i) => (
                                     <li key={i} className="flex items-center text-xs lg:text-sm font-sans text-t-text/80">
-                                        <span className="material-symbols-outlined text-[14px] lg:text-[16px] text-t-strong/70 mr-3 shrink-0">blur_on</span>
+                                        <Sparkles className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-t-strong/70 mr-3 shrink-0" />
                                         {feature}
                                     </li>
                                 ))}
@@ -58,7 +59,7 @@ const PricingSection: React.FC = () => {
                             <ul className="space-y-2 lg:space-y-3 mb-6">
                                 {['Заполнение всех анкет', 'Перевод документов', 'Бронь авиа и отелей', 'Запись в консульство/ВЦ', 'Сопровождение'].map((feature, i) => (
                                     <li key={i} className="flex items-center text-xs lg:text-sm font-sans text-t-text/90">
-                                        <span className="material-symbols-outlined text-[14px] lg:text-[16px] text-t-strong mr-3 shrink-0">filter_center_focus</span>
+                                        <Compass className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-t-strong mr-3 shrink-0" />
                                         {feature}
                                     </li>
                                 ))}
@@ -90,7 +91,7 @@ const PricingSection: React.FC = () => {
                             <ul className="space-y-2 lg:space-y-3 mb-6">
                                 {['Оформление визы', 'Билеты по лучшим ценам', 'Подбор отелей', 'Трансферы и гиды', 'Ассистент 24/7'].map((feature, i) => (
                                     <li key={i} className="flex items-center text-xs lg:text-sm font-sans text-t-text/80">
-                                        <span className="material-symbols-outlined text-[14px] lg:text-[16px] text-t-strong/70 mr-3 shrink-0">layers</span>
+                                        <Layers className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-t-strong/70 mr-3 shrink-0" />
                                         {feature}
                                     </li>
                                 ))}

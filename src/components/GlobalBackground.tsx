@@ -12,8 +12,9 @@ const HOME_IMAGES = [
 
 const ROUTE_IMAGE: { prefix: string; src: string }[] = [
     { prefix: '/visas', src: '/backgrounds/bg-bambuk.webp' },
+    { prefix: '/tours', src: '/backgrounds/bg-maple.webp' },
     { prefix: '/education', src: '/backgrounds/bg-book.webp' },
-    { prefix: '/services', src: '/backgrounds/bg-teacup.webp' },
+    { prefix: '/services', src: '/backgrounds/bg-passport.webp' },
 ];
 
 // Detect reduced-motion and mobile once at module level (stable across renders)

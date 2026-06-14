@@ -1,5 +1,25 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Mountain, Landmark, SunMoon, Users, Briefcase, GraduationCap } from 'lucide-react';
+
+const FeelingIcon: React.FC<{ id: string; className?: string }> = ({ id, className }) => {
+    switch (id) {
+        case 'adventure':
+            return <Mountain className={className} />;
+        case 'culture':
+            return <Landmark className={className} />;
+        case 'romance':
+            return <SunMoon className={className} />;
+        case 'family':
+            return <Users className={className} />;
+        case 'business':
+            return <Briefcase className={className} />;
+        case 'education':
+            return <GraduationCap className={className} />;
+        default:
+            return null;
+    }
+};
 
 const FEELINGS = [
     { id: 'adventure', label: 'Приключение', genitive: 'приключений', icon: 'terrain', desc: 'Горы, экспедиции, активный отдых' },
@@ -84,7 +104,7 @@ const ExperienceFinder: React.FC<ExperienceFinderProps> = ({ images, onOpenModal
                                 : 'bg-t-glass border-t-border text-t-text/70 hover:border-champagne/40 hover:text-t-text'
                         }`}
                     >
-                        <span className="material-symbols-outlined text-base leading-none">{f.icon}</span>
+                        <FeelingIcon id={f.id} className="w-4 h-4 shrink-0" />
                         <span>{f.label}</span>
                     </button>
                 ))}
