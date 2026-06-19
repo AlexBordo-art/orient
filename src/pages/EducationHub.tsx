@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { EDUCATION_DATA } from '../data/education';
 import Breadcrumbs from '../components/Breadcrumbs';
 import SEO from '../components/SEO';
-import { GraduationCap, ArrowRight, Calendar, Users } from 'lucide-react';
+import { GraduationCap, ArrowRight, Users } from 'lucide-react';
 
 const EducationHub: React.FC = () => (
     <div className="min-h-screen bg-transparent">

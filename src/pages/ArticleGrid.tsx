@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { ArrowRight, BookOpen, Clock, X, ChevronRight } from 'lucide-react';
 import Magnetic from '../components/Magnetic';
-import { articles, Article } from '../data/blog';
+import { articles, type Article } from '../data/blog';
 import { TOURS_DATA } from '../data/tours';
 import { Link } from 'react-router-dom';
 import { ModalContext } from '../layouts/RootLayout';

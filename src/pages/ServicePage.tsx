@@ -4,7 +4,7 @@ import { SERVICES_DATA } from '../data/services';
 import { ModalContext } from '../layouts/RootLayout';
 import Breadcrumbs from '../components/Breadcrumbs';
 import SEO from '../components/SEO';
-import { Briefcase, CheckCircle2, ChevronRight, Clock, HelpCircle, Shield } from 'lucide-react';
+import { Briefcase, ChevronRight, Clock, Shield } from 'lucide-react';
 
 const ServicePage: React.FC = () => {
     const { service: serviceId } = useParams<{ service: string }>();
