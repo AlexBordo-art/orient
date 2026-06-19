@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# scraped old-site content (lives in orient-express/research/ instead)
+old_site_content/
+scrape_old_site.py

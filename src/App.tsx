@@ -11,6 +11,7 @@ import EducationProgram from './pages/EducationProgram';
 import ServicesHub from './pages/ServicesHub';
 import ServicePage from './pages/ServicePage';
 import ComingSoon from './pages/ComingSoon';
+import ArticleGrid from './pages/ArticleGrid';
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
         <Route path="services/:service" element={<ServicePage />} />
 
         {/* Утилиты и контент (Заглушки) */}
-        <Route path="blog" element={<ComingSoon />} />
+        <Route path="blog" element={<ArticleGrid />} />
         <Route path="reviews" element={<ComingSoon />} />
         <Route path="about" element={<ComingSoon />} />
         <Route path="contact" element={<ComingSoon />} />

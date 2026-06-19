@@ -28,6 +28,7 @@ const NAV_LINKS = [
     },
     { index: '03', label: 'Образование', href: '/education' },
     { index: '04', label: 'Сервисы', href: '/services' },
+    { index: '05', label: 'Блог', href: '/blog' },
 ];
 
 // Detect reduced-motion preference (stable, read once)
