@@ -139,7 +139,7 @@ const ToursCategory: React.FC = () => {
                     </div>
                 )}
 
-                <SpecialistBlock type={category === 'japan' ? 'japan' : 'china'} />
+                <SpecialistBlock type="china" />
             </div>
         </div>
     );

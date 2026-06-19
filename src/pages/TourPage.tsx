@@ -193,7 +193,7 @@ const TourPage: React.FC = () => {
             </div>
 
             <div className="max-w-7xl mx-auto px-6 pb-20">
-                <SpecialistBlock type={destination === 'japan' ? 'japan' : 'china'} />
+                <SpecialistBlock type="china" />
             </div>
         </div>
     );

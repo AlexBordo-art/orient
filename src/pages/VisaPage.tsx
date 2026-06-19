@@ -247,7 +247,7 @@ const VisaPage: React.FC = () => {
                             {(Object.keys(CHINA_CITIES_DATA) as Array<keyof typeof CHINA_CITIES_DATA>).map(cityKey => (
                                 <button
                                     key={cityKey}
-                                    onClick={() => setSelectedCity(cityKey)}
+                                    onClick={() => setSelectedCity(cityKey as 'khv' | 'vlad' | 'msk' | 'spb')}
                                     className={`px-4 py-3 rounded-xl border text-xs font-mono tracking-wide transition-all duration-300 ${
                                         selectedCity === cityKey
                                             ? 'bg-t-strong text-t-bg border-champagne shadow-[0_0_15px_rgba(212,175,55,0.25)] font-bold'
