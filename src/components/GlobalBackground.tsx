@@ -12,29 +12,9 @@ const HOME_IMAGES = [
 
 const ROUTE_IMAGE: { prefix: string; src: string }[] = [
     { prefix: '/visas', src: '/backgrounds/bg-bambuk.webp' },
-    { prefix: '/tours', src: '/backgrounds/bg-maple.webp' },
     { prefix: '/education', src: '/backgrounds/bg-book.webp' },
-    { prefix: '/services', src: '/backgrounds/bg-passport.webp' },
+    { prefix: '/services', src: '/backgrounds/bg-teacup.webp' },
 ];
-
-// Detect reduced-motion and mobile once at module level (stable across renders)
-const prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-const isMobileDevice =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(max-width: 767px)').matches;
-
-// Crossfade: 1200ms on mobile/reduced-motion, 2500ms on desktop
-const FADE_DURATION = prefersReducedMotion || isMobileDevice ? 1200 : 2500;
-
-// Ken Burns: skip on mobile and reduced-motion (saves GPU)
-const KEN_BURNS_CLASS =
-    !prefersReducedMotion && !isMobileDevice ? 'animate-ken-burns' : '';
-
-// On mobile, only preload current + next image to limit memory pressure
-const PRELOAD_LIMIT = isMobileDevice ? 2 : Infinity;
 
 const GlobalBackground: React.FC = () => {
     const { isDay } = useTheme();
@@ -45,21 +25,19 @@ const GlobalBackground: React.FC = () => {
     const routeMatch = ROUTE_IMAGE.find(r => location.pathname.startsWith(r.prefix));
     const IMAGES = routeMatch ? [routeMatch.src] : HOME_IMAGES;
 
-    // Preload images; reset index on route change
+    // Preload all images; reset index on route change
     useEffect(() => {
         setCurrentIndex(0);
-        IMAGES.slice(0, PRELOAD_LIMIT).forEach(src => {
+        IMAGES.forEach(src => {
             const img = new Image();
             img.src = src;
-            img.decoding = 'async';
-            img.onload = () =>
-                setLoadedImages(prev => (prev.includes(src) ? prev : [...prev, src]));
+            img.onload = () => setLoadedImages(prev => prev.includes(src) ? prev : [...prev, src]);
         });
     }, [location.pathname]);
 
-    // Auto-rotate (desktop only — on mobile a static image is lighter)
+    // Auto-rotate
     useEffect(() => {
-        if (IMAGES.length < 2 || isMobileDevice) return;
+        if (IMAGES.length < 2) return;
         const interval = setInterval(() => {
             setCurrentIndex(prev => (prev + 1) % IMAGES.length);
         }, 9000);
@@ -71,6 +49,7 @@ const GlobalBackground: React.FC = () => {
             className="fixed inset-0 w-full h-full z-0 pointer-events-none overflow-hidden transition-colors duration-700"
             style={{ backgroundColor: 'var(--color-bg)' }}
         >
+            {/* All images always in DOM — CSS transition fires on opacity change, not on mount */}
             {IMAGES.map((src, index) => {
                 const isCurrent = index === currentIndex;
                 const isLoaded = loadedImages.includes(src);
@@ -80,18 +59,15 @@ const GlobalBackground: React.FC = () => {
                         className="absolute inset-0"
                         style={{
                             opacity: isCurrent && isLoaded ? 1 : 0,
-                            transition: `opacity ${FADE_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`,
+                            transition: 'opacity 2500ms cubic-bezier(0.4, 0, 0.2, 1)',
                             zIndex: isCurrent ? 11 : 10,
                         }}
                     >
                         <img
                             src={src}
                             alt=""
-                            className={`w-full h-full object-cover object-center photo-atmosphere ${
-                                isCurrent ? KEN_BURNS_CLASS : ''
-                            }`}
+                            className={`w-full h-full object-cover object-center photo-atmosphere ${isCurrent ? 'animate-ken-burns' : ''}`}
                             loading={index === 0 ? 'eager' : 'lazy'}
-                            decoding="async"
                         />
                     </div>
                 );
@@ -100,11 +76,13 @@ const GlobalBackground: React.FC = () => {
             {/* Theme-aware overlays */}
             {isDay ? (
                 <>
+                    {/* Day: light cream veil — photos stay visible */}
                     <div className="absolute inset-0 bg-gradient-to-b from-[#FFFBEB]/45 via-[#FFFBEB]/20 to-[#FFFBEB]/55 z-20 transition-opacity duration-700" />
                     <div className="absolute inset-0 bg-[#FEF3C7]/10 mix-blend-soft-light z-20" />
                 </>
             ) : (
                 <>
+                    {/* Night: obsidian depth with subtle blue tint */}
                     <div className="absolute inset-0 bg-gradient-to-b from-obsidian-dark/60 via-obsidian/30 to-obsidian-dark/80 z-20 transition-opacity duration-700" />
                     <div className="absolute inset-0 bg-sapphire-dark/20 mix-blend-multiply z-20" />
                 </>
