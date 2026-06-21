@@ -134,11 +134,12 @@ const Home: React.FC = () => {
                 {/* Quiet contact line (real details) */}
                 <div className="mt-16 pt-8 border-t border-t-border/50 flex flex-col sm:flex-row items-center justify-center gap-x-8 gap-y-2 text-t-subtle text-sm font-sans font-light">
                     <span className="flex items-center gap-2">
-                        <MapPin size={14} className="text-t-accent/70" /> г. Хабаровск, ул. Дикопольцева, 26
+                        <MapPin size={14} className="text-t-accent/70" /> Офисы в Хабаровске и Москве · с 2007
                     </span>
                     <a href="tel:+79164665606" className="flex items-center gap-2 hover:text-t-strong transition-colors">
                         <Phone size={14} className="text-t-accent/70" /> +7 916 466 56 06
                     </a>
+                    <Link to="/contact" className="hover:text-t-strong transition-colors">Контакты →</Link>
                 </div>
             </div>
         </div>
