@@ -1,32 +1,138 @@
-import React, { useContext } from 'react';
-import CodropsStickyGrid from '../components/CodropsStickyGrid';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Compass, Plane, GraduationCap, Briefcase, BookOpen, ArrowRight, MapPin, Phone } from 'lucide-react';
 import SEO from '../components/SEO';
-import { ModalContext } from '../layouts/RootLayout';
+
+const SECONDARY = [
+    { to: '/education', icon: GraduationCap, label: 'Образование', desc: 'Учёба и языковые программы за рубежом' },
+    { to: '/services', icon: Briefcase, label: 'Услуги', desc: 'Карты АТЭС, гиды, отели, авиабилеты, страхование' },
+    { to: '/blog', icon: BookOpen, label: 'Блог', desc: 'Заметки путешественника' },
+];
 
 const Home: React.FC = () => {
-    const { openLeadModal } = useContext(ModalContext);
     return (
-        <main className="bg-transparent min-h-screen">
+        <div className="min-h-screen bg-transparent">
             <SEO
-                title="Визы, Путешествия, Образование"
-                description="Бюро путешествий Ориент Экспресс — оформление виз в Китай, Корею, Таиланд, Шенген. Авторские туры и образование за рубежом. С 2007 года, 5.0★ на 2GIS. Хабаровск и Москва."
+                title="Ориент Экспресс — авторские туры и визы в Азию из Хабаровска"
+                description="Бюро путешествий «Ориент Экспресс» с 2007 года: авторские туры по Китаю и Японии, оформление виз, образование за рубежом. Хабаровск и Москва."
                 canonical="/"
-                keywords="оформление виз Хабаровск, визы в Китай, туры в Китай, образование за рубежом, Ориент Экспресс"
+                keywords="туры в Китай, туры в Японию, визы, путешествия из Хабаровска, Ориент Экспресс"
                 schema={{
                     "@context": "https://schema.org",
-                    "@type": "Organization",
+                    "@type": "TravelAgency",
                     "name": "Ориент Экспресс",
-                    "url": "https://orient-dv.ru",
-                    "description": "Бюро путешествий и визовой поддержки",
+                    "description": "Бюро путешествий и визовой поддержки: авторские туры по Китаю и Японии, оформление виз, образование за рубежом.",
                     "foundingDate": "2007",
+                    "telephone": "+7 916 466 56 06",
                     "address": [
-                        { "@type": "PostalAddress", "addressLocality": "Хабаровск", "addressCountry": "RU" },
+                        { "@type": "PostalAddress", "streetAddress": "ул. Дикопольцева, 26", "addressLocality": "Хабаровск", "addressCountry": "RU" },
                         { "@type": "PostalAddress", "addressLocality": "Москва", "addressCountry": "RU" }
                     ]
                 }}
             />
-            <CodropsStickyGrid onOpenModal={openLeadModal} />
-        </main>
+
+            <div className="max-w-7xl mx-auto px-6 pb-24">
+                {/* Hero */}
+                <header className="pt-36 md:pt-44 pb-14 md:pb-20 text-center max-w-3xl mx-auto">
+                    <span className="text-t-accent text-xs md:text-sm font-mono tracking-[0.25em] uppercase opacity-70">
+                        Бюро путешествий «Ориент Экспресс» · с 2007
+                    </span>
+                    <h1 className="mt-6 text-5xl md:text-7xl font-heading font-light text-t-text leading-[1.05] tracking-tight">
+                        Путешествие в Азию <br />
+                        <span className="text-t-accent italic font-normal">без бюрократии и спешки</span>
+                    </h1>
+                    <p className="mt-7 text-t-muted text-lg font-sans font-light leading-relaxed max-w-2xl mx-auto">
+                        Авторские туры по Китаю и Японии, оформление виз и образование за рубежом.
+                        Из Хабаровска и Москвы — по всему миру.
+                    </p>
+                </header>
+
+                {/* Two doors — travel leads, visas alongside */}
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+                    {/* Путешествия — the face of the brand */}
+                    <Link
+                        to="/tours"
+                        className="group relative md:col-span-3 rounded-3xl border border-t-border bg-t-card hover:border-t-strong/40 transition-all duration-500 p-8 md:p-12 flex flex-col overflow-hidden"
+                    >
+                        <div className="absolute -right-24 -top-24 w-72 h-72 bg-t-accent/5 rounded-full blur-[60px] pointer-events-none" />
+                        <div className="relative z-10 flex flex-col h-full">
+                            <div className="w-12 h-12 rounded-2xl bg-t-strong/10 border border-t-strong/20 flex items-center justify-center mb-6">
+                                <Compass className="text-t-strong" size={24} />
+                            </div>
+                            <span className="text-t-accent text-xs font-mono tracking-widest uppercase opacity-60 mb-3">
+                                Путешествия
+                            </span>
+                            <h2 className="text-3xl md:text-5xl font-heading font-medium text-t-text leading-tight tracking-tight mb-4 group-hover:text-t-accent transition-colors">
+                                Авторские туры
+                            </h2>
+                            <p className="text-t-muted text-base font-sans font-light leading-relaxed max-w-md mb-8">
+                                Китай и Япония — маршруты, которые наши эксперты прошли лично.
+                                Вылеты из Хабаровска, Владивостока и Москвы.
+                            </p>
+                            <div className="mt-auto flex items-center gap-2 text-t-accent text-sm font-bold tracking-widest uppercase group-hover:text-t-strong transition-colors">
+                                Выбрать маршрут
+                                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                            </div>
+                        </div>
+                    </Link>
+
+                    {/* Визы — important second door */}
+                    <Link
+                        to="/visas"
+                        className="group relative md:col-span-2 rounded-3xl border border-t-border bg-t-card hover:border-t-strong/40 transition-all duration-500 p-8 md:p-10 flex flex-col"
+                    >
+                        <div className="w-12 h-12 rounded-2xl bg-t-strong/10 border border-t-strong/20 flex items-center justify-center mb-6">
+                            <Plane className="text-t-strong" size={24} />
+                        </div>
+                        <span className="text-t-accent text-xs font-mono tracking-widest uppercase opacity-60 mb-3">
+                            Визы
+                        </span>
+                        <h2 className="text-2xl md:text-3xl font-heading font-medium text-t-text leading-tight tracking-tight mb-4 group-hover:text-t-accent transition-colors">
+                            Оформление виз
+                        </h2>
+                        <p className="text-t-muted text-base font-sans font-light leading-relaxed mb-8">
+                            Китай, Корея, Таиланд, Шенген и другие. Для жителей ДВ —
+                            оформление в консульстве Хабаровска.
+                        </p>
+                        <div className="mt-auto flex items-center gap-2 text-t-accent text-sm font-bold tracking-widest uppercase group-hover:text-t-strong transition-colors">
+                            Оформить визу
+                            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                        </div>
+                    </Link>
+                </div>
+
+                {/* Secondary — quieter doors */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                    {SECONDARY.map(({ to, icon: Icon, label, desc }) => (
+                        <Link
+                            key={to}
+                            to={to}
+                            className="group rounded-2xl border border-t-border bg-t-card hover:border-t-strong/30 transition-all duration-500 p-6 flex items-start gap-4"
+                        >
+                            <div className="w-10 h-10 rounded-xl bg-t-strong/10 border border-t-strong/20 flex items-center justify-center shrink-0">
+                                <Icon className="text-t-strong" size={18} />
+                            </div>
+                            <div>
+                                <h3 className="text-t-text font-heading font-medium text-lg mb-1 group-hover:text-t-accent transition-colors">
+                                    {label}
+                                </h3>
+                                <p className="text-t-subtle text-sm font-sans font-light leading-relaxed">{desc}</p>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+
+                {/* Quiet contact line (real details) */}
+                <div className="mt-16 pt-8 border-t border-t-border/50 flex flex-col sm:flex-row items-center justify-center gap-x-8 gap-y-2 text-t-subtle text-sm font-sans font-light">
+                    <span className="flex items-center gap-2">
+                        <MapPin size={14} className="text-t-accent/70" /> г. Хабаровск, ул. Дикопольцева, 26
+                    </span>
+                    <a href="tel:+79164665606" className="flex items-center gap-2 hover:text-t-strong transition-colors">
+                        <Phone size={14} className="text-t-accent/70" /> +7 916 466 56 06
+                    </a>
+                </div>
+            </div>
+        </div>
     );
 };
 
