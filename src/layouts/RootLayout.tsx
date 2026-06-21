@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import ScrollToTop from '../components/ScrollToTop';
 import GlobalBackground from '../components/GlobalBackground';
 import LeadModal from '../components/LeadModal';
 import { useTheme } from '../contexts/ThemeContext';
@@ -48,6 +49,7 @@ const RootLayout: React.FC = () => {
                 }`}
                 style={{ backgroundColor: 'var(--color-bg)', color: 'var(--color-text)' }}
             >
+                <ScrollToTop />
                 <GlobalBackground />
 
                 {/* On desktop home the spatial portal has no Navbar — it owns the whole screen.
