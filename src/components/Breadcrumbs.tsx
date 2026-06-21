@@ -9,6 +9,7 @@ const LABELS: Record<string, string> = {
     education: 'Образование',
     services: 'Сервисы',
     blog: 'Блог',
+    sights: 'Достопримечательности',
     reviews: 'Отзывы',
     about: 'О компании',
     contact: 'Контакты',

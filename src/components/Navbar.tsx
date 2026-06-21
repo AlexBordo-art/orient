@@ -24,6 +24,7 @@ const NAV_LINKS = [
             { label: 'Туры в Китай', href: '/tours/china' },
             { label: 'По России', href: '/tours/russia' },
             { label: 'Горящие туры', href: '/tours/hot-deals' },
+            { label: 'Достопримечательности', href: '/sights' },
         ],
     },
     { index: '03', label: 'Образование', href: '/education' },

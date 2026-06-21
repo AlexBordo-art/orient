@@ -1,17 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { ArrowRight, BookOpen, Clock } from 'lucide-react';
 import Magnetic from '../components/Magnetic';
-import { articles } from '../data/blog';
+import { sights } from '../data/sights';
 import { Link } from 'react-router-dom';
 import { ModalContext } from '../layouts/RootLayout';
 import SEO from '../components/SEO';
 import Breadcrumbs from '../components/Breadcrumbs';
 
-const ArticleGrid: React.FC = () => {
+const SightsGrid: React.FC = () => {
     const { openLeadModal } = useContext(ModalContext);
     const [selectedCategory, setSelectedCategory] = useState<'Все' | 'Китай' | 'Япония'>('Все');
 
-    const filteredArticles = articles.filter(
+    const filteredArticles = sights.filter(
         article => selectedCategory === 'Все' || article.category === selectedCategory
     );
 
@@ -22,10 +22,10 @@ const ArticleGrid: React.FC = () => {
     return (
         <div className="min-h-screen bg-transparent pb-24">
             <SEO
-                title="Блог путешественника — Ориент Экспресс"
-                description="Инсайды, разборы кейсов, достопримечательности Китая и Японии от экспертов бюро путешествий Ориент Экспресс."
-                canonical="/blog"
-                keywords="достопримечательности Китая, достопримечательности Японии, путешествие в Азию, блог о туризме"
+                title="Достопримечательности Китая и Японии — Ориент Экспресс"
+                description="Авторские обзоры локаций и культурных кодов Китая и Японии от экспертов бюро путешествий Ориент Экспресс."
+                canonical="/sights"
+                keywords="достопримечательности Китая, достопримечательности Японии, путешествие в Азию"
             />
             <Breadcrumbs />
 
@@ -74,7 +74,7 @@ const ArticleGrid: React.FC = () => {
                         {/* Featured Article (Left/Main section, spanning 2 columns) */}
                         {featuredArticle && (
                             <Link
-                                to={`/blog/${featuredArticle.id}`}
+                                to={`/sights/${featuredArticle.id}`}
                                 className="lg:col-span-2 group cursor-pointer flex flex-col justify-between"
                             >
                                 <div>
@@ -125,7 +125,7 @@ const ArticleGrid: React.FC = () => {
                                 {regularArticles.map(article => (
                                     <Link
                                         key={article.id}
-                                        to={`/blog/${article.id}`}
+                                        to={`/sights/${article.id}`}
                                         className="block group cursor-pointer border-b border-t-border/40 pb-6 last:border-0"
                                     >
                                         <div className="relative h-44 w-full rounded-2xl overflow-hidden mb-4 border border-t-border">
@@ -191,4 +191,4 @@ const ArticleGrid: React.FC = () => {
     );
 };
 
-export default ArticleGrid;
+export default SightsGrid;

@@ -11,7 +11,9 @@ import EducationProgram from './pages/EducationProgram';
 import ServicesHub from './pages/ServicesHub';
 import ServicePage from './pages/ServicePage';
 import ComingSoon from './pages/ComingSoon';
-import ArticleGrid from './pages/ArticleGrid';
+import SightsGrid from './pages/SightsGrid';
+import SightPage from './pages/SightPage';
+import BlogGrid from './pages/BlogGrid';
 import BlogPost from './pages/BlogPost';
 
 function App() {
@@ -38,7 +40,12 @@ function App() {
         <Route path="services/:service" element={<ServicePage />} />
 
         {/* Утилиты и контент (Заглушки) */}
-        <Route path="blog" element={<ArticleGrid />} />
+        {/* Достопримечательности (энциклопедия локаций) */}
+        <Route path="sights" element={<SightsGrid />} />
+        <Route path="sights/:slug" element={<SightPage />} />
+
+        {/* Блог (авторские travel-заметки) */}
+        <Route path="blog" element={<BlogGrid />} />
         <Route path="blog/:slug" element={<BlogPost />} />
         <Route path="reviews" element={<ComingSoon />} />
         <Route path="about" element={<ComingSoon />} />
