@@ -12,6 +12,7 @@ import ServicesHub from './pages/ServicesHub';
 import ServicePage from './pages/ServicePage';
 import ComingSoon from './pages/ComingSoon';
 import ArticleGrid from './pages/ArticleGrid';
+import BlogPost from './pages/BlogPost';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
 
         {/* Утилиты и контент (Заглушки) */}
         <Route path="blog" element={<ArticleGrid />} />
+        <Route path="blog/:slug" element={<BlogPost />} />
         <Route path="reviews" element={<ComingSoon />} />
         <Route path="about" element={<ComingSoon />} />
         <Route path="contact" element={<ComingSoon />} />

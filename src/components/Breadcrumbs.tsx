@@ -35,7 +35,9 @@ const LABELS: Record<string, string> = {
     'tax-free': 'Tax Free',
 };
 
-const Breadcrumbs: React.FC = () => {
+// `overrides` maps a URL segment → human label, for dynamic segments
+// (e.g. an article slug) that aren't in the static LABELS map.
+const Breadcrumbs: React.FC<{ overrides?: Record<string, string> }> = ({ overrides }) => {
     const location = useLocation();
     const segments = location.pathname.split('/').filter(Boolean);
 
@@ -43,7 +45,7 @@ const Breadcrumbs: React.FC = () => {
 
     const crumbs = segments.map((seg, i) => {
         const path = '/' + segments.slice(0, i + 1).join('/');
-        const label = LABELS[seg] || seg.charAt(0).toUpperCase() + seg.slice(1);
+        const label = overrides?.[seg] || LABELS[seg] || seg.charAt(0).toUpperCase() + seg.slice(1);
         const isLast = i === segments.length - 1;
         return { path, label, isLast };
     });
