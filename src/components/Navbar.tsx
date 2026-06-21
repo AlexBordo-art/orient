@@ -100,37 +100,27 @@ export function Navbar() {
             {/* ── Bar ─────────────────────────────────────────────────────── */}
             <nav
                 aria-label="Навигация"
-                className={`fixed top-0 left-0 right-0 z-[70]
-                    flex items-center justify-between
-                    px-6 md:px-10 lg:px-14
-                    h-14 md:h-16
-                    transition-all
+                className={`fixed top-0 left-0 right-0 z-[70] h-16 md:h-20 transition-all
                     ${scrolled
-                        ? 'bg-[var(--color-bg)]/70 backdrop-blur-[18px] -webkit-backdrop-blur-[18px]'
-                        : 'bg-transparent'
+                        ? 'bg-[var(--color-bg)]/90 border-b border-[var(--color-border)]'
+                        : 'bg-transparent border-b border-transparent'
                     }`}
                 style={{ transitionDuration: DURATION, transitionTimingFunction: EASE }}
             >
-                {/* Logo */}
+              <div className="max-w-7xl mx-auto h-full px-6 md:px-10 flex items-center justify-between">
+                {/* Wordmark — typographic masthead, gold only as a glint */}
                 <Link
                     to="/"
-                    className="flex items-center gap-2.5 group"
+                    className="group"
                     onClick={() => setMenuOpen(false)}
                     aria-label="Ориент Экспресс — на главную"
                 >
-                    <div
-                        className="w-6 h-6 rounded-full flex items-center justify-center
-                            bg-[var(--color-accent-strong)] text-[var(--color-bg)]
-                            font-mono font-bold text-[9px] tracking-wider flex-shrink-0"
-                    >
-                        OE
-                    </div>
                     <span
-                        className="font-heading font-semibold tracking-tight
-                            text-[var(--color-text)] text-[15px] md:text-base
-                            transition-opacity duration-300 group-hover:opacity-70"
+                        className="font-heading tracking-tight text-[var(--color-text)]
+                            text-lg md:text-xl
+                            transition-opacity duration-300 group-hover:opacity-60"
                     >
-                        Ориент Экспресс.
+                        Ориент Экспресс<span className="text-[var(--color-accent-strong)]">.</span>
                     </span>
                 </Link>
 
@@ -205,6 +195,7 @@ export function Navbar() {
                         </span>
                     </button>
                 </div>
+              </div>
             </nav>
 
             {/* ── Overlay ─────────────────────────────────────────────────── */}
