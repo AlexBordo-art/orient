@@ -101,10 +101,7 @@ export function Navbar() {
             <nav
                 aria-label="Навигация"
                 className={`fixed top-0 left-0 right-0 z-[70] h-16 md:h-20 transition-all
-                    ${scrolled
-                        ? 'bg-[var(--color-bg)]/90 border-b border-[var(--color-border)]'
-                        : 'bg-transparent border-b border-transparent'
-                    }`}
+                    ${scrolled ? 'bg-[var(--color-bg)]/95' : 'bg-transparent'}`}
                 style={{ transitionDuration: DURATION, transitionTimingFunction: EASE }}
             >
               <div className="max-w-7xl mx-auto h-full px-6 md:px-10 flex items-center justify-between">
