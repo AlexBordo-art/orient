@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { GraduationCap, Briefcase, BookOpen, ArrowRight, MapPin, Phone } from 'lucide-react';
+import { GraduationCap, Briefcase, BookOpen, ArrowRight, MapPin, Phone, Star } from 'lucide-react';
 import SEO from '../components/SEO';
+import { REVIEWS } from '../data/reviews';
 
 const SECONDARY = [
     { to: '/education', icon: GraduationCap, label: 'Образование', desc: 'Учёба и языковые программы за рубежом' },
@@ -129,6 +130,35 @@ const Home: React.FC = () => {
                             </div>
                         </Link>
                     ))}
+                </div>
+
+                {/* Trust — real review platforms */}
+                <div className="mt-20">
+                    <p className="text-center text-t-accent text-xs font-mono tracking-widest uppercase opacity-60 mb-6">
+                        Нам доверяют
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                        {REVIEWS.map(r => (
+                            <a
+                                key={r.platform}
+                                href={r.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group rounded-2xl border border-t-border bg-t-card hover:border-t-strong/30 transition-all duration-500 p-6 flex items-center justify-between gap-4"
+                            >
+                                <div>
+                                    <div className="text-t-text font-heading font-medium text-lg group-hover:text-t-accent transition-colors">
+                                        {r.platform}
+                                    </div>
+                                    <div className="text-t-subtle text-xs font-sans font-light mt-0.5">{r.count} отзывов</div>
+                                </div>
+                                <div className="flex items-center gap-1.5 text-t-strong shrink-0">
+                                    <span className="font-mono font-bold text-xl">{r.rating}</span>
+                                    <Star size={16} className="fill-current" />
+                                </div>
+                            </a>
+                        ))}
+                    </div>
                 </div>
 
                 {/* Quiet contact line (real details) */}

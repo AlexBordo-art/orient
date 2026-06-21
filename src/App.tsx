@@ -15,6 +15,7 @@ import SightsGrid from './pages/SightsGrid';
 import SightPage from './pages/SightPage';
 import BlogGrid from './pages/BlogGrid';
 import BlogPost from './pages/BlogPost';
+import ReviewsPage from './pages/ReviewsPage';
 
 function App() {
   return (
@@ -47,7 +48,7 @@ function App() {
         {/* Блог (авторские travel-заметки) */}
         <Route path="blog" element={<BlogGrid />} />
         <Route path="blog/:slug" element={<BlogPost />} />
-        <Route path="reviews" element={<ComingSoon />} />
+        <Route path="reviews" element={<ReviewsPage />} />
         <Route path="about" element={<ComingSoon />} />
         <Route path="contact" element={<ComingSoon />} />
         <Route path="privacy" element={<ComingSoon />} />
