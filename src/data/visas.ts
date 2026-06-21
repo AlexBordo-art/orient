@@ -1,5 +1,5 @@
 // Visa datasets — relocated out of VisaPage.tsx (content packaging audit).
-// Note: VISA_DATA still uses flag-emoji icons + GHOST CJK glyphs; emoji cleanup is a separate design task.
+// Country glyphs come from GHOST (CJK / national initials) — no flag emoji in the product UI.
 
 export const GHOST: Record<string, string> = {
     china: '中', korea: '韓', thailand: 'ไ', schengen: 'E',
@@ -14,14 +14,14 @@ export interface VisaType {
 }
 
 // Visa data with prices and processing times
-export const VISA_DATA: Record<string, { name: string; icon: string; description: string; types: VisaType[] }> = {
+export const VISA_DATA: Record<string, { name: string; description: string; types: VisaType[] }> = {
     china: {
-        name: 'Китай', icon: '🇨🇳',
+        name: 'Китай',
         description: 'Оформление всех типов виз в Китай. Требования, сроки и стоимость зависят от выбранного города подачи (консульского округа). Выберите ваш город ниже.',
         types: [] // Populated dynamically based on city selection
     },
     korea: {
-        name: 'Южная Корея', icon: '🇰🇷',
+        name: 'Южная Корея',
         description: 'Электронные разрешения K-ETA и консульские визы для туризма, учебы и работы. 98% одобрений по K-ETA благодаря ручной проверке анкет.',
         types: [
             { name: 'K-ETA (Электронное разрешение)', desc: 'Для безвизового въезда с туристическими целями на срок до 60 дней.', price: '3 500 ₽', time: '1–2 рабочих дня' },
@@ -31,7 +31,7 @@ export const VISA_DATA: Record<string, { name: string; icon: string; description
         ],
     },
     thailand: {
-        name: 'Таиланд', icon: '🇹🇭',
+        name: 'Таиланд',
         description: 'Однократные и многократные туристические визы, пенсионные программы и новые визы для цифровых кочевников (DTV).',
         types: [
             { name: 'Туристическая виза (TR)', desc: 'Дает право находиться в стране до 60 дней с возможностью продления еще на 30 дней.', price: '8 500 ₽', time: '5–7 рабочих дней' },
@@ -41,28 +41,28 @@ export const VISA_DATA: Record<string, { name: string; icon: string; description
         ],
     },
     schengen: {
-        name: 'Шенгенская зона', icon: '🇪🇺',
+        name: 'Шенгенская зона',
         description: 'Оформление виз через дружественные консульства (Италия, Испания, Франция, Венгрия). Помогаем с записью и готовим идеальный пакет документов.',
         types: [
             { name: 'Туристическая виза (C)', desc: 'Краткосрочная виза для туризма или посещения близких. Консульский сбор оплачивается отдельно.', price: 'от 14 000 ₽', time: '15–30 рабочих дней' }
         ],
     },
     singapore: {
-        name: 'Сингапур', icon: '🇸🇬',
+        name: 'Сингапур',
         description: 'Оформление электронных виз в Сингапур для граждан РФ и СНГ. Без личного присутствия и визитов в посольство.',
         types: [
             { name: 'Электронная виза (eVisa)', desc: 'Оформляется в виде электронного письма с баркодом. Необходима бронь отеля и билет.', price: '6 500 ₽', time: '3–4 рабочих дня' }
         ]
     },
     india: {
-        name: 'Индия', icon: '🇮🇳',
+        name: 'Индия',
         description: 'Быстрое электронное разрешение на въезд в Индию для туризма, йога-туров и деловых поездок.',
         types: [
             { name: 'Электронная виза (e-Visa)', desc: 'Однократная или многократная виза на срок от 30 дней до 5 лет.', price: 'от 5 500 ₽', time: '3–4 рабочих дня' }
         ]
     },
     bulgaria: {
-        name: 'Болгария', icon: '🇧🇬',
+        name: 'Болгария',
         description: 'Национальные болгарские визы. Подача без личного присутствия, подходит для транзита и отдыха.',
         types: [
             { name: 'Туристическая виза (C)', desc: 'Для краткосрочных поездок. Требуется подтверждение проживания.', price: '9 500 ₽', time: '10–15 рабочих дней' },
@@ -70,7 +70,7 @@ export const VISA_DATA: Record<string, { name: string; icon: string; description
         ],
     },
     cyprus: {
-        name: 'Кипр', icon: '🇨🇾',
+        name: 'Кипр',
         description: 'Оформление кипрских национальных виз взамен ранее действовавших провиз.',
         types: [
             { name: 'Национальная виза (C)', desc: 'Туристическая виза, вклеиваемая в заграничный паспорт.', price: '8 500 ₽', time: '5–7 рабочих дней' }

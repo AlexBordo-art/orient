@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, CheckCircle2, Globe2 } from 'lucide-react';
 import Magnetic from './Magnetic';
+import { GHOST } from '../data/visas';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,48 +14,42 @@ const DESTINATIONS = [
         title: 'Китай',
         type: 'Туризм / Бизнес',
         time: 'От 3 до 5 дней',
-        features: ['Мультивизы на год', 'Подача без присутствия', 'Специальные условия для ДВ'],
-        flag: '🇨🇳'
+        features: ['Мультивизы на год', 'Подача без присутствия', 'Специальные условия для ДВ']
     },
     {
         id: 'korea',
         title: 'Южная Корея',
         type: 'K-ETA',
         time: 'От 2 до 5 дней',
-        features: ['Электронное разрешение', 'Заполнение на англ. языке', 'Гарантия правильности данных'],
-        flag: '🇰🇷'
+        features: ['Электронное разрешение', 'Заполнение на англ. языке', 'Гарантия правильности данных']
     },
     {
         id: 'thailand',
         title: 'Таиланд',
         type: 'Туристическая виза',
         time: 'От 7 дней',
-        features: ['Долгосрочное пребывание', 'TR, STV визы', 'Сбор пакета документов'],
-        flag: '🇹🇭'
+        features: ['Долгосрочное пребывание', 'TR, STV визы', 'Сбор пакета документов']
     },
     {
         id: 'india',
         title: 'Индия',
         type: 'E-Visa',
         time: 'От 3 дней',
-        features: ['Электронная подача', 'Мультивиза', 'Без посещения консульства'],
-        flag: '🇮🇳'
+        features: ['Электронная подача', 'Мультивиза', 'Без посещения консульства']
     },
     {
         id: 'schengen',
         title: 'Шенген (Болгария)',
         type: 'Единая виза',
         time: 'От 15 дней',
-        features: ['Лёгкий вход в Шенген', 'Полноценная биометрия', 'Доступ по всей зоне'],
-        flag: '🇪🇺'
+        features: ['Лёгкий вход в Шенген', 'Полноценная биометрия', 'Доступ по всей зоне']
     },
     {
         id: 'singapore',
         title: 'Сингапур',
         type: 'Электронная',
         time: 'От 3 дней',
-        features: ['Только онлайн подача', 'Срок до 30 дней', 'Высокий шанс одобрения'],
-        flag: '🇸🇬'
+        features: ['Только онлайн подача', 'Срок до 30 дней', 'Высокий шанс одобрения']
     }
 ];
 
@@ -107,7 +102,7 @@ const Destinations: React.FC = () => {
                             {/* Flag & Title */}
                             <div className="flex items-start justify-between mb-8 relative z-10">
                                 <div>
-                                    <div className="text-4xl mb-4 shadow-sm inline-block rounded-full bg-sky-50 p-2">{dest.flag}</div>
+                                    <div className="text-4xl font-heading mb-4 shadow-sm inline-block rounded-full bg-sky-50 p-2 leading-none w-16 h-16 flex items-center justify-center">{GHOST[dest.id] ?? ''}</div>
                                     <h4 className="text-2xl font-heading text-sky-900 mb-1">{dest.title}</h4>
                                     <p className="text-sm text-sky-600 font-body uppercase tracking-wider">{dest.type}</p>
                                 </div>

@@ -109,7 +109,7 @@ const VisaPage: React.FC = () => {
                     </span>
                     <div className="relative z-10">
                         <div className="flex items-center gap-2 mb-3">
-                            <span className="text-3xl">{visa.icon}</span>
+                            <span className="text-3xl font-heading text-t-accent">{GHOST[country!] ?? ''}</span>
                             <span className="text-t-accent text-xs font-mono tracking-widest uppercase opacity-60">Визовый центр</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-heading font-bold text-t-text mb-4 tracking-tight leading-tight">
