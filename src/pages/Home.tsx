@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Compass, Plane, GraduationCap, Briefcase, BookOpen, ArrowRight, MapPin, Phone } from 'lucide-react';
+import { GraduationCap, Briefcase, BookOpen, ArrowRight, MapPin, Phone } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const SECONDARY = [
@@ -47,29 +47,32 @@ const Home: React.FC = () => {
                     </p>
                 </header>
 
-                {/* Two doors — travel leads, visas alongside */}
+                {/* Two doors — editorial image panels; travel leads, visas alongside */}
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
                     {/* Путешествия — the face of the brand */}
                     <Link
                         to="/tours"
-                        className="group relative md:col-span-3 rounded-3xl border border-t-border bg-t-card hover:border-t-strong/40 transition-all duration-500 p-8 md:p-12 flex flex-col overflow-hidden"
+                        className="group relative md:col-span-3 rounded-3xl overflow-hidden border border-t-border min-h-[22rem] md:min-h-[28rem] flex"
                     >
-                        <div className="absolute -right-24 -top-24 w-72 h-72 bg-t-accent/5 rounded-full blur-[60px] pointer-events-none" />
-                        <div className="relative z-10 flex flex-col h-full">
-                            <div className="w-12 h-12 rounded-2xl bg-t-strong/10 border border-t-strong/20 flex items-center justify-center mb-6">
-                                <Compass className="text-t-strong" size={24} />
-                            </div>
-                            <span className="text-t-accent text-xs font-mono tracking-widest uppercase opacity-60 mb-3">
+                        <img
+                            src="/backgrounds/bg-sakura.webp"
+                            alt=""
+                            aria-hidden="true"
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/5" />
+                        <div className="relative z-10 mt-auto p-8 md:p-12 w-full">
+                            <span className="text-white/70 text-xs font-mono tracking-widest uppercase mb-3 block">
                                 Путешествия
                             </span>
-                            <h2 className="text-3xl md:text-5xl font-heading font-medium text-t-text leading-tight tracking-tight mb-4 group-hover:text-t-accent transition-colors">
+                            <h2 className="text-3xl md:text-5xl font-heading font-medium text-white leading-tight tracking-tight mb-4">
                                 Авторские туры
                             </h2>
-                            <p className="text-t-muted text-base font-sans font-light leading-relaxed max-w-md mb-8">
+                            <p className="text-white/80 text-base font-sans font-light leading-relaxed max-w-md mb-8">
                                 Китай и Япония — маршруты, которые наши эксперты прошли лично.
                                 Вылеты из Хабаровска, Владивостока и Москвы.
                             </p>
-                            <div className="mt-auto flex items-center gap-2 text-t-accent text-sm font-bold tracking-widest uppercase group-hover:text-t-strong transition-colors">
+                            <div className="flex items-center gap-2 text-white text-sm font-bold tracking-widest uppercase">
                                 Выбрать маршрут
                                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                             </div>
@@ -79,24 +82,30 @@ const Home: React.FC = () => {
                     {/* Визы — important second door */}
                     <Link
                         to="/visas"
-                        className="group relative md:col-span-2 rounded-3xl border border-t-border bg-t-card hover:border-t-strong/40 transition-all duration-500 p-8 md:p-10 flex flex-col"
+                        className="group relative md:col-span-2 rounded-3xl overflow-hidden border border-t-border min-h-[22rem] md:min-h-[28rem] flex"
                     >
-                        <div className="w-12 h-12 rounded-2xl bg-t-strong/10 border border-t-strong/20 flex items-center justify-center mb-6">
-                            <Plane className="text-t-strong" size={24} />
-                        </div>
-                        <span className="text-t-accent text-xs font-mono tracking-widest uppercase opacity-60 mb-3">
-                            Визы
-                        </span>
-                        <h2 className="text-2xl md:text-3xl font-heading font-medium text-t-text leading-tight tracking-tight mb-4 group-hover:text-t-accent transition-colors">
-                            Оформление виз
-                        </h2>
-                        <p className="text-t-muted text-base font-sans font-light leading-relaxed mb-8">
-                            Китай, Корея, Таиланд, Шенген и другие. Для жителей ДВ —
-                            оформление в консульстве Хабаровска.
-                        </p>
-                        <div className="mt-auto flex items-center gap-2 text-t-accent text-sm font-bold tracking-widest uppercase group-hover:text-t-strong transition-colors">
-                            Оформить визу
-                            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                        <img
+                            src="/backgrounds/bg-bambuk.webp"
+                            alt=""
+                            aria-hidden="true"
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/5" />
+                        <div className="relative z-10 mt-auto p-8 md:p-10 w-full">
+                            <span className="text-white/70 text-xs font-mono tracking-widest uppercase mb-3 block">
+                                Визы
+                            </span>
+                            <h2 className="text-2xl md:text-3xl font-heading font-medium text-white leading-tight tracking-tight mb-4">
+                                Оформление виз
+                            </h2>
+                            <p className="text-white/80 text-base font-sans font-light leading-relaxed mb-8">
+                                Китай, Корея, Таиланд, Шенген и другие. Для жителей ДВ —
+                                оформление в консульстве Хабаровска.
+                            </p>
+                            <div className="flex items-center gap-2 text-white text-sm font-bold tracking-widest uppercase">
+                                Оформить визу
+                                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                            </div>
                         </div>
                     </Link>
                 </div>
