@@ -114,7 +114,7 @@ export function Navbar() {
                 >
                     <span
                         className="font-heading tracking-tight text-[var(--color-text)]
-                            text-lg md:text-xl
+                            text-base sm:text-lg md:text-xl whitespace-nowrap
                             transition-opacity duration-300 group-hover:opacity-60"
                     >
                         Ориент Экспресс<span className="text-[var(--color-accent-strong)]">.</span>
@@ -123,18 +123,19 @@ export function Navbar() {
 
                 {/* Right: theme toggle + burger trigger */}
                 <div className="flex items-center gap-5">
-                    {/* Theme toggle — no background, just icon */}
+                    {/* Theme toggle — gold chip, static colour, findable in both themes */}
                     <button
                         onClick={toggleTheme}
                         aria-label={theme === 'night' ? 'Включить дневной режим' : 'Включить ночной режим'}
-                        className="min-w-[44px] min-h-[44px] flex items-center justify-center
-                            text-[var(--color-text-subtle)] hover:text-[var(--color-text)]
+                        className="w-10 h-10 flex items-center justify-center rounded-full
+                            text-[#D4AF37] border border-[#D4AF37]/35
+                            hover:bg-[#D4AF37]/12 hover:border-[#D4AF37]/70
                             transition-colors duration-300"
                         style={{ transitionDuration: DURATION }}
                     >
                         {theme === 'night'
-                            ? <Sun size={14} strokeWidth={1.5} />
-                            : <Moon size={14} strokeWidth={1.5} />
+                            ? <Sun size={17} strokeWidth={1.6} />
+                            : <Moon size={17} strokeWidth={1.6} />
                         }
                     </button>
 
@@ -144,7 +145,7 @@ export function Navbar() {
                         aria-expanded={menuOpen}
                         aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
                         className="min-w-[44px] min-h-[44px] flex items-center justify-center gap-2.5
-                            text-[var(--color-text-subtle)] hover:text-[var(--color-text)]
+                            text-[var(--color-text)] hover:text-[#D4AF37]
                             transition-colors duration-300 relative"
                         style={{ transitionDuration: DURATION }}
                     >

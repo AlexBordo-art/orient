@@ -4,6 +4,11 @@ import { GraduationCap, Briefcase, BookOpen, ArrowRight, MapPin, Phone, Star } f
 import SEO from '../components/SEO';
 import { REVIEWS } from '../data/reviews';
 
+// Фрост-стекло: полупрозрачная матовая панель над общим фоном — видна отчётливо, но гармонирует.
+// Цвет берёт из --color-bg, поэтому сам подстраивается под день/ночь.
+const GLASS = 'backdrop-blur-md border border-t-border/70 shadow-[0_10px_50px_-12px_rgba(0,0,0,0.45)] transition-all duration-500';
+const glassStyle: React.CSSProperties = { backgroundColor: 'color-mix(in srgb, var(--color-bg) 66%, transparent)' };
+
 const SECONDARY = [
     { to: '/education', icon: GraduationCap, label: 'Образование', desc: 'Учёба и языковые программы за рубежом' },
     { to: '/services', icon: Briefcase, label: 'Услуги', desc: 'Карты АТЭС, гиды, отели, авиабилеты, страхование' },
@@ -33,7 +38,7 @@ const Home: React.FC = () => {
             />
 
             <div className="max-w-7xl mx-auto px-6 pb-24">
-                {/* Hero */}
+                {/* Hero — текст прямо на общем фоне (по пустому небу) */}
                 <header className="pt-36 md:pt-44 pb-14 md:pb-20 text-center max-w-3xl mx-auto">
                     <span className="text-t-accent text-xs md:text-sm font-mono tracking-[0.25em] uppercase opacity-70">
                         Бюро путешествий «Ориент Экспресс» · с 2007
@@ -48,62 +53,50 @@ const Home: React.FC = () => {
                     </p>
                 </header>
 
-                {/* Two doors — editorial image panels; travel leads, visas alongside */}
+                {/* Две двери — фрост-панели над общим фоном. Путешествия ведут, визы рядом. */}
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-                    {/* Путешествия — the face of the brand */}
+                    {/* Путешествия — лицо бренда */}
                     <Link
                         to="/tours"
-                        className="group relative md:col-span-3 rounded-3xl overflow-hidden border border-t-border min-h-[22rem] md:min-h-[28rem] flex"
+                        style={glassStyle}
+                        className={`group relative md:col-span-3 rounded-3xl ${GLASS} min-h-[20rem] md:min-h-[26rem] flex hover:border-t-strong/40 hover:-translate-y-1`}
                     >
-                        <img
-                            src="/backgrounds/bg-sakura.webp"
-                            alt=""
-                            aria-hidden="true"
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/5" />
                         <div className="relative z-10 mt-auto p-8 md:p-12 w-full">
-                            <span className="text-white/70 text-xs font-mono tracking-widest uppercase mb-3 block">
+                            <span className="text-t-accent/80 text-xs font-mono tracking-widest uppercase mb-3 block">
                                 Путешествия
                             </span>
-                            <h2 className="text-3xl md:text-5xl font-heading font-medium text-white leading-tight tracking-tight mb-4">
+                            <h2 className="text-3xl md:text-5xl font-heading font-medium text-t-text leading-tight tracking-tight mb-4">
                                 Авторские туры
                             </h2>
-                            <p className="text-white/80 text-base font-sans font-light leading-relaxed max-w-md mb-8">
+                            <p className="text-t-muted text-base font-sans font-light leading-relaxed max-w-md mb-8">
                                 Китай и Япония — маршруты, которые наши эксперты прошли лично.
                                 Вылеты из Хабаровска, Владивостока и Москвы.
                             </p>
-                            <div className="flex items-center gap-2 text-white text-sm font-bold tracking-widest uppercase">
+                            <div className="flex items-center gap-2 text-t-strong text-sm font-bold tracking-widest uppercase">
                                 Выбрать маршрут
                                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                             </div>
                         </div>
                     </Link>
 
-                    {/* Визы — important second door */}
+                    {/* Визы — важная вторая дверь */}
                     <Link
                         to="/visas"
-                        className="group relative md:col-span-2 rounded-3xl overflow-hidden border border-t-border min-h-[22rem] md:min-h-[28rem] flex"
+                        style={glassStyle}
+                        className={`group relative md:col-span-2 rounded-3xl ${GLASS} min-h-[20rem] md:min-h-[26rem] flex hover:border-t-strong/40 hover:-translate-y-1`}
                     >
-                        <img
-                            src="/backgrounds/bg-bambuk.webp"
-                            alt=""
-                            aria-hidden="true"
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/5" />
                         <div className="relative z-10 mt-auto p-8 md:p-10 w-full">
-                            <span className="text-white/70 text-xs font-mono tracking-widest uppercase mb-3 block">
+                            <span className="text-t-accent/80 text-xs font-mono tracking-widest uppercase mb-3 block">
                                 Визы
                             </span>
-                            <h2 className="text-2xl md:text-3xl font-heading font-medium text-white leading-tight tracking-tight mb-4">
+                            <h2 className="text-2xl md:text-3xl font-heading font-medium text-t-text leading-tight tracking-tight mb-4">
                                 Оформление виз
                             </h2>
-                            <p className="text-white/80 text-base font-sans font-light leading-relaxed mb-8">
+                            <p className="text-t-muted text-base font-sans font-light leading-relaxed mb-8">
                                 Китай, Корея, Таиланд, Шенген и другие. Для жителей ДВ —
                                 оформление в консульстве Хабаровска.
                             </p>
-                            <div className="flex items-center gap-2 text-white text-sm font-bold tracking-widest uppercase">
+                            <div className="flex items-center gap-2 text-t-strong text-sm font-bold tracking-widest uppercase">
                                 Оформить визу
                                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                             </div>
@@ -111,13 +104,14 @@ const Home: React.FC = () => {
                     </Link>
                 </div>
 
-                {/* Secondary — quieter doors */}
+                {/* Тихие двери — те же фрост-панели */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
                     {SECONDARY.map(({ to, icon: Icon, label, desc }) => (
                         <Link
                             key={to}
                             to={to}
-                            className="group rounded-2xl border border-t-border bg-t-card hover:border-t-strong/30 transition-all duration-500 p-6 flex items-start gap-4"
+                            style={glassStyle}
+                            className={`group rounded-2xl ${GLASS} hover:border-t-strong/40 hover:-translate-y-1 p-6 flex items-start gap-4`}
                         >
                             <div className="w-10 h-10 rounded-xl bg-t-strong/10 border border-t-strong/20 flex items-center justify-center shrink-0">
                                 <Icon className="text-t-strong" size={18} />
@@ -132,7 +126,7 @@ const Home: React.FC = () => {
                     ))}
                 </div>
 
-                {/* Trust — real review platforms */}
+                {/* Доверие — реальные площадки отзывов */}
                 <div className="mt-20">
                     <p className="text-center text-t-accent text-xs font-mono tracking-widest uppercase opacity-60 mb-6">
                         Нам доверяют
@@ -144,7 +138,8 @@ const Home: React.FC = () => {
                                 href={r.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group rounded-2xl border border-t-border bg-t-card hover:border-t-strong/30 transition-all duration-500 p-6 flex items-center justify-between gap-4"
+                                style={glassStyle}
+                                className={`group rounded-2xl ${GLASS} hover:border-t-strong/40 hover:-translate-y-1 p-6 flex items-center justify-between gap-4`}
                             >
                                 <div>
                                     <div className="text-t-text font-heading font-medium text-lg group-hover:text-t-accent transition-colors">
@@ -161,10 +156,10 @@ const Home: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Quiet contact line (real details) */}
+                {/* Тихая строка контактов (реальные данные) */}
                 <div className="mt-16 pt-8 border-t border-t-border/50 flex flex-col sm:flex-row items-center justify-center gap-x-8 gap-y-2 text-t-subtle text-sm font-sans font-light">
                     <span className="flex items-center gap-2">
-                        <MapPin size={14} className="text-t-accent/70" /> Офисы в Хабаровске и Москве · с 2007
+                        <MapPin size={14} className="text-t-accent/70" /> Офисы в Хабаровске и Москве
                     </span>
                     <a href="tel:+79164665606" className="flex items-center gap-2 hover:text-t-strong transition-colors">
                         <Phone size={14} className="text-t-accent/70" /> +7 916 466 56 06
