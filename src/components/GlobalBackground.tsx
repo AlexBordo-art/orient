@@ -12,12 +12,18 @@ const HOME_SCENES: Scene[] = [
     { id: 'sakura', day: '/backgrounds/home-sakura-day.webp', night: '/backgrounds/home-sakura-night.webp' },
 ];
 
-// Разделы: пока одиночный кадр (без честной пары) — ночь отрисовываем тональным слоем.
+// Разделы: у каждого — своё тихое одиночное основание (без честной пары; ночь = тональный слой).
+// Живые день/ночь-сцены остаются ТОЛЬКО на главной — они её подпись, а не общий фон сайта.
 const ROUTE_IMAGE: { prefix: string; src: string }[] = [
     { prefix: '/visas', src: '/backgrounds/bg-bambuk.webp' },
+    { prefix: '/tours', src: '/backgrounds/bg-bonsai.webp' },
     { prefix: '/education', src: '/backgrounds/bg-book.webp' },
     { prefix: '/services', src: '/backgrounds/bg-teacup.webp' },
 ];
+
+// Прочие внутренние страницы (блог, достопримечательности, отзывы, about/contact, 404)
+// — общее нейтральное основание, чтобы они НИКОГДА не наследовали сцену главной.
+const INNER_DEFAULT = '/backgrounds/bg-vetka.webp';
 
 const GlobalBackground: React.FC = () => {
     const { isDay } = useTheme();
@@ -25,12 +31,15 @@ const GlobalBackground: React.FC = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loaded, setLoaded] = useState<string[]>([]);
 
+    const isHome = location.pathname === '/';
     const routeMatch = ROUTE_IMAGE.find(r => location.pathname.startsWith(r.prefix));
-    // Маршрут без пары моделируем сценой, где день == ночь (тинт даёт ночь).
-    const SCENES: Scene[] = routeMatch
-        ? [{ id: routeMatch.prefix, day: routeMatch.src, night: routeMatch.src }]
-        : HOME_SCENES;
-    const isPaired = !routeMatch; // честные day/night-кадры — тинт не нужен
+    // Главная — живые сцены; любая другая страница — своё одиночное основание
+    // (явное из ROUTE_IMAGE либо общий INNER_DEFAULT), смоделированное сценой день==ночь (тинт даёт ночь).
+    const innerSrc = routeMatch?.src ?? INNER_DEFAULT;
+    const SCENES: Scene[] = isHome
+        ? HOME_SCENES
+        : [{ id: routeMatch?.prefix ?? 'inner', day: innerSrc, night: innerSrc }];
+    const isPaired = isHome; // честные day/night-кадры есть только на главной
 
     // Предзагрузка всех кадров (день + ночь); сброс индекса на смене роута
     useEffect(() => {

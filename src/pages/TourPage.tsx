@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { TOURS_DATA } from '../data/tours';
 import { ModalContext } from '../layouts/RootLayout';
-import Breadcrumbs from '../components/Breadcrumbs';
+import { useTheme } from '../contexts/ThemeContext';
 import SEO from '../components/SEO';
 import SpecialistBlock from '../components/SpecialistBlock';
 import { Calendar, CheckCircle2, Compass, MapPin, XCircle, ChevronRight } from 'lucide-react';
@@ -11,6 +11,7 @@ const TourPage: React.FC = () => {
     const { destination, tourId } = useParams<{ destination: string; tourId: string }>();
     const navigate = useNavigate();
     const { openLeadModal } = useContext(ModalContext);
+    const { isDay } = useTheme();
 
     const tour = TOURS_DATA.find(t => t.id === tourId && t.category === destination);
 
@@ -31,54 +32,73 @@ const TourPage: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-transparent">
+        <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bg)' }}>
             <SEO
                 title={`${tour.title} — Авторский тур`}
                 description={`${tour.subtitle}. Маршрут: ${tour.route}. Длительность: ${tour.duration}.`}
                 canonical={`/tours/${destination}/${tour.id}`}
             />
-            <Breadcrumbs />
-
-            {/* Hero Section */}
-            <div className="relative h-[65vh] md:h-[75vh] w-full overflow-hidden shrink-0">
+            {/* Photo header — full-bleed from the very top; navbar + back-link float over it, no dark bar.
+               object-cover fills any screen width (crops only the airy top/bottom of the square cover, never distorts). */}
+            <div className="relative w-full h-[58vh] sm:h-[64vh] lg:h-[72vh] overflow-hidden">
                 <img
                     src={tour.image}
                     alt={tour.title}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover object-center"
+                    style={{ opacity: isDay ? 1 : 0, transition: 'opacity 700ms ease' }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-obsidian-dark via-obsidian-dark/40 to-obsidian-dark/30 z-10" />
+                <img
+                    src={tour.imageNight || tour.image}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 w-full h-full object-cover object-center"
+                    style={{ opacity: isDay ? 0 : 1, transition: 'opacity 700ms ease' }}
+                />
 
-                <div className="absolute inset-0 z-20 flex items-end">
-                    <div className="max-w-7xl mx-auto w-full px-6 pb-12 md:pb-16">
-                        <button
-                            onClick={() => navigate(`/tours/${destination}`)}
-                            className="text-champagne/80 hover:text-champagne font-mono text-xs uppercase tracking-wider mb-6 flex items-center gap-1.5 transition-colors group"
-                        >
-                            <span className="group-hover:-translate-x-1 transition-transform">←</span> Назад к списку
-                        </button>
+                {/* Back to list — light overlay on the photo, no separate bar */}
+                <button
+                    onClick={() => navigate(`/tours/${destination}`)}
+                    className="absolute top-20 md:top-24 left-6 z-20 text-white/90 hover:text-white font-mono text-xs uppercase tracking-wider flex items-center gap-1.5 transition-colors group"
+                    style={{ textShadow: '0 1px 10px rgba(0,0,0,0.65)' }}
+                >
+                    <span className="group-hover:-translate-x-1 transition-transform">←</span> Вернуться к списку
+                </button>
 
-                        <div className="flex items-center gap-3 mb-4 flex-wrap text-champagne/90">
+                {/* Bottom dissolve into the current theme tone (obsidian by night, champagne/cream by day) */}
+                <div
+                    className="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none"
+                    style={{ background: 'linear-gradient(to top, var(--color-bg) 0%, var(--color-bg) 4%, transparent 100%)' }}
+                />
+            </div>
+
+            {/* Title + meta + route on the flat theme tone */}
+            <div className="max-w-7xl mx-auto w-full px-6 -mt-6 md:-mt-10 relative z-10 mb-4">
+                {(tour.duration || tour.dates) && (
+                    <div className="flex items-center gap-3 mb-4 flex-wrap text-t-accent">
+                        {tour.duration && (
                             <div className="flex items-center gap-1 text-xs font-mono uppercase tracking-wider">
                                 <Calendar size={14} />
                                 <span>{tour.duration}</span>
                             </div>
-                            <span className="w-1.5 h-1.5 rounded-full bg-champagne/45"></span>
-                            <span className="text-xs font-mono uppercase tracking-wider">{tour.dates}</span>
-                        </div>
-
-                        <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-bold text-white mb-4 tracking-tight leading-[1.05] drop-shadow-lg">
-                            {tour.title}
-                        </h1>
-
-                        <p className="text-white/80 text-lg md:text-xl font-light italic max-w-3xl leading-relaxed mb-6">
-                            {tour.subtitle}
-                        </p>
-
-                        <div className="flex items-start gap-2 text-white/75 text-sm md:text-base max-w-2xl bg-black/30 backdrop-blur-md border border-white/10 p-4 rounded-xl">
-                            <MapPin size={20} className="shrink-0 text-champagne mt-0.5" />
-                            <span>{tour.route}</span>
-                        </div>
+                        )}
+                        {tour.duration && tour.dates && <span className="w-1.5 h-1.5 rounded-full bg-t-strong/45"></span>}
+                        {tour.dates && <span className="text-xs font-mono uppercase tracking-wider">{tour.dates}</span>}
                     </div>
+                )}
+
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-t-text mb-4 tracking-tight leading-[1.05]">
+                    {tour.title}
+                </h1>
+
+                {tour.subtitle && (
+                    <p className="text-t-muted text-lg md:text-xl font-light italic max-w-3xl leading-relaxed mb-6">
+                        {tour.subtitle}
+                    </p>
+                )}
+
+                <div className="flex items-start gap-2 text-t-muted text-sm md:text-base max-w-2xl bg-t-card border border-t-border p-4 rounded-xl">
+                    <MapPin size={20} className="shrink-0 text-t-strong mt-0.5" />
+                    <span>{tour.route}</span>
                 </div>
             </div>
 
@@ -115,40 +135,46 @@ const TourPage: React.FC = () => {
                         ))}
                     </div>
 
-                    {/* Exclusions/Inclusions */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-t-border pt-12">
-                        {/* Included */}
-                        <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-2xl p-6 md:p-8">
-                            <h3 className="text-t-text font-heading text-xl mb-5 flex items-center gap-2">
-                                <CheckCircle2 className="text-emerald-500" size={22} />
-                                В стоимость включено
-                            </h3>
-                            <ul className="space-y-3">
-                                {tour.included.map((item, i) => (
-                                    <li key={i} className="flex gap-2 text-xs md:text-sm text-t-muted items-start font-sans font-light leading-relaxed">
-                                        <span className="text-emerald-500 mt-1 shrink-0">•</span>
-                                        <span>{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                    {/* Exclusions/Inclusions — only when we actually have the data */}
+                    {(tour.included.length > 0 || tour.notIncluded.length > 0) && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-t-border pt-12">
+                            {/* Included */}
+                            {tour.included.length > 0 && (
+                                <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-2xl p-6 md:p-8">
+                                    <h3 className="text-t-text font-heading text-xl mb-5 flex items-center gap-2">
+                                        <CheckCircle2 className="text-emerald-500" size={22} />
+                                        В стоимость включено
+                                    </h3>
+                                    <ul className="space-y-3">
+                                        {tour.included.map((item, i) => (
+                                            <li key={i} className="flex gap-2 text-xs md:text-sm text-t-muted items-start font-sans font-light leading-relaxed">
+                                                <span className="text-emerald-500 mt-1 shrink-0">•</span>
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
 
-                        {/* Not Included */}
-                        <div className="bg-rose-500/5 border border-rose-500/15 rounded-2xl p-6 md:p-8">
-                            <h3 className="text-t-text font-heading text-xl mb-5 flex items-center gap-2">
-                                <XCircle className="text-rose-500" size={22} />
-                                Не включено
-                            </h3>
-                            <ul className="space-y-3">
-                                {tour.notIncluded.map((item, i) => (
-                                    <li key={i} className="flex gap-2 text-xs md:text-sm text-t-muted items-start font-sans font-light leading-relaxed">
-                                        <span className="text-rose-500 mt-1 shrink-0">•</span>
-                                        <span>{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
+                            {/* Not Included */}
+                            {tour.notIncluded.length > 0 && (
+                                <div className="bg-rose-500/5 border border-rose-500/15 rounded-2xl p-6 md:p-8">
+                                    <h3 className="text-t-text font-heading text-xl mb-5 flex items-center gap-2">
+                                        <XCircle className="text-rose-500" size={22} />
+                                        Не включено
+                                    </h3>
+                                    <ul className="space-y-3">
+                                        {tour.notIncluded.map((item, i) => (
+                                            <li key={i} className="flex gap-2 text-xs md:text-sm text-t-muted items-start font-sans font-light leading-relaxed">
+                                                <span className="text-rose-500 mt-1 shrink-0">•</span>
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 {/* Right Sidebar: Price & Form */}
@@ -157,14 +183,17 @@ const TourPage: React.FC = () => {
                         <div className="absolute top-0 left-0 w-full h-1.5 bg-t-strong" />
 
                         <div className="mb-6">
-                            <span className="font-mono text-t-text/50 text-[10px] tracking-widest uppercase block mb-1">Стоимость VIP-тура</span>
+                            <span className="font-mono text-t-text/50 text-[10px] tracking-widest uppercase block mb-1">Стоимость тура</span>
                             <div className="text-3xl md:text-4xl font-heading font-bold text-t-text tracking-tight mb-2">
-                                {tour.price} <span className="text-[10px] font-mono tracking-tighter text-t-text/40 uppercase">/ за человека</span>
+                                {tour.price || 'Цена по запросу'}
+                                {tour.price && <span className="text-[10px] font-mono tracking-tighter text-t-text/40 uppercase"> / за человека</span>}
                             </div>
-                            <p className="text-t-subtle text-xs leading-relaxed font-sans font-light mb-4">
-                                Стоимость рассчитывается в юанях по курсу ЦБ РФ + 6% на день оплаты.
-                            </p>
-                            <span className="text-t-text/40 text-[10px] font-mono block">Ближайшие даты: {tour.dates}</span>
+                            {/CNY|юан/i.test(tour.price) && (
+                                <p className="text-t-subtle text-xs leading-relaxed font-sans font-light mb-4">
+                                    Стоимость рассчитывается в юанях по курсу ЦБ РФ + 6% на день оплаты.
+                                </p>
+                            )}
+                            {tour.dates && <span className="text-t-text/40 text-[10px] font-mono block">Ближайшие даты: {tour.dates}</span>}
                         </div>
 
                         <div className="space-y-4">
@@ -186,7 +215,7 @@ const TourPage: React.FC = () => {
                         </div>
 
                         <div className="border-t border-t-border mt-6 pt-6 text-t-muted text-xs leading-relaxed font-sans font-light">
-                            <strong>Важная информация:</strong> Для комфортного путешествия по данному маршруту обязательно требуется удобная треккинговая обувь и дождевик. Погода в горах меняется стремительно.
+                            <strong>Важная информация:</strong> Точную стоимость, доступные даты и полный список включённых услуг уточняйте у менеджера — мы подберём и адаптируем маршрут под вас.
                         </div>
                     </div>
                 </div>

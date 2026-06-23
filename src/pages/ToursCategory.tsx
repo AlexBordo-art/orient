@@ -85,21 +85,25 @@ const ToursCategory: React.FC = () => {
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-obsidian/85 via-obsidian/30 to-transparent pointer-events-none" />
                                     <span className="absolute bottom-4 right-4 text-[10px] font-mono text-t-strong bg-t-bg/90 border border-t-strong/20 px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">
-                                        {tour.price}
+                                        {tour.price || 'Цена по запросу'}
                                     </span>
                                 </div>
 
                                 {/* Body */}
                                 <div className="p-6 md:p-8 flex-grow flex flex-col justify-between">
                                     <div>
-                                        <div className="flex items-center gap-2 mb-3 flex-wrap">
-                                            <div className="flex items-center gap-1 text-[10px] font-mono text-t-strong uppercase tracking-wider">
-                                                <Calendar size={12} />
-                                                <span>{tour.duration}</span>
+                                        {(tour.duration || tour.dates) && (
+                                            <div className="flex items-center gap-2 mb-3 flex-wrap">
+                                                {tour.duration && (
+                                                    <div className="flex items-center gap-1 text-[10px] font-mono text-t-strong uppercase tracking-wider">
+                                                        <Calendar size={12} />
+                                                        <span>{tour.duration}</span>
+                                                    </div>
+                                                )}
+                                                {tour.duration && tour.dates && <span className="w-1 h-1 rounded-full bg-t-text/20"></span>}
+                                                {tour.dates && <span className="text-[10px] font-mono text-t-accent uppercase tracking-wider">{tour.dates}</span>}
                                             </div>
-                                            <span className="w-1 h-1 rounded-full bg-t-text/20"></span>
-                                            <span className="text-[10px] font-mono text-t-accent uppercase tracking-wider">{tour.dates}</span>
-                                        </div>
+                                        )}
 
                                         <h3 className="text-t-text font-heading font-medium text-2xl lg:text-3xl mb-3 tracking-tight group-hover:text-t-strong transition-colors">
                                             {tour.title}

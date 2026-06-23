@@ -5,10 +5,18 @@ import SEO from '../components/SEO';
 import SpecialistBlock from '../components/SpecialistBlock';
 import { ArrowRight, Compass } from 'lucide-react';
 
-const TOUR_DESTINATIONS = [
-    { slug: 'china', name: 'Туры в Китай', code: 'CN', desc: 'Пекин, Шанхай, Харбин, Хайнань — авторские маршруты от знатоков региона', popular: true },
-    { slug: 'russia', name: 'Туры по России', code: 'RU', desc: 'Сахалин, Камчатка, Байкал — лучшее Дальнего Востока и за его пределами' },
-    { slug: 'hot-deals', name: 'Горящие туры', code: '★', desc: 'Специальные предложения с вылетом в ближайшие даты. Экономия до 40%', popular: true },
+type Destination = {
+    slug: string; name: string; code: string; desc: string;
+    status: 'live' | 'soon'; popular?: boolean;
+};
+
+// Doors derive from what actually has content (TOURS_DATA): China + Japan are live;
+// Russia is honestly marked "скоро" (its page still captures leads). Hot-deals stays
+// out of the hub until real deals exist — an empty card promising "−40%" lies to the user.
+const TOUR_DESTINATIONS: Destination[] = [
+    { slug: 'china', name: 'Туры в Китай', code: 'CN', desc: 'Сиань, Чжанцзяцзе, Фэнхуан, Пекин — авторские VIP-маршруты по местам силы Поднебесной', status: 'live', popular: true },
+    { slug: 'japan', name: 'Туры в Японию', code: 'JP', desc: 'Токио, Хаконэ, Такаяма, Киото — знакомство со страной традиций и футуризма', status: 'live' },
+    { slug: 'russia', name: 'Туры по России', code: 'RU', desc: 'Камчатка, Сахалин, Байкал — экспедиции по Дальнему Востоку. Готовим к запуску', status: 'soon' },
 ];
 
 const ToursHub: React.FC = () => (
@@ -30,7 +38,7 @@ const ToursHub: React.FC = () => (
                 </div>
                 <h1 className="text-4xl md:text-6xl font-heading font-bold text-t-text mb-6 tracking-tight">
                     Авторские маршруты <br />
-                    <span className="text-t-accent italic">по всему миру</span>
+                    <span className="text-t-accent italic">по Азии и Дальнему Востоку</span>
                 </h1>
                 <p className="text-t-muted text-lg max-w-2xl leading-relaxed">
                     Мы не продаём стандартные пакеты. Каждое путешествие — это индивидуальный маршрут,
@@ -45,18 +53,22 @@ const ToursHub: React.FC = () => (
                         to={`/tours/${dest.slug}`}
                         className="group relative p-8 rounded-2xl border border-t-border bg-t-card hover:border-t-strong/30 transition-all duration-500"
                     >
-                        {dest.popular && (
+                        {dest.status === 'soon' ? (
+                            <span className="absolute top-4 right-4 text-[10px] font-mono text-t-subtle bg-t-text/5 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                                скоро
+                            </span>
+                        ) : dest.popular ? (
                             <span className="absolute top-4 right-4 text-[10px] font-mono text-t-accent bg-t-strong/10 px-2 py-0.5 rounded-full">
                                 популярное
                             </span>
-                        )}
+                        ) : null}
                         <div className="inline-flex items-center justify-center w-12 h-7 rounded bg-t-strong/10 border border-t-strong/20 mb-6">
                             <span className="font-mono text-[11px] font-bold text-t-strong tracking-widest">{dest.code}</span>
                         </div>
                         <h3 className="text-t-text font-semibold text-xl mb-3 group-hover:text-t-strong transition-colors">{dest.name}</h3>
                         <p className="text-t-subtle text-sm leading-relaxed mb-6">{dest.desc}</p>
                         <div className="flex items-center gap-2 text-t-accent text-sm group-hover:text-t-strong transition-colors">
-                            <span>Смотреть туры</span>
+                            <span>{dest.status === 'soon' ? 'Узнать о запуске' : 'Смотреть туры'}</span>
                             <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                         </div>
                     </Link>
