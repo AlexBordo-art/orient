@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ScrollToTop from '../components/ScrollToTop';
+import BackToTop from '../components/BackToTop';
 import GlobalBackground from '../components/GlobalBackground';
 import LeadModal from '../components/LeadModal';
 
@@ -28,6 +29,8 @@ const RootLayout: React.FC = () => {
                 <main key={location.pathname} className="page-transition flex-grow flex flex-col relative z-10">
                     <Outlet />
                 </main>
+
+                <BackToTop />
 
                 <LeadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
             </div>

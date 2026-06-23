@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import { Sun, Moon } from 'lucide-react';
@@ -40,12 +40,21 @@ const prefersReduced =
 export function Navbar() {
     const { theme, toggle: toggleTheme } = useTheme();
     const [scrolled, setScrolled] = useState(false);
+    const [hidden, setHidden] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const lastY = useRef(0);
     const location = useLocation();
 
-    // Scroll detector for subtle backdrop
+    // Scroll detector: backdrop on scroll + hide chrome on scroll-down, reveal on scroll-up
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 40);
+        const onScroll = () => {
+            const y = window.scrollY;
+            setScrolled(y > 40);
+            if (y < 80) setHidden(false);
+            else if (y > lastY.current + 4) setHidden(true);   // вниз — прячем
+            else if (y < lastY.current - 4) setHidden(false);  // вверх — показываем
+            lastY.current = y;
+        };
         window.addEventListener('scroll', onScroll, { passive: true });
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
@@ -95,6 +104,9 @@ export function Navbar() {
     const EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
     const STAGGER_BASE = prefersReduced ? 0 : 60;
 
+    // Хром прячем только при скролле; открытое меню всегда видно
+    const chromeHidden = hidden && !menuOpen;
+
     return (
         <>
             {/* ── Bar ─────────────────────────────────────────────────────── */}
@@ -102,13 +114,19 @@ export function Navbar() {
                 aria-label="Навигация"
                 className={`fixed top-0 left-0 right-0 z-[70] h-16 md:h-20 transition-all
                     ${scrolled ? 'bg-[var(--color-bg)]/95' : 'bg-transparent'}`}
-                style={{ transitionDuration: DURATION, transitionTimingFunction: EASE }}
+                style={{
+                    transitionDuration: DURATION,
+                    transitionTimingFunction: EASE,
+                    transform: chromeHidden ? 'translateY(-100%)' : 'translateY(0)',
+                    opacity: chromeHidden ? 0 : 1,
+                    pointerEvents: chromeHidden ? 'none' : 'auto',
+                }}
             >
               <div className="max-w-7xl mx-auto h-full px-6 md:px-10 flex items-center justify-between">
                 {/* Wordmark — typographic masthead, gold only as a glint */}
                 <Link
                     to="/"
-                    className="group"
+                    className="group shrink-0"
                     onClick={() => setMenuOpen(false)}
                     aria-label="Ориент Экспресс — на главную"
                 >
@@ -122,7 +140,7 @@ export function Navbar() {
                 </Link>
 
                 {/* Right: theme toggle + burger trigger */}
-                <div className="flex items-center gap-5">
+                <div className="flex items-center gap-3 sm:gap-5 shrink-0">
                     {/* Theme toggle — gold chip, static colour, findable in both themes */}
                     <button
                         onClick={toggleTheme}
