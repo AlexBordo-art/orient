@@ -53,7 +53,6 @@ const PrimaryCard: React.FC<{ country: Country }> = ({ country }) => (
                 <div className="inline-flex items-center justify-center w-14 h-8 rounded border border-t-strong/30 bg-t-glass">
                     <span className="font-mono text-[11px] font-bold text-t-strong tracking-[0.15em]">{country.code}</span>
                 </div>
-                <span className="text-[9px] font-mono tracking-[0.25em] uppercase text-t-subtle">популярное</span>
             </div>
 
             <h3 className="text-t-text font-heading font-semibold text-xl xl:text-2xl mb-4 group-hover:text-t-strong transition-colors">
