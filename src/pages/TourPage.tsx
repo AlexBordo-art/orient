@@ -1,17 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { TOURS_DATA } from '../data/tours';
 import { ModalContext } from '../layouts/RootLayout';
 import { useTheme } from '../contexts/ThemeContext';
 import SEO from '../components/SEO';
 import SpecialistBlock from '../components/SpecialistBlock';
-import { Calendar, CheckCircle2, Compass, MapPin, XCircle, ChevronRight } from 'lucide-react';
+import { Calendar, CheckCircle2, Compass, MapPin, Plane, XCircle, ChevronRight } from 'lucide-react';
 
 const TourPage: React.FC = () => {
     const { destination, tourId } = useParams<{ destination: string; tourId: string }>();
     const navigate = useNavigate();
     const { openLeadModal } = useContext(ModalContext);
     const { isDay } = useTheme();
+    const [depIdx, setDepIdx] = useState(0);
 
     const tour = TOURS_DATA.find(t => t.id === tourId && t.category === destination);
 
@@ -30,6 +31,17 @@ const TourPage: React.FC = () => {
             </div>
         );
     }
+
+    // Departure-aware view: one product sold from several cities. The switcher
+    // swaps itinerary/price/dates; anything a departure omits falls back to the tour.
+    const departures = tour.departures ?? [];
+    const showDepartures = departures.length > 1;
+    const active = departures[depIdx];
+    const itinerary = active?.itinerary ?? tour.itinerary;
+    const price = active?.price ?? tour.price;
+    const dates = active?.dates ?? tour.dates;
+    const included = active?.included ?? tour.included;
+    const notIncluded = active?.notIncluded ?? tour.notIncluded;
 
     return (
         <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bg)' }}>
@@ -73,7 +85,7 @@ const TourPage: React.FC = () => {
 
             {/* Title + meta + route on the flat theme tone */}
             <div className="max-w-7xl mx-auto w-full px-6 -mt-6 md:-mt-10 relative z-10 mb-4">
-                {(tour.duration || tour.dates) && (
+                {(tour.duration || dates) && (
                     <div className="flex items-center gap-3 mb-4 flex-wrap text-t-accent">
                         {tour.duration && (
                             <div className="flex items-center gap-1 text-xs font-mono uppercase tracking-wider">
@@ -81,8 +93,8 @@ const TourPage: React.FC = () => {
                                 <span>{tour.duration}</span>
                             </div>
                         )}
-                        {tour.duration && tour.dates && <span className="w-1.5 h-1.5 rounded-full bg-t-strong/45"></span>}
-                        {tour.dates && <span className="text-xs font-mono uppercase tracking-wider">{tour.dates}</span>}
+                        {tour.duration && dates && <span className="w-1.5 h-1.5 rounded-full bg-t-strong/45"></span>}
+                        {dates && <span className="text-xs font-mono uppercase tracking-wider">{dates}</span>}
                     </div>
                 )}
 
@@ -96,10 +108,41 @@ const TourPage: React.FC = () => {
                     </p>
                 )}
 
-                <div className="flex items-start gap-2 text-t-muted text-sm md:text-base max-w-2xl bg-t-card border border-t-border p-4 rounded-xl">
-                    <MapPin size={20} className="shrink-0 text-t-strong mt-0.5" />
-                    <span>{tour.route}</span>
-                </div>
+                {tour.route && tour.route.trim() !== tour.subtitle?.trim() && (
+                    <div className="flex items-start gap-2 text-t-muted text-sm md:text-base max-w-2xl bg-t-card border border-t-border p-4 rounded-xl">
+                        <MapPin size={20} className="shrink-0 text-t-strong mt-0.5" />
+                        <span>{tour.route}</span>
+                    </div>
+                )}
+
+                {/* Departure switcher — same tour, different city of departure (changes the flight legs).
+                   Calm segment control: champagne on the active leg, a glint not a fill. */}
+                {showDepartures && (
+                    <div className="mt-5 max-w-2xl">
+                        <span className="font-mono text-t-text/40 text-[10px] tracking-widest uppercase flex items-center gap-1.5 mb-2">
+                            <Plane size={12} /> Город вылета
+                        </span>
+                        <div className="inline-flex flex-wrap gap-1.5 p-1 rounded-xl bg-t-card border border-t-border">
+                            {departures.map((dep, i) => {
+                                const isActive = i === depIdx;
+                                return (
+                                    <button
+                                        key={dep.city}
+                                        onClick={() => setDepIdx(i)}
+                                        aria-pressed={isActive}
+                                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 active:scale-[0.97] ${
+                                            isActive
+                                                ? 'bg-t-strong/10 text-t-strong border border-t-strong/30'
+                                                : 'text-t-muted border border-transparent hover:text-t-text'
+                                        }`}
+                                    >
+                                        {dep.city}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Main Content */}
@@ -112,7 +155,7 @@ const TourPage: React.FC = () => {
 
                     {/* Timeline */}
                     <div className="relative border-l border-t-strong/20 pl-6 md:pl-8 ml-3 md:ml-4 space-y-12 mb-16">
-                        {tour.itinerary.map((day, index) => (
+                        {itinerary.map((day, index) => (
                             <div key={index} className="relative group">
                                 {/* Timeline Dot */}
                                 <div className="absolute -left-[31px] md: -left-[39px] top-1.5 w-4 h-4 rounded-full bg-t-strong border-2 border-t-bg transition-transform duration-300 group-hover:scale-125 z-10" />
@@ -136,17 +179,17 @@ const TourPage: React.FC = () => {
                     </div>
 
                     {/* Exclusions/Inclusions — only when we actually have the data */}
-                    {(tour.included.length > 0 || tour.notIncluded.length > 0) && (
+                    {(included.length > 0 || notIncluded.length > 0) && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-t-border pt-12">
                             {/* Included */}
-                            {tour.included.length > 0 && (
+                            {included.length > 0 && (
                                 <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-2xl p-6 md:p-8">
                                     <h3 className="text-t-text font-heading text-xl mb-5 flex items-center gap-2">
                                         <CheckCircle2 className="text-emerald-500" size={22} />
                                         В стоимость включено
                                     </h3>
                                     <ul className="space-y-3">
-                                        {tour.included.map((item, i) => (
+                                        {included.map((item, i) => (
                                             <li key={i} className="flex gap-2 text-xs md:text-sm text-t-muted items-start font-sans font-light leading-relaxed">
                                                 <span className="text-emerald-500 mt-1 shrink-0">•</span>
                                                 <span>{item}</span>
@@ -157,14 +200,14 @@ const TourPage: React.FC = () => {
                             )}
 
                             {/* Not Included */}
-                            {tour.notIncluded.length > 0 && (
+                            {notIncluded.length > 0 && (
                                 <div className="bg-rose-500/5 border border-rose-500/15 rounded-2xl p-6 md:p-8">
                                     <h3 className="text-t-text font-heading text-xl mb-5 flex items-center gap-2">
                                         <XCircle className="text-rose-500" size={22} />
                                         Не включено
                                     </h3>
                                     <ul className="space-y-3">
-                                        {tour.notIncluded.map((item, i) => (
+                                        {notIncluded.map((item, i) => (
                                             <li key={i} className="flex gap-2 text-xs md:text-sm text-t-muted items-start font-sans font-light leading-relaxed">
                                                 <span className="text-rose-500 mt-1 shrink-0">•</span>
                                                 <span>{item}</span>
@@ -185,15 +228,15 @@ const TourPage: React.FC = () => {
                         <div className="mb-6">
                             <span className="font-mono text-t-text/50 text-[10px] tracking-widest uppercase block mb-1">Стоимость тура</span>
                             <div className="text-3xl md:text-4xl font-heading font-bold text-t-text tracking-tight mb-2">
-                                {tour.price || 'Цена по запросу'}
-                                {tour.price && <span className="text-[10px] font-mono tracking-tighter text-t-text/40 uppercase"> / за человека</span>}
+                                {price || 'Цена по запросу'}
+                                {price && <span className="text-[10px] font-mono tracking-tighter text-t-text/40 uppercase"> / за человека</span>}
                             </div>
-                            {/CNY|юан/i.test(tour.price) && (
+                            {/CNY|юан/i.test(price) && (
                                 <p className="text-t-subtle text-xs leading-relaxed font-sans font-light mb-4">
                                     Стоимость рассчитывается в юанях по курсу ЦБ РФ + 6% на день оплаты.
                                 </p>
                             )}
-                            {tour.dates && <span className="text-t-text/40 text-[10px] font-mono block">Ближайшие даты: {tour.dates}</span>}
+                            {dates && <span className="text-t-text/40 text-[10px] font-mono block">Ближайшие даты: {dates}</span>}
                         </div>
 
                         <div className="space-y-4">

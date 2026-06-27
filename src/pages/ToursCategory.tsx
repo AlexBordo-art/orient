@@ -4,7 +4,7 @@ import { TOURS_DATA } from '../data/tours';
 import Breadcrumbs from '../components/Breadcrumbs';
 import SEO from '../components/SEO';
 import SpecialistBlock from '../components/SpecialistBlock';
-import { ArrowRight, Calendar, Compass, MapPin } from 'lucide-react';
+import { ArrowRight, Calendar, Compass, MapPin, Plane } from 'lucide-react';
 
 const CATEGORY_NAMES: Record<string, { title: string; desc: string }> = {
     'china': {
@@ -73,7 +73,7 @@ const ToursCategory: React.FC = () => {
                         {tours.map(tour => (
                             <div
                                 key={tour.id}
-                                className="group relative flex flex-col justify-between rounded-2xl border border-t-border bg-t-card overflow-hidden hover:border-t-strong/30 transition-all duration-500 shadow-xl"
+                                className="group relative flex flex-col justify-between rounded-2xl border border-t-border bg-t-card backdrop-blur-md overflow-hidden hover:border-t-strong/30 transition-all duration-500 shadow-xl"
                             >
                                 {/* Photo Container */}
                                 <div className="h-64 overflow-hidden relative">
@@ -110,10 +110,19 @@ const ToursCategory: React.FC = () => {
                                         </h3>
                                         <p className="text-t-muted text-sm italic font-light mb-4">{tour.subtitle}</p>
 
-                                        <div className="flex gap-1.5 items-start text-xs text-t-subtle mb-6">
-                                            <MapPin size={14} className="shrink-0 text-t-strong/60 mt-0.5" />
-                                            <span>{tour.route}</span>
-                                        </div>
+                                        {tour.route && tour.route.trim() !== tour.subtitle?.trim() && (
+                                            <div className={`flex gap-1.5 items-start text-xs text-t-subtle ${tour.departures && tour.departures.length > 1 ? 'mb-3' : 'mb-6'}`}>
+                                                <MapPin size={14} className="shrink-0 text-t-strong/60 mt-0.5" />
+                                                <span>{tour.route}</span>
+                                            </div>
+                                        )}
+
+                                        {tour.departures && tour.departures.length > 1 && (
+                                            <div className="flex gap-1.5 items-center text-[10px] font-mono uppercase tracking-wider text-t-accent/80 mb-6">
+                                                <Plane size={12} className="shrink-0" />
+                                                <span>вылет · {tour.departures.map(d => d.city).join(' / ')}</span>
+                                            </div>
+                                        )}
                                     </div>
 
                                     <Link

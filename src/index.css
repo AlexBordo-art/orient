@@ -10,7 +10,7 @@
 [data-theme="night"] {
   --color-bg:          #020617;
   --color-bg-elevated: #0F172A;
-  --color-bg-card:     rgba(255, 255, 255, 0.05);
+  --color-bg-card:     rgba(15, 23, 42, 0.62);  /* raised matte obsidian (verdict B) — was 5% white, too transparent on dark */
   --color-text:        #F8FAFC;
   --color-text-muted:  #94A3B8;
   --color-text-subtle: #64748B;
