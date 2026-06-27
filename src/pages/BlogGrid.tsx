@@ -34,75 +34,75 @@ const BlogGrid: React.FC = () => {
                         Заметки <span className="text-t-accent italic font-normal">путешественника</span>
                     </h1>
                     <p className="text-t-muted text-lg max-w-2xl mx-auto font-sans font-light leading-relaxed">
-                        Личные истории из поездок — впечатления, маршруты и детали, которые не попадают в путеводители.
+                        Личные истории из поездок Елены Журавской — впечатления, маршруты и детали, которые не попадают в путеводители.
                     </p>
                 </div>
 
                 {posts.length === 0 ? (
-                    <div className="text-center py-24 border border-dashed border-t-border rounded-3xl bg-t-card">
+                    <div className="text-center py-24 border border-dashed border-t-border rounded-3xl bg-t-card backdrop-blur-md">
                         <p className="text-t-muted font-sans font-light">Здесь пока нет записей.</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                        {/* Featured post */}
+                        {/* Featured — an editorial panel (works with or without a cover) */}
                         {featured && (
-                            <Link
-                                to={`/blog/${featured.id}`}
-                                className="lg:col-span-2 group cursor-pointer flex flex-col justify-between"
-                            >
-                                <div>
-                                    <div className="relative h-96 md:h-[480px] w-full rounded-3xl overflow-hidden mb-6 shadow-2xl border border-t-border">
-                                        <div className="absolute inset-0 bg-obsidian/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
-                                        <img
-                                            src={featured.image}
-                                            alt={featured.title}
-                                            className="w-full h-full object-cover transform scale-100 group-hover:scale-101 transition-transform duration-700"
-                                        />
+                            <Link to={`/blog/${featured.id}`} className="lg:col-span-2 group">
+                                <div className="relative h-full min-h-[380px] md:min-h-[460px] flex flex-col justify-end rounded-3xl border border-t-border bg-t-card backdrop-blur-md overflow-hidden p-8 md:p-12 transition-colors duration-500 group-hover:border-t-strong/30">
+                                    {featured.image && (
+                                        <>
+                                            <img
+                                                src={featured.image}
+                                                alt={featured.title}
+                                                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-obsidian/85 via-obsidian/40 to-transparent" />
+                                        </>
+                                    )}
+                                    <div className="relative">
+                                        <div className="w-10 h-px bg-t-strong/50 mb-5" />
+                                        <div className="flex items-center gap-3 text-[10px] font-mono text-t-subtle uppercase tracking-widest mb-4">
+                                            <span className="text-t-accent">{featured.region}</span>
+                                            <span className="w-1 h-1 rounded-full bg-t-text/20" />
+                                            <span className="flex items-center gap-1.5">
+                                                <Clock className="w-3 h-3" /> {featured.readTime}
+                                            </span>
+                                        </div>
+                                        <h2 className="text-3xl md:text-5xl font-heading font-medium text-t-text mb-5 leading-[1.1] tracking-tight group-hover:text-t-accent transition-colors max-w-2xl">
+                                            {featured.title}
+                                        </h2>
+                                        <p className="text-t-muted font-sans font-light text-base md:text-lg leading-relaxed mb-7 max-w-2xl">
+                                            {featured.excerpt}
+                                        </p>
+                                        <Magnetic strength={10}>
+                                            <div className="inline-flex items-center gap-2 text-t-accent font-bold text-xs tracking-widest uppercase group-hover:text-t-strong transition-colors magnetic-button">
+                                                Читать заметку <ArrowRight className="w-4 h-4" />
+                                            </div>
+                                        </Magnetic>
                                     </div>
-                                    <div className="flex items-center gap-4 text-[10px] font-mono text-t-subtle uppercase tracking-widest mb-3">
-                                        <span className="flex items-center gap-1">
-                                            <Clock className="w-3.5 h-3.5" /> {featured.readTime}
-                                        </span>
-                                    </div>
-                                    <h2 className="text-2xl md:text-4xl font-heading font-medium text-t-text mb-4 group-hover:text-t-accent transition-colors leading-tight tracking-tight">
-                                        {featured.title}
-                                    </h2>
-                                    <p className="text-t-muted font-sans font-light text-base leading-relaxed mb-6 max-w-3xl">
-                                        {featured.excerpt}
-                                    </p>
                                 </div>
-                                <Magnetic strength={10}>
-                                    <div className="inline-flex items-center gap-2 text-t-accent font-bold text-xs tracking-widest uppercase group-hover:text-t-strong transition-colors magnetic-button">
-                                        Читать заметку <ArrowRight className="w-4 h-4" />
-                                    </div>
-                                </Magnetic>
                             </Link>
                         )}
 
-                        {/* Other posts */}
-                        <div className="flex flex-col gap-8 lg:col-span-1 border-t lg:border-t-0 lg:border-l border-t-border/50 lg:border-l-border/50 lg:pl-10 pt-10 lg:pt-0">
-                            <h3 className="text-xs font-mono tracking-widest uppercase text-t-accent opacity-60 mb-2">
+                        {/* Other posts — quiet typographic index, no preview tiles */}
+                        <div className="lg:col-span-1 lg:border-l border-t-border/50 lg:pl-10">
+                            <h3 className="text-xs font-mono tracking-widest uppercase text-t-accent opacity-60 mb-6">
                                 Другие заметки
                             </h3>
-                            <div className="flex flex-col gap-8">
+                            <div className="flex flex-col">
                                 {rest.map(post => (
                                     <Link
                                         key={post.id}
                                         to={`/blog/${post.id}`}
-                                        className="block group cursor-pointer border-b border-t-border/40 pb-6 last:border-0"
+                                        className="group block border-b border-t-border/40 py-5 first:pt-0 last:border-0"
                                     >
-                                        <div className="relative h-44 w-full rounded-2xl overflow-hidden mb-4 border border-t-border">
-                                            <div className="absolute inset-0 bg-obsidian/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
-                                            <img
-                                                src={post.image}
-                                                alt={post.title}
-                                                className="w-full h-full object-cover transform scale-100 group-hover:scale-101 transition-transform duration-500"
-                                            />
+                                        <div className="flex items-center gap-3 mb-2 text-[9px] font-mono text-t-subtle uppercase tracking-widest">
+                                            <span className="text-t-accent/80">{post.region}</span>
+                                            <span className="w-1 h-1 rounded-full bg-t-text/20" />
+                                            <span className="flex items-center gap-1">
+                                                <Clock className="w-3 h-3" /> {post.readTime}
+                                            </span>
                                         </div>
-                                        <div className="flex items-center gap-2 mb-2 text-[9px] font-mono text-t-subtle tracking-wider uppercase">
-                                            <Clock className="w-3 h-3" /> {post.readTime}
-                                        </div>
-                                        <h4 className="text-lg font-heading font-medium text-t-text mb-2 group-hover:text-t-accent transition-colors leading-snug tracking-tight">
+                                        <h4 className="text-lg font-heading font-medium text-t-text leading-snug tracking-tight group-hover:text-t-accent transition-colors">
                                             {post.title}
                                         </h4>
                                     </Link>
